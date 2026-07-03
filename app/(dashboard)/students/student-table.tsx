@@ -1,0 +1,40 @@
+import type { Student } from "./student.model";
+
+export function StudentTable({ students }: { students: Student[] }) {
+  if (students.length === 0) {
+    return (
+      <p className="rounded-lg border border-dashed border-zinc-300 p-8 text-center text-zinc-500 dark:border-zinc-700">
+        No students yet. Add the first one.
+      </p>
+    );
+  }
+
+  return (
+    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+      <table className="w-full text-left text-sm">
+        <thead className="bg-zinc-50 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+          <tr>
+            <th className="px-4 py-3 font-medium">Name</th>
+            <th className="px-4 py-3 font-medium">Phone</th>
+            <th className="px-4 py-3 font-medium">Class</th>
+            <th className="px-4 py-3 font-medium">Theory</th>
+            <th className="px-4 py-3 font-medium">Practice</th>
+            <th className="px-4 py-3 font-medium">MEB</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+          {students.map((student) => (
+            <tr key={student.id}>
+              <td className="px-4 py-3 font-medium">{student.fullName}</td>
+              <td className="px-4 py-3">{student.phone}</td>
+              <td className="px-4 py-3">{student.licenseClass}</td>
+              <td className="px-4 py-3">{student.theoryLabel()}</td>
+              <td className="px-4 py-3">{student.practiceLabel()}</td>
+              <td className="px-4 py-3">{student.mebLabel()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
