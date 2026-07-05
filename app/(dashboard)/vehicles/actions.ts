@@ -6,6 +6,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { VehicleRepository } from "./vehicle.repository";
 import { VehicleDamageRecordRepository } from "./vehicle-damage-record.repository";
 import { VehicleViolationRepository } from "./vehicle-violation.repository";
+import { isValidPlate } from "./plate";
 import {
   DAMAGE_STATUSES,
   LICENSE_CLASSES,
@@ -26,12 +27,22 @@ export async function createVehicle(formData: FormData): Promise<void> {
     throw new Error(`Invalid license class: ${licenseClass}`);
   }
 
+  const plate = String(formData.get("plate") ?? "").trim();
+  if (!isValidPlate(plate)) {
+    throw new Error(`Invalid plate: ${plate}`);
+  }
+
   const supabase = await createSupabaseServerClient();
   const repository = new VehicleRepository(supabase);
 
   await repository.create({
-    plate: String(formData.get("plate") ?? "").trim(),
-    make_model: String(formData.get("make_model") ?? "").trim(),
+    plate,
+    make_model: [
+      String(formData.get("make") ?? "").trim(),
+      String(formData.get("model") ?? "").trim(),
+    ]
+      .filter(Boolean)
+      .join(" "),
     transmission: transmission as Transmission,
     license_class: licenseClass as LicenseClass,
   });
