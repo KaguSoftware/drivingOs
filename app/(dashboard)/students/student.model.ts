@@ -28,6 +28,10 @@ export class Student {
     return this.row.phone;
   }
 
+  get nationalId() {
+    return this.row.national_id;
+  }
+
   get licenseClass() {
     return this.row.license_class;
   }

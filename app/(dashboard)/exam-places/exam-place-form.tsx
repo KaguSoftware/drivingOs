@@ -1,0 +1,51 @@
+"use client";
+
+import { useState } from "react";
+import { createExamPlace } from "./actions";
+
+const inputClass =
+  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
+
+export function ExamPlaceForm() {
+  const [address, setAddress] = useState("");
+
+  return (
+    <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
+      <form action={createExamPlace} className="flex flex-1 flex-col gap-4">
+        <label className="flex flex-col gap-1 text-sm">
+          Name
+          <input name="name" required className={inputClass} />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Address
+          <input
+            name="address"
+            required
+            className={inputClass}
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+          />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Notes
+          <input name="notes" className={inputClass} />
+        </label>
+        <button
+          type="submit"
+          className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
+        >
+          Add exam place
+        </button>
+      </form>
+
+      {address.trim() && (
+        <iframe
+          title="Address preview"
+          src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
+          className="h-64 flex-1 rounded-lg border border-zinc-200 dark:border-zinc-800"
+          loading="lazy"
+        />
+      )}
+    </div>
+  );
+}

@@ -1,0 +1,47 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { Lesson } from "./lesson.model";
+import { MAX_CONCURRENT_LESSONS, type LessonRow, type NewLessonInput } from "./types";
+
+const LESSON_SELECT = "*, students(full_name, phone), instructors(full_name), vehicles(plate)";
+
+export class LessonRepository {
+  constructor(private readonly supabase: SupabaseClient) {}
+
+  async listForWeek(weekStart: Date, weekEnd: Date): Promise<Lesson[]> {
+    const { data, error } = await this.supabase
+      .from("lessons")
+      .select(LESSON_SELECT)
+      .gte("starts_at", weekStart.toISOString())
+      .lt("starts_at", weekEnd.toISOString())
+      .order("starts_at", { ascending: true });
+
+    if (error) throw new Error(`Failed to list lessons: ${error.message}`);
+    return (data as LessonRow[]).map((row) => new Lesson(row));
+  }
+
+  async create(input: NewLessonInput): Promise<Lesson> {
+    // App-level concurrency rule: at most MAX_CONCURRENT_LESSONS lessons may
+    // overlap the same time window (one per vehicle). Not enforced by a DB
+    // constraint (no btree_gist precedent in this codebase), so there is a
+    // small race-condition window between this check and the insert below.
+    const { count, error: countError } = await this.supabase
+      .from("lessons")
+      .select("id", { count: "exact", head: true })
+      .lt("starts_at", input.ends_at)
+      .gt("ends_at", input.starts_at);
+
+    if (countError) throw new Error(`Failed to check schedule: ${countError.message}`);
+    if ((count ?? 0) >= MAX_CONCURRENT_LESSONS) {
+      throw new Error("Time slot is fully booked (3 vehicles already scheduled)");
+    }
+
+    const { data, error } = await this.supabase
+      .from("lessons")
+      .insert(input)
+      .select(LESSON_SELECT)
+      .single();
+
+    if (error) throw new Error(`Failed to create lesson: ${error.message}`);
+    return new Lesson(data as LessonRow);
+  }
+}

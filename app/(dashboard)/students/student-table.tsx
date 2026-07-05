@@ -20,6 +20,7 @@ export function StudentTable({ students }: { students: Student[] }) {
             <th className="px-4 py-3 font-medium">Theory</th>
             <th className="px-4 py-3 font-medium">Practice</th>
             <th className="px-4 py-3 font-medium">MEB</th>
+            <th className="px-4 py-3 font-medium">MEB PDF</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -31,6 +32,11 @@ export function StudentTable({ students }: { students: Student[] }) {
               <td className="px-4 py-3">{student.theoryLabel()}</td>
               <td className="px-4 py-3">{student.practiceLabel()}</td>
               <td className="px-4 py-3">{student.mebLabel()}</td>
+              <td className="px-4 py-3">
+                <a href={`/api/students/${student.id}/meb-pdf`} className="hover:underline">
+                  Download PDF
+                </a>
+              </td>
             </tr>
           ))}
         </tbody>

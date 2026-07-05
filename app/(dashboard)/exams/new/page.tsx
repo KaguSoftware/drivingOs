@@ -1,0 +1,17 @@
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { ExamPlaceRepository } from "../../exam-places/exam-place.repository";
+import { InstructorRepository } from "../../tutors/instructor.repository";
+import { ExamSessionForm } from "../exam-session-form";
+
+export default async function NewExamSessionPage() {
+  const supabase = await createSupabaseServerClient();
+  const examPlaces = await new ExamPlaceRepository(supabase).listAll();
+  const instructors = await new InstructorRepository(supabase).listAll();
+
+  return (
+    <section className="flex flex-col gap-6">
+      <h1 className="text-2xl font-semibold">Schedule exam</h1>
+      <ExamSessionForm examPlaces={examPlaces} instructors={instructors} />
+    </section>
+  );
+}

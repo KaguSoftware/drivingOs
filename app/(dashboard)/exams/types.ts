@@ -1,0 +1,32 @@
+// Mirrors supabase/migrations/0009_exam_sessions.sql — keep in sync.
+
+export interface ExamSessionRow {
+  id: string;
+  exam_place_id: string;
+  instructor_id: string | null;
+  starts_at: string;
+  ends_at: string;
+  created_at: string;
+  exam_places: { name: string; address: string } | null;
+  instructors: { full_name: string } | null;
+}
+
+export interface NewExamSessionInput {
+  exam_place_id: string;
+  instructor_id: string;
+  starts_at: string;
+  ends_at: string;
+}
+
+export interface ExamEnrollmentRow {
+  id: string;
+  exam_session_id: string;
+  student_id: string;
+  created_at: string;
+  students: { full_name: string } | null;
+}
+
+export interface NewExamEnrollmentInput {
+  exam_session_id: string;
+  student_id: string;
+}

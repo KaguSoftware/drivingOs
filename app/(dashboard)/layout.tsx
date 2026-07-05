@@ -1,6 +1,15 @@
 import Link from "next/link";
 
-const NAV_ITEMS = [{ href: "/students", label: "Students" }];
+const NAV_ITEMS = [
+  { href: "/students", label: "Students" },
+  { href: "/vehicles", label: "Damaged Vehicles" },
+  { href: "/vehicle-checks", label: "Vehicle Periodics" },
+  { href: "/schedule", label: "Weekly Schedule" },
+  { href: "/tutors", label: "Tutors" },
+  { href: "/payments", label: "Payment Control" },
+  { href: "/exam-places", label: "Exam Places" },
+  { href: "/exams", label: "Exams" },
+];
 
 export default function DashboardLayout({
   children,
