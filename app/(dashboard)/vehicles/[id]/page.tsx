@@ -24,7 +24,7 @@ export default async function VehicleDetailPage({
       <div>
         <h1 className="text-2xl font-semibold">{vehicle.plate}</h1>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          {vehicle.makeModel} &middot; {vehicle.transmission} &middot; {vehicle.licenseClass}
+          {vehicle.makeModel} &middot; {vehicle.transmissionLabel()} &middot; {vehicle.licenseClass}
         </p>
       </div>
 

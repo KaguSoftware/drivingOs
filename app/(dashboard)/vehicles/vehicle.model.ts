@@ -19,6 +19,11 @@ export class Vehicle {
     return this.row.transmission;
   }
 
+  transmissionLabel() {
+    const value = this.row.transmission;
+    return value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
   get licenseClass() {
     return this.row.license_class;
   }

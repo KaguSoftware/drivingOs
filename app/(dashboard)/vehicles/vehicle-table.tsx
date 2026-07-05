@@ -30,7 +30,7 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
                 </Link>
               </td>
               <td className="px-4 py-3">{vehicle.makeModel}</td>
-              <td className="px-4 py-3">{vehicle.transmission}</td>
+              <td className="px-4 py-3">{vehicle.transmissionLabel()}</td>
               <td className="px-4 py-3">{vehicle.licenseClass}</td>
             </tr>
           ))}
