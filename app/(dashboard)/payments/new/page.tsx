@@ -1,3 +1,4 @@
+import { BackLink } from "@/components/ui/back-link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "../../students/student.repository";
 import { InstallmentForm } from "../installment-form";
@@ -8,6 +9,7 @@ export default async function NewInstallmentPage() {
 
   return (
     <section className="flex flex-col gap-6">
+      <BackLink href="../" label="Back to payments" />
       <h1 className="text-2xl font-semibold">New installment</h1>
       <InstallmentForm students={students} />
     </section>
