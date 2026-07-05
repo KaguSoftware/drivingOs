@@ -22,8 +22,12 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         <input name="amount" type="number" step="0.01" required className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Due date
+        Due date (first installment if split)
         <input name="due_date" type="date" required className={inputClass} />
+      </label>
+      <label className="flex flex-col gap-1 text-sm">
+        Number of months
+        <input name="months" type="number" min={1} step={1} defaultValue={1} className={inputClass} />
       </label>
       <button
         type="submit"

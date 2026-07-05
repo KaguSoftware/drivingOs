@@ -44,4 +44,44 @@ export class LessonRepository {
     if (error) throw new Error(`Failed to create lesson: ${error.message}`);
     return new Lesson(data as LessonRow);
   }
+
+  async findById(id: string): Promise<Lesson> {
+    const { data, error } = await this.supabase
+      .from("lessons")
+      .select(LESSON_SELECT)
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to find lesson: ${error.message}`);
+    return new Lesson(data as LessonRow);
+  }
+
+  async update(id: string, input: NewLessonInput): Promise<Lesson> {
+    const { count, error: countError } = await this.supabase
+      .from("lessons")
+      .select("id", { count: "exact", head: true })
+      .neq("id", id)
+      .lt("starts_at", input.ends_at)
+      .gt("ends_at", input.starts_at);
+
+    if (countError) throw new Error(`Failed to check schedule: ${countError.message}`);
+    if ((count ?? 0) >= MAX_CONCURRENT_LESSONS) {
+      throw new Error("Time slot is fully booked (3 vehicles already scheduled)");
+    }
+
+    const { data, error } = await this.supabase
+      .from("lessons")
+      .update(input)
+      .eq("id", id)
+      .select(LESSON_SELECT)
+      .single();
+
+    if (error) throw new Error(`Failed to update lesson: ${error.message}`);
+    return new Lesson(data as LessonRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("lessons").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete lesson: ${error.message}`);
+  }
 }

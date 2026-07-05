@@ -4,9 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "./student.repository";
-import { LICENSE_CLASSES, type LicenseClass } from "./types";
+import { LICENSE_CLASSES, type LicenseClass, type NewStudentInput } from "./types";
 
-export async function createStudent(formData: FormData): Promise<void> {
+function parseStudentInput(formData: FormData): NewStudentInput {
   const licenseClass = formData.get("license_class") as string;
   if (!LICENSE_CLASSES.includes(licenseClass as LicenseClass)) {
     throw new Error(`Invalid license class: ${licenseClass}`);
@@ -27,16 +27,39 @@ export async function createStudent(formData: FormData): Promise<void> {
     throw new Error("National ID must be exactly 11 digits");
   }
 
-  const supabase = await createSupabaseServerClient();
-  const repository = new StudentRepository(supabase);
-
-  await repository.create({
+  return {
     full_name: fullName,
     phone: `+90${phone}`,
     national_id: nationalId,
     license_class: licenseClass as LicenseClass,
-  });
+  };
+}
+
+export async function createStudent(formData: FormData): Promise<void> {
+  const supabase = await createSupabaseServerClient();
+  const repository = new StudentRepository(supabase);
+
+  await repository.create(parseStudentInput(formData));
 
   revalidatePath("/students");
   redirect("/students");
+}
+
+export async function updateStudent(id: string, formData: FormData): Promise<void> {
+  const supabase = await createSupabaseServerClient();
+  const repository = new StudentRepository(supabase);
+
+  await repository.update(id, parseStudentInput(formData));
+
+  revalidatePath("/students");
+  redirect("/students");
+}
+
+export async function deleteStudent(id: string): Promise<void> {
+  const supabase = await createSupabaseServerClient();
+  const repository = new StudentRepository(supabase);
+
+  await repository.delete(id);
+
+  revalidatePath("/students");
 }

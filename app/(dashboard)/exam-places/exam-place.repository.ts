@@ -36,4 +36,21 @@ export class ExamPlaceRepository {
     if (error) throw new Error(`Failed to create exam place: ${error.message}`);
     return new ExamPlace(data as ExamPlaceRow);
   }
+
+  async update(id: string, input: NewExamPlaceInput): Promise<ExamPlace> {
+    const { data, error } = await this.supabase
+      .from("exam_places")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to update exam place: ${error.message}`);
+    return new ExamPlace(data as ExamPlaceRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("exam_places").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete exam place: ${error.message}`);
+  }
 }

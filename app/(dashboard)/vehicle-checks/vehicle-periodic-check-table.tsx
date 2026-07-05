@@ -1,5 +1,8 @@
+import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { CheckStatus } from "./types";
 import type { VehiclePeriodicCheck } from "./vehicle-periodic-check.model";
+import { deletePeriodicCheck } from "./actions";
 
 const STATUS_COLORS: Record<CheckStatus, string> = {
   ok: "text-emerald-600 dark:text-emerald-400",
@@ -27,6 +30,8 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Cost</th>
             <th className="px-4 py-3 font-medium">Provider</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -42,6 +47,14 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
               </td>
               <td className="px-4 py-3">{check.cost ?? "-"}</td>
               <td className="px-4 py-3">{check.provider ?? "-"}</td>
+              <td className="px-4 py-3">
+                <Link href={`/vehicle-checks/${check.id}/edit`} className="hover:underline">
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton action={deletePeriodicCheck.bind(null, check.id)} confirmMessage="Delete this check?" />
+              </td>
             </tr>
           ))}
         </tbody>

@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { ExamSession } from "./exam-session.model";
+import { deleteExamSession } from "./actions";
 
 export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
   if (sessions.length === 0) {
@@ -18,6 +20,8 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
             <th className="px-4 py-3 font-medium">When</th>
             <th className="px-4 py-3 font-medium">Exam place</th>
             <th className="px-4 py-3 font-medium">Proctor</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -30,6 +34,14 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
               </td>
               <td className="px-4 py-3">{session.examPlaceName}</td>
               <td className="px-4 py-3">{session.instructorName}</td>
+              <td className="px-4 py-3">
+                <Link href={`/exams/${session.id}/edit`} className="hover:underline">
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton action={deleteExamSession.bind(null, session.id)} confirmMessage="Delete this exam?" />
+              </td>
             </tr>
           ))}
         </tbody>

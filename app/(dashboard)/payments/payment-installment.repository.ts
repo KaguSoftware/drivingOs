@@ -62,6 +62,44 @@ export class PaymentInstallmentRepository {
     return new PaymentInstallment(data as PaymentInstallmentRow);
   }
 
+  async createMany(inputs: NewPaymentInstallmentInput[]): Promise<PaymentInstallment[]> {
+    const { data, error } = await this.supabase
+      .from("payment_installments")
+      .insert(inputs)
+      .select(INSTALLMENT_SELECT);
+
+    if (error) throw new Error(`Failed to create installments: ${error.message}`);
+    return (data as PaymentInstallmentRow[]).map((row) => new PaymentInstallment(row));
+  }
+
+  async findById(id: string): Promise<PaymentInstallment> {
+    const { data, error } = await this.supabase
+      .from("payment_installments")
+      .select(INSTALLMENT_SELECT)
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to find installment: ${error.message}`);
+    return new PaymentInstallment(data as PaymentInstallmentRow);
+  }
+
+  async update(id: string, input: NewPaymentInstallmentInput): Promise<PaymentInstallment> {
+    const { data, error } = await this.supabase
+      .from("payment_installments")
+      .update(input)
+      .eq("id", id)
+      .select(INSTALLMENT_SELECT)
+      .single();
+
+    if (error) throw new Error(`Failed to update installment: ${error.message}`);
+    return new PaymentInstallment(data as PaymentInstallmentRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("payment_installments").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete installment: ${error.message}`);
+  }
+
   async recordPayment(id: string, amountPaid: number): Promise<PaymentInstallment> {
     const { data: existing, error: findError } = await this.supabase
       .from("payment_installments")

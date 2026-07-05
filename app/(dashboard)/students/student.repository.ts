@@ -36,4 +36,21 @@ export class StudentRepository {
     if (error) throw new Error(`Failed to create student: ${error.message}`);
     return new Student(data as StudentRow);
   }
+
+  async update(id: string, input: NewStudentInput): Promise<Student> {
+    const { data, error } = await this.supabase
+      .from("students")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to update student: ${error.message}`);
+    return new Student(data as StudentRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("students").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete student: ${error.message}`);
+  }
 }

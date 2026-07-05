@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { Lesson } from "./lesson.model";
 import type { ExamSession } from "../exams/exam-session.model";
+import { deleteLesson } from "./actions";
 
 const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const HOURS = Array.from({ length: 13 }, (_, i) => 8 + i); // 08:00-20:00
@@ -62,15 +64,23 @@ export function WeeklyCalendar({
                   className="flex flex-col gap-1 border-b border-l border-zinc-200 p-1 dark:border-zinc-800"
                 >
                   {cellLessons.map((lesson) => (
-                    <a
+                    <div
                       key={lesson.id}
-                      href={lesson.whatsAppLink()}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="rounded-md bg-zinc-900 px-2 py-1 text-xs text-white hover:opacity-90 dark:bg-zinc-100 dark:text-zinc-900"
+                      className="flex flex-col gap-1 rounded-md bg-zinc-900 px-2 py-1 text-xs text-white dark:bg-zinc-100 dark:text-zinc-900"
                     >
-                      {lesson.studentName} &middot; {lesson.vehiclePlate}
-                    </a>
+                      <a href={lesson.whatsAppLink()} target="_blank" rel="noreferrer" className="hover:underline">
+                        {lesson.studentName} &middot; {lesson.vehiclePlate}
+                      </a>
+                      <div className="flex items-center gap-2">
+                        <Link href={`/schedule/${lesson.id}/edit`} className="hover:underline">
+                          Edit
+                        </Link>
+                        <DeleteButton
+                          action={deleteLesson.bind(null, lesson.id)}
+                          confirmMessage="Delete this lesson?"
+                        />
+                      </div>
+                    </div>
                   ))}
                   {cellExamSessions.map((session) => (
                     <Link

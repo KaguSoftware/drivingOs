@@ -36,4 +36,21 @@ export class VehicleRepository {
     if (error) throw new Error(`Failed to find vehicle: ${error.message}`);
     return new Vehicle(data as VehicleRow);
   }
+
+  async update(id: string, input: NewVehicleInput): Promise<Vehicle> {
+    const { data, error } = await this.supabase
+      .from("vehicles")
+      .update(input)
+      .eq("id", id)
+      .select("*")
+      .single();
+
+    if (error) throw new Error(`Failed to update vehicle: ${error.message}`);
+    return new Vehicle(data as VehicleRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("vehicles").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete vehicle: ${error.message}`);
+  }
 }

@@ -51,4 +51,21 @@ export class ExamSessionRepository {
     if (error) throw new Error(`Failed to create exam session: ${error.message}`);
     return new ExamSession(data as ExamSessionRow);
   }
+
+  async update(id: string, input: NewExamSessionInput): Promise<ExamSession> {
+    const { data, error } = await this.supabase
+      .from("exam_sessions")
+      .update(input)
+      .eq("id", id)
+      .select(EXAM_SESSION_SELECT)
+      .single();
+
+    if (error) throw new Error(`Failed to update exam session: ${error.message}`);
+    return new ExamSession(data as ExamSessionRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("exam_sessions").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete exam session: ${error.message}`);
+  }
 }

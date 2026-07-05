@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { VehicleDamageRecord } from "../vehicle-damage-record.model";
+import { deleteDamageRecord } from "../damage-record-actions";
 
 export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] }) {
   if (records.length === 0) {
@@ -17,6 +20,8 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
             <th className="px-4 py-3 font-medium">Part</th>
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Notes</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -25,6 +30,17 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
               <td className="px-4 py-3 font-medium">{record.partName}</td>
               <td className="px-4 py-3">{record.statusLabel()}</td>
               <td className="px-4 py-3">{record.notes}</td>
+              <td className="px-4 py-3">
+                <Link href={`/vehicles/${record.vehicleId}/damage-records/${record.id}/edit`} className="hover:underline">
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton
+                  action={deleteDamageRecord.bind(null, record.id, record.vehicleId)}
+                  confirmMessage="Delete this damage record?"
+                />
+              </td>
             </tr>
           ))}
         </tbody>

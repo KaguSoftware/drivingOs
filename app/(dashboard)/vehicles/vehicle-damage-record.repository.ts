@@ -26,4 +26,32 @@ export class VehicleDamageRecordRepository {
     if (error) throw new Error(`Failed to create damage record: ${error.message}`);
     return new VehicleDamageRecord(data as VehicleDamageRecordRow);
   }
+
+  async findById(id: string): Promise<VehicleDamageRecord> {
+    const { data, error } = await this.supabase
+      .from("vehicle_damage_records")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to find damage record: ${error.message}`);
+    return new VehicleDamageRecord(data as VehicleDamageRecordRow);
+  }
+
+  async update(id: string, input: NewVehicleDamageRecordInput): Promise<VehicleDamageRecord> {
+    const { data, error } = await this.supabase
+      .from("vehicle_damage_records")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to update damage record: ${error.message}`);
+    return new VehicleDamageRecord(data as VehicleDamageRecordRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("vehicle_damage_records").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete damage record: ${error.message}`);
+  }
 }
