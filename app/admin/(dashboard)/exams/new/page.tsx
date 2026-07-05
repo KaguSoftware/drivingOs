@@ -1,3 +1,4 @@
+import { BackLink } from "@/components/ui/back-link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ExamPlaceRepository } from "../../exam-places/exam-place.repository";
 import { InstructorRepository } from "../../tutors/instructor.repository";
@@ -10,6 +11,7 @@ export default async function NewExamSessionPage() {
 
   return (
     <section className="flex flex-col gap-6">
+      <BackLink href="../" label="Back to exams" />
       <h1 className="text-2xl font-semibold">Schedule exam</h1>
       <ExamSessionForm examPlaces={examPlaces} instructors={instructors} />
     </section>

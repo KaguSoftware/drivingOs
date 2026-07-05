@@ -1,3 +1,4 @@
+import { BackLink } from "@/components/ui/back-link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "../../students/student.repository";
 import { InstructorRepository } from "../../tutors/instructor.repository";
@@ -12,6 +13,7 @@ export default async function NewLessonPage() {
 
   return (
     <section className="flex flex-col gap-6">
+      <BackLink href="../" label="Back to schedule" />
       <h1 className="text-2xl font-semibold">Book lesson</h1>
       <LessonForm students={students} instructors={instructors} vehicles={vehicles} />
     </section>
