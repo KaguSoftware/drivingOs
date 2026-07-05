@@ -1,4 +1,7 @@
 import { createStudent } from "./actions";
+import { FullNameInput } from "./full-name-input";
+import { NationalIdInput } from "./national-id-input";
+import { PhoneInput } from "./phone-input";
 import { LICENSE_CLASSES } from "./types";
 
 const inputClass =
@@ -9,21 +12,18 @@ export function StudentForm() {
     <form action={createStudent} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
         Full name
-        <input name="full_name" required className={inputClass} />
+        <FullNameInput />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Phone
-        <input name="phone" type="tel" required className={inputClass} />
+        <div className="flex items-center rounded-md border border-zinc-300 bg-transparent text-sm dark:border-zinc-700">
+          <span className="px-3 py-2 text-zinc-500">+90</span>
+          <PhoneInput />
+        </div>
       </label>
       <label className="flex flex-col gap-1 text-sm">
         National ID (TC Kimlik No)
-        <input
-          name="national_id"
-          required
-          pattern="\d{11}"
-          title="11-digit national ID"
-          className={inputClass}
-        />
+        <NationalIdInput />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         License class
