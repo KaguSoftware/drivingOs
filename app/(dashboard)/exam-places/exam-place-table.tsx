@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { ExamPlace } from "./exam-place.model";
+import { deleteExamPlace } from "./actions";
 
 export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
   if (places.length === 0) {
@@ -17,6 +19,8 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
           <tr>
             <th className="px-4 py-3 font-medium">Name</th>
             <th className="px-4 py-3 font-medium">Address</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -28,6 +32,14 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
                 </Link>
               </td>
               <td className="px-4 py-3">{place.address}</td>
+              <td className="px-4 py-3">
+                <Link href={`/exam-places/${place.id}/edit`} className="hover:underline">
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton action={deleteExamPlace.bind(null, place.id)} confirmMessage="Delete this exam place?" />
+              </td>
             </tr>
           ))}
         </tbody>

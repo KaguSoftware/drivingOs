@@ -25,4 +25,32 @@ export class VehiclePeriodicCheckRepository {
     if (error) throw new Error(`Failed to create periodic check: ${error.message}`);
     return new VehiclePeriodicCheck(data as VehiclePeriodicCheckRow);
   }
+
+  async findById(id: string): Promise<VehiclePeriodicCheck> {
+    const { data, error } = await this.supabase
+      .from("vehicle_periodic_checks")
+      .select("*, vehicles(plate, make_model)")
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to find periodic check: ${error.message}`);
+    return new VehiclePeriodicCheck(data as VehiclePeriodicCheckRow);
+  }
+
+  async update(id: string, input: NewVehiclePeriodicCheckInput): Promise<VehiclePeriodicCheck> {
+    const { data, error } = await this.supabase
+      .from("vehicle_periodic_checks")
+      .update(input)
+      .eq("id", id)
+      .select("*, vehicles(plate, make_model)")
+      .single();
+
+    if (error) throw new Error(`Failed to update periodic check: ${error.message}`);
+    return new VehiclePeriodicCheck(data as VehiclePeriodicCheckRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("vehicle_periodic_checks").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete periodic check: ${error.message}`);
+  }
 }

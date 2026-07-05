@@ -1,25 +1,35 @@
-import { createLesson } from "./actions";
+import { createLesson, updateLesson } from "./actions";
 import type { Student } from "../students/student.model";
 import type { Instructor } from "../tutors/instructor.model";
 import type { Vehicle } from "../vehicles/vehicle.model";
+import type { Lesson } from "./lesson.model";
 
 const inputClass =
   "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
+
+function toLocalDateTimeValue(date: Date): string {
+  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
+}
 
 export function LessonForm({
   students,
   instructors,
   vehicles,
+  lesson,
 }: {
   students: Student[];
   instructors: Instructor[];
   vehicles: Vehicle[];
+  lesson?: Lesson;
 }) {
+  const action = lesson ? updateLesson.bind(null, lesson.id) : createLesson;
+
   return (
-    <form action={createLesson} className="flex max-w-md flex-col gap-4">
+    <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
         Student
-        <select name="student_id" required className={inputClass}>
+        <select name="student_id" required defaultValue={lesson?.studentId} className={inputClass}>
           {students.map((student) => (
             <option key={student.id} value={student.id}>
               {student.fullName}
@@ -29,7 +39,7 @@ export function LessonForm({
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Instructor
-        <select name="instructor_id" required className={inputClass}>
+        <select name="instructor_id" required defaultValue={lesson?.instructorId} className={inputClass}>
           {instructors.map((instructor) => (
             <option key={instructor.id} value={instructor.id}>
               {instructor.fullName}
@@ -39,7 +49,7 @@ export function LessonForm({
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Vehicle
-        <select name="vehicle_id" required className={inputClass}>
+        <select name="vehicle_id" required defaultValue={lesson?.vehicleId} className={inputClass}>
           {vehicles.map((vehicle) => (
             <option key={vehicle.id} value={vehicle.id}>
               {vehicle.plate}
@@ -49,17 +59,29 @@ export function LessonForm({
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Starts at
-        <input name="starts_at" type="datetime-local" required className={inputClass} />
+        <input
+          name="starts_at"
+          type="datetime-local"
+          required
+          defaultValue={lesson ? toLocalDateTimeValue(lesson.startsAt()) : undefined}
+          className={inputClass}
+        />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Ends at
-        <input name="ends_at" type="datetime-local" required className={inputClass} />
+        <input
+          name="ends_at"
+          type="datetime-local"
+          required
+          defaultValue={lesson ? toLocalDateTimeValue(lesson.endsAt()) : undefined}
+          className={inputClass}
+        />
       </label>
       <button
         type="submit"
         className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
       >
-        Book lesson
+        {lesson ? "Save changes" : "Book lesson"}
       </button>
     </form>
   );

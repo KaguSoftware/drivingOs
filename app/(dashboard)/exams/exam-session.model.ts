@@ -7,6 +7,14 @@ export class ExamSession {
     return this.row.id;
   }
 
+  get examPlaceId() {
+    return this.row.exam_place_id;
+  }
+
+  get instructorId() {
+    return this.row.instructor_id;
+  }
+
   get examPlaceName() {
     return this.row.exam_places?.name ?? "-";
   }

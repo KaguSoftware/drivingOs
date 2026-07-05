@@ -1,5 +1,8 @@
+import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { PaymentInstallment } from "../payment-installment.model";
 import { RecordPaymentForm } from "./record-payment-form";
+import { deleteInstallment } from "../actions";
 
 export function InstallmentTable({ installments }: { installments: PaymentInstallment[] }) {
   if (installments.length === 0) {
@@ -21,6 +24,8 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
             <th className="px-4 py-3 font-medium">Remaining</th>
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Record payment</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -33,6 +38,20 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
               <td className="px-4 py-3">{installment.statusLabel()}</td>
               <td className="px-4 py-3">
                 <RecordPaymentForm installmentId={installment.id} />
+              </td>
+              <td className="px-4 py-3">
+                <Link
+                  href={`/payments/${installment.studentId}/${installment.id}/edit`}
+                  className="hover:underline"
+                >
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton
+                  action={deleteInstallment.bind(null, installment.id, installment.studentId)}
+                  confirmMessage="Delete this installment?"
+                />
               </td>
             </tr>
           ))}

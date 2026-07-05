@@ -7,6 +7,18 @@ export class Lesson {
     return this.row.id;
   }
 
+  get studentId() {
+    return this.row.student_id;
+  }
+
+  get instructorId() {
+    return this.row.instructor_id;
+  }
+
+  get vehicleId() {
+    return this.row.vehicle_id;
+  }
+
   get studentName() {
     return this.row.students?.full_name ?? "-";
   }

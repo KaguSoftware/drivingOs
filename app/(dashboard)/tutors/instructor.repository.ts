@@ -25,4 +25,32 @@ export class InstructorRepository {
     if (error) throw new Error(`Failed to create instructor: ${error.message}`);
     return new Instructor(data as InstructorRow);
   }
+
+  async findById(id: string): Promise<Instructor> {
+    const { data, error } = await this.supabase
+      .from("instructors")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw new Error(`Failed to find instructor: ${error.message}`);
+    return new Instructor(data as InstructorRow);
+  }
+
+  async update(id: string, input: NewInstructorInput): Promise<Instructor> {
+    const { data, error } = await this.supabase
+      .from("instructors")
+      .update(input)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(`Failed to update instructor: ${error.message}`);
+    return new Instructor(data as InstructorRow);
+  }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("instructors").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete instructor: ${error.message}`);
+  }
 }

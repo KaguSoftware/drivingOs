@@ -1,20 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { createExamPlace } from "./actions";
+import { createExamPlace, updateExamPlace } from "./actions";
+import type { ExamPlace } from "./exam-place.model";
 
 const inputClass =
   "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
 
-export function ExamPlaceForm() {
-  const [address, setAddress] = useState("");
+export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
+  const [address, setAddress] = useState(examPlace?.address ?? "");
+  const action = examPlace ? updateExamPlace.bind(null, examPlace.id) : createExamPlace;
 
   return (
     <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
-      <form action={createExamPlace} className="flex flex-1 flex-col gap-4">
+      <form action={action} className="flex flex-1 flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Name
-          <input name="name" required className={inputClass} />
+          <input name="name" required defaultValue={examPlace?.name} className={inputClass} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Address
@@ -28,13 +30,13 @@ export function ExamPlaceForm() {
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Notes
-          <input name="notes" className={inputClass} />
+          <input name="notes" defaultValue={examPlace?.notes ?? undefined} className={inputClass} />
         </label>
         <button
           type="submit"
           className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white dark:bg-zinc-100 dark:text-zinc-900"
         >
-          Add exam place
+          {examPlace ? "Save changes" : "Add exam place"}
         </button>
       </form>
 

@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { VehicleViolation } from "../vehicle-violation.model";
+import { deleteViolation } from "../violation-actions";
 
 export function ViolationTable({ violations }: { violations: VehicleViolation[] }) {
   if (violations.length === 0) {
@@ -18,6 +21,8 @@ export function ViolationTable({ violations }: { violations: VehicleViolation[] 
             <th className="px-4 py-3 font-medium">Date</th>
             <th className="px-4 py-3 font-medium">Fine</th>
             <th className="px-4 py-3 font-medium">Description</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -27,6 +32,17 @@ export function ViolationTable({ violations }: { violations: VehicleViolation[] 
               <td className="px-4 py-3">{violation.violationDate().toLocaleDateString()}</td>
               <td className="px-4 py-3">{violation.fineAmount ?? "-"}</td>
               <td className="px-4 py-3">{violation.description}</td>
+              <td className="px-4 py-3">
+                <Link href={`/vehicles/${violation.vehicleId}/violations/${violation.id}/edit`} className="hover:underline">
+                  Edit
+                </Link>
+              </td>
+              <td className="px-4 py-3">
+                <DeleteButton
+                  action={deleteViolation.bind(null, violation.id, violation.vehicleId)}
+                  confirmMessage="Delete this violation?"
+                />
+              </td>
             </tr>
           ))}
         </tbody>

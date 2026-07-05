@@ -1,5 +1,8 @@
+import Link from "next/link";
+import { DeleteButton } from "@/components/ui/delete-button";
 import type { Instructor } from "./instructor.model";
 import type { InstructorStats } from "./exam-result.repository";
+import { deleteInstructor } from "./actions";
 
 export function TutorTable({
   instructors,
@@ -25,6 +28,8 @@ export function TutorTable({
             <th className="px-4 py-3 font-medium">Phone</th>
             <th className="px-4 py-3 font-medium">License classes</th>
             <th className="px-4 py-3 font-medium">Pass rate</th>
+            <th className="px-4 py-3 font-medium">Edit</th>
+            <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
@@ -41,6 +46,17 @@ export function TutorTable({
                 <td className="px-4 py-3">{instructor.phone}</td>
                 <td className="px-4 py-3">{instructor.licenseClasses.join(", ")}</td>
                 <td className="px-4 py-3">{passRate}</td>
+                <td className="px-4 py-3">
+                  <Link href={`/tutors/${instructor.id}/edit`} className="hover:underline">
+                    Edit
+                  </Link>
+                </td>
+                <td className="px-4 py-3">
+                  <DeleteButton
+                    action={deleteInstructor.bind(null, instructor.id)}
+                    confirmMessage="Delete this tutor?"
+                  />
+                </td>
               </tr>
             );
           })}

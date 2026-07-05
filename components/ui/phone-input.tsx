@@ -1,6 +1,6 @@
 "use client";
 
-export function PhoneInput() {
+export function PhoneInput({ defaultValue }: { defaultValue?: string }) {
   return (
     <input
       name="phone"
@@ -11,6 +11,7 @@ export function PhoneInput() {
       maxLength={10}
       title="Enter exactly 10 digits"
       placeholder="5551234567"
+      defaultValue={defaultValue}
       className="w-full bg-transparent py-2 pr-3 text-sm outline-none"
       onInput={(event) => {
         const input = event.currentTarget;

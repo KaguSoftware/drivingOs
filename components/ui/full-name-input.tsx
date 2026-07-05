@@ -3,7 +3,7 @@
 const inputClass =
   "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
 
-export function FullNameInput() {
+export function FullNameInput({ defaultValue }: { defaultValue?: string }) {
   return (
     <input
       name="full_name"
@@ -11,6 +11,7 @@ export function FullNameInput() {
       pattern="[^0-9]*"
       title="Name cannot contain numbers"
       placeholder="John Doe"
+      defaultValue={defaultValue}
       className={inputClass}
       onInput={(event) => {
         const input = event.currentTarget;

@@ -31,4 +31,9 @@ export class ExamEnrollmentRepository {
     }
     return new ExamEnrollment(data as ExamEnrollmentRow);
   }
+
+  async delete(id: string): Promise<void> {
+    const { error } = await this.supabase.from("exam_enrollments").delete().eq("id", id);
+    if (error) throw new Error(`Failed to delete enrollment: ${error.message}`);
+  }
 }
