@@ -1,4 +1,5 @@
 import { createVehicle } from "./actions";
+import { PlateInput } from "./plate-input";
 import { LICENSE_CLASSES, TRANSMISSIONS } from "./types";
 
 const inputClass =
@@ -7,20 +8,21 @@ const inputClass =
 export function VehicleForm() {
   return (
     <form action={createVehicle} className="flex max-w-md flex-col gap-4">
+      <PlateInput />
       <label className="flex flex-col gap-1 text-sm">
-        Plate
-        <input name="plate" required className={inputClass} />
+        Brand
+        <input name="make" required placeholder="Renault" className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Brand / model
-        <input name="make_model" required className={inputClass} />
+        Model
+        <input name="model" required placeholder="Twingo" className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Transmission
         <select name="transmission" required className={inputClass}>
           {TRANSMISSIONS.map((transmission) => (
             <option key={transmission} value={transmission}>
-              {transmission}
+              {transmission.charAt(0).toUpperCase() + transmission.slice(1)}
             </option>
           ))}
         </select>
