@@ -4,6 +4,7 @@ import { InstructorRepository } from "../../../tutors/instructor.repository";
 import { VehicleRepository } from "../../../vehicles/vehicle.repository";
 import { LessonRepository } from "../../lesson.repository";
 import { LessonForm } from "../../lesson-form";
+import { toFormInstructors, toFormLesson, toFormStudents, toFormVehicles } from "../../form-data";
 
 export default async function EditLessonPage({
   params,
@@ -20,7 +21,12 @@ export default async function EditLessonPage({
   return (
     <section className="flex flex-col gap-6">
       <h1 className="text-2xl font-semibold">Edit lesson</h1>
-      <LessonForm students={students} instructors={instructors} vehicles={vehicles} lesson={lesson} />
+      <LessonForm
+        students={toFormStudents(students)}
+        instructors={toFormInstructors(instructors)}
+        vehicles={toFormVehicles(vehicles)}
+        lesson={toFormLesson(lesson)}
+      />
     </section>
   );
 }

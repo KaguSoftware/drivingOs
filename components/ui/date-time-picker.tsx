@@ -19,16 +19,28 @@ function parseDateValue(value: string): Date | null {
   return new Date(year, month - 1, day);
 }
 
+function toTimePart(date: Date): string {
+  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
+
+function isSameDay(a: Date, b: Date): boolean {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
 export function DateTimePicker({
   name,
   defaultValue,
   required,
   className,
+  onValueChange,
+  minDate,
 }: {
   name: string;
   defaultValue?: string;
   required?: boolean;
   className?: string;
+  onValueChange?: (value: string) => void;
+  minDate?: Date;
 }) {
   const initial = splitValue(defaultValue ?? "");
   const [datePart, setDatePart] = useState(initial.datePart);
@@ -49,6 +61,11 @@ export function DateTimePicker({
 
   const selectedDate = parseDateValue(datePart);
   const value = datePart ? `${datePart}T${timePart}` : "";
+
+  useEffect(() => {
+    onValueChange?.(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   return (
     <div ref={containerRef} className="relative">
@@ -72,12 +89,14 @@ export function DateTimePicker({
             onViewDateChange={setViewDate}
             selectedDate={selectedDate}
             onSelectDate={(day) => setDatePart(toDatePart(day))}
+            minDate={minDate}
           />
           <label className="flex items-center justify-between gap-2 text-sm">
             Time
             <input
               type="time"
               value={timePart}
+              min={minDate && selectedDate && isSameDay(selectedDate, minDate) ? toTimePart(minDate) : undefined}
               onChange={(event) => setTimePart(event.target.value)}
               className="rounded-md border border-border bg-surface px-2 py-1 text-sm"
             />

@@ -11,11 +11,13 @@ export function CalendarGrid({
   onViewDateChange,
   selectedDate,
   onSelectDate,
+  minDate,
 }: {
   viewDate: Date;
   onViewDateChange: (date: Date) => void;
   selectedDate: Date | null;
   onSelectDate: (date: Date) => void;
+  minDate?: Date;
 }) {
   const monthStart = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
   const startWeekday = (monthStart.getDay() + 6) % 7;
@@ -52,24 +54,28 @@ export function CalendarGrid({
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1">
-        {cells.map((day, index) =>
-          day ? (
+        {cells.map((day, index) => {
+          if (!day) return <span key={index} />;
+
+          const isDisabled = Boolean(minDate) && day < (minDate as Date);
+          return (
             <button
               key={index}
               type="button"
+              disabled={isDisabled}
               onClick={() => onSelectDate(day)}
               className={
-                selectedDate && isSameDay(day, selectedDate)
-                  ? "rounded-md bg-primary py-1 text-sm text-primary-foreground"
-                  : "rounded-md py-1 text-sm hover:bg-background"
+                isDisabled
+                  ? "rounded-md py-1 text-sm text-muted opacity-40"
+                  : selectedDate && isSameDay(day, selectedDate)
+                    ? "rounded-md bg-primary py-1 text-sm text-primary-foreground"
+                    : "rounded-md py-1 text-sm hover:bg-background"
               }
             >
               {day.getDate()}
             </button>
-          ) : (
-            <span key={index} />
-          ),
-        )}
+          );
+        })}
       </div>
     </div>
   );

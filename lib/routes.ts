@@ -2,6 +2,7 @@
 export const DASHBOARD_PATH_PREFIXES = [
   "/admin/students",
   "/admin/vehicles",
+  "/admin/damaged-vehicles",
   "/admin/vehicle-checks",
   "/admin/schedule",
   "/admin/tutors",

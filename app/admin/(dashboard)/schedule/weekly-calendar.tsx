@@ -15,6 +15,11 @@ function isSameDay(a: Date, b: Date): boolean {
   );
 }
 
+function toLocalDateTimeValue(date: Date): string {
+  const offsetMs = date.getTimezoneOffset() * 60 * 1000;
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
+}
+
 export function WeeklyCalendar({
   weekStart,
   lessons,
@@ -58,11 +63,27 @@ export function WeeklyCalendar({
               const cellExamSessions = examSessions.filter(
                 (session) => isSameDay(session.startsAt(), day.date) && session.startsAt().getHours() === hour
               );
+              const isEmpty = cellLessons.length === 0 && cellExamSessions.length === 0;
+              const slotStart = new Date(day.date);
+              slotStart.setHours(hour, 0, 0, 0);
+              const isPast = slotStart.getTime() < Date.now();
+
               return (
                 <div
                   key={day.label}
-                  className="flex flex-col gap-1 border-b border-l border-border p-1"
+                  className={`group relative flex flex-col gap-1 border-b border-l border-border p-1 ${
+                    isPast && isEmpty ? "bg-background/40" : ""
+                  }`}
                 >
+                  {isEmpty && !isPast && (
+                    <Link
+                      href={`/admin/schedule/new?starts_at=${encodeURIComponent(toLocalDateTimeValue(slotStart))}`}
+                      className="absolute inset-0 flex items-center justify-center text-xs text-muted opacity-0 transition-opacity hover:bg-background/60 group-hover:opacity-100"
+                      aria-label={`Book lesson at ${String(hour).padStart(2, "0")}:00`}
+                    >
+                      +
+                    </Link>
+                  )}
                   {cellLessons.map((lesson) => (
                     <div
                       key={lesson.id}
@@ -71,6 +92,11 @@ export function WeeklyCalendar({
                       <a href={lesson.whatsAppLink()} target="_blank" rel="noreferrer" className="hover:underline">
                         {lesson.studentName} &middot; {lesson.vehiclePlate}
                       </a>
+                      <span className="text-primary-foreground/80">
+                        {lesson.startsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                        {" – "}
+                        {lesson.endsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      </span>
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/schedule/${lesson.id}/edit`} className="hover:underline">
                           Edit

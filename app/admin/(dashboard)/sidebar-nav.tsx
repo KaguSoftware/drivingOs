@@ -7,7 +7,8 @@ import { NAV_ICONS } from "./nav-icons";
 
 const NAV_LABELS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], string> = {
   "/admin/students": "Students",
-  "/admin/vehicles": "Damaged Vehicles",
+  "/admin/vehicles": "Vehicles",
+  "/admin/damaged-vehicles": "Damaged Vehicles",
   "/admin/vehicle-checks": "Vehicle Periodics",
   "/admin/schedule": "Weekly Schedule",
   "/admin/tutors": "Tutors",
@@ -48,7 +49,9 @@ export function SidebarNav() {
                 isActive ? "text-primary-foreground" : "text-sidebar-muted group-hover:text-sidebar-foreground"
               }`}
             />
-            <span className="truncate">{label}</span>
+            <span className="truncate whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover/sidebar:opacity-100">
+              {label}
+            </span>
           </Link>
         );
       })}

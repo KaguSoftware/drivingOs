@@ -31,6 +31,13 @@ const VehiclesIcon = (props: IconProps) => (
   </Icon>
 );
 
+const DamagedVehiclesIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0ZM3 17V11l2-5h10l4 5v6" />
+    <path d="m9 8 2.5 3L14 8" />
+  </Icon>
+);
+
 const VehicleChecksIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="m9 12 2 2 4-4" />
@@ -76,6 +83,7 @@ const ExamsIcon = (props: IconProps) => (
 export const NAV_ICONS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], (props: IconProps) => React.JSX.Element> = {
   "/admin/students": StudentsIcon,
   "/admin/vehicles": VehiclesIcon,
+  "/admin/damaged-vehicles": DamagedVehiclesIcon,
   "/admin/vehicle-checks": VehicleChecksIcon,
   "/admin/schedule": ScheduleIcon,
   "/admin/tutors": TutorsIcon,

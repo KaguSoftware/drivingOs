@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { assertNotPast } from "@/lib/scheduling-guards";
 import { Lesson } from "./lesson.model";
 import { MAX_CONCURRENT_LESSONS, type LessonRow, type NewLessonInput } from "./types";
 
@@ -20,6 +21,8 @@ export class LessonRepository {
   }
 
   async create(input: NewLessonInput): Promise<Lesson> {
+    assertNotPast(input.starts_at);
+
     // App-level concurrency rule: at most MAX_CONCURRENT_LESSONS lessons may
     // overlap the same time window (one per vehicle). Not enforced by a DB
     // constraint (no btree_gist precedent in this codebase), so there is a
@@ -57,6 +60,8 @@ export class LessonRepository {
   }
 
   async update(id: string, input: NewLessonInput): Promise<Lesson> {
+    assertNotPast(input.starts_at);
+
     const { count, error: countError } = await this.supabase
       .from("lessons")
       .select("id", { count: "exact", head: true })
