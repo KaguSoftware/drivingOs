@@ -18,7 +18,7 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Tutar
+        Amount per installment
         <input name="amount" type="number" step="0.01" required className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
@@ -26,7 +26,7 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         <DatePicker name="due_date" required className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Ay sayısı
+        Number of months (total = amount &times; months)
         <input name="months" type="number" min={1} step={1} defaultValue={1} className={inputClass} />
       </label>
       <Button type="submit">Taksit ekle</Button>

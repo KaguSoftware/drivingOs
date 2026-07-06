@@ -1,8 +1,16 @@
-import Link from "next/link";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { StudentBalance } from "./payment-installment.repository";
+import type { PaymentInstallment } from "./payment-installment.model";
+import { ExpandableBalanceRow } from "./expandable-balance-row";
+import { InstallmentTable } from "./[studentId]/installment-table";
 
-export function PaymentTable({ balances }: { balances: StudentBalance[] }) {
+export function PaymentTable({
+  balances,
+  installmentsByStudent,
+}: {
+  balances: StudentBalance[];
+  installmentsByStudent: Map<string, PaymentInstallment[]>;
+}) {
   if (balances.length === 0) {
     return <p className={emptyStateClass}>Henüz taksit yok.</p>;
   }
@@ -12,20 +20,24 @@ export function PaymentTable({ balances }: { balances: StudentBalance[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Öğrenci</th>
-            <th className="px-4 py-3 font-medium">Kalan borç</th>
+            <th className="px-4 py-3 font-medium">Student</th>
+            <th className="px-4 py-3 font-medium">Remaining debt</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
           {balances.map((balance) => (
-            <tr key={balance.studentId}>
-              <td className="px-4 py-3 font-medium">
-                <Link href={`/admin/payments/${balance.studentId}`} className="hover:underline">
-                  {balance.studentName}
-                </Link>
-              </td>
-              <td className="px-4 py-3">{balance.totalDebt.toFixed(2)}</td>
-            </tr>
+            <ExpandableBalanceRow
+              key={balance.studentId}
+              trigger={
+                <>
+                  <td className="px-4 py-3 font-medium">{balance.studentName}</td>
+                  <td className="px-4 py-3">{balance.totalDebt.toFixed(2)}</td>
+                </>
+              }
+            >
+              <InstallmentTable installments={installmentsByStudent.get(balance.studentId) ?? []} />
+            </ExpandableBalanceRow>
           ))}
         </tbody>
       </table>

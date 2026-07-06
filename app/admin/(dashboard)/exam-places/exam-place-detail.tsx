@@ -3,11 +3,13 @@ export function ExamPlaceDetail({
   address,
   notes,
   mapsEmbedUrl,
+  youtubeEmbedUrl,
 }: {
   name: string;
   address: string;
   notes: string | null;
   mapsEmbedUrl: string;
+  youtubeEmbedUrl: string | null;
 }) {
   return (
     <div className="flex flex-col gap-4">
@@ -36,6 +38,19 @@ export function ExamPlaceDetail({
           tamamlama için NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ayarlanması gerekir.
         </p>
       </section>
+
+      {youtubeEmbedUrl && (
+        <section className="flex flex-col gap-2">
+          <h2 className="text-lg font-semibold">Video</h2>
+          <iframe
+            title={`${name} video`}
+            src={youtubeEmbedUrl}
+            className="aspect-video w-full rounded-lg border border-border"
+            loading="lazy"
+            allowFullScreen
+          />
+        </section>
+      )}
     </div>
   );
 }

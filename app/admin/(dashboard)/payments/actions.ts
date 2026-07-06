@@ -8,24 +8,19 @@ import type { NewPaymentInstallmentInput } from "./types";
 
 function splitIntoMonths(
   studentId: string,
-  totalAmount: number,
+  amountPerInstallment: number,
   months: number,
   firstDueDate: string
 ): NewPaymentInstallmentInput[] {
-  const perInstallment = Math.round((totalAmount / months) * 100) / 100;
   const rows: NewPaymentInstallmentInput[] = [];
 
   for (let i = 0; i < months; i++) {
     const dueDate = new Date(firstDueDate);
     dueDate.setMonth(dueDate.getMonth() + i);
 
-    const isLast = i === months - 1;
-    const amountSoFar = perInstallment * (months - 1);
-    const amount = isLast ? Math.round((totalAmount - amountSoFar) * 100) / 100 : perInstallment;
-
     rows.push({
       student_id: studentId,
-      amount,
+      amount: amountPerInstallment,
       due_date: dueDate.toISOString().slice(0, 10),
     });
   }

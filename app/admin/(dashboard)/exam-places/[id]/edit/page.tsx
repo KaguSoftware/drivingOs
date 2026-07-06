@@ -19,7 +19,13 @@ export default async function EditExamPlacePage({
         <h1 className="text-2xl font-semibold">Sınav yerini düzenle</h1>
         <DeleteButton action={deleteExamPlace.bind(null, id)} confirmMessage="Bu sınav yeri silinsin mi?" />
       </div>
-      <ExamPlaceForm examPlace={examPlace} />
+      <ExamPlaceForm
+        id={examPlace.id}
+        name={examPlace.name}
+        address={examPlace.address}
+        notes={examPlace.notes}
+        youtubeUrl={examPlace.youtubeUrl}
+      />
     </section>
   );
 }
