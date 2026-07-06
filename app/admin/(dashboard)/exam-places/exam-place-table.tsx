@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { ExamPlace } from "./exam-place.model";
 import { deleteExamPlace } from "./actions";
@@ -16,8 +16,7 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
           <tr>
             <th className="px-4 py-3 font-medium">Name</th>
             <th className="px-4 py-3 font-medium">Address</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -29,13 +28,12 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
                 </Link>
               </td>
               <td className="px-4 py-3">{place.address}</td>
-              <td className="px-4 py-3">
-                <Link href={`/admin/exam-places/${place.id}/edit`} className="hover:underline">
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton action={deleteExamPlace.bind(null, place.id)} confirmMessage="Delete this exam place?" />
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/exam-places/${place.id}/edit`}
+                  deleteAction={deleteExamPlace.bind(null, place.id)}
+                  deleteConfirmMessage="Delete this exam place?"
+                />
               </td>
             </tr>
           ))}

@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DeleteButton } from "@/components/ui/delete-button";
 import { VehicleRepository } from "../../vehicle.repository";
 import { VehicleForm } from "../../vehicle-form";
+import { deleteVehicle } from "../../actions";
 
 export default async function EditVehiclePage({
   params,
@@ -13,7 +15,10 @@ export default async function EditVehiclePage({
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Edit vehicle</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Edit vehicle</h1>
+        <DeleteButton action={deleteVehicle.bind(null, id)} confirmMessage="Delete this vehicle?" />
+      </div>
       <VehicleForm vehicle={vehicle} />
     </section>
   );

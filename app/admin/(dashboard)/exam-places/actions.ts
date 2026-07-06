@@ -41,4 +41,5 @@ export async function deleteExamPlace(id: string): Promise<void> {
   await repository.delete(id);
 
   revalidatePath("/admin/exam-places");
+  redirect("/admin/exam-places");
 }

@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DeleteButton } from "@/components/ui/delete-button";
 import { VehicleDamageRecordRepository } from "../../../../vehicle-damage-record.repository";
 import { DamageRecordForm } from "../../../damage-record-form";
+import { deleteDamageRecord } from "../../../../damage-record-actions";
 
 export default async function EditDamageRecordPage({
   params,
@@ -13,7 +15,13 @@ export default async function EditDamageRecordPage({
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Edit damage record</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Edit damage record</h1>
+        <DeleteButton
+          action={deleteDamageRecord.bind(null, recordId, id)}
+          confirmMessage="Delete this damage record?"
+        />
+      </div>
       <DamageRecordForm vehicleId={id} record={record} />
     </section>
   );

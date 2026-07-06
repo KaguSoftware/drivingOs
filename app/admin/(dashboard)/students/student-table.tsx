@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { Student } from "./student.model";
 import { deleteStudent } from "./actions";
@@ -21,8 +20,7 @@ export function StudentTable({ students }: { students: Student[] }) {
             <th className="px-4 py-3 font-medium">Practice</th>
             <th className="px-4 py-3 font-medium">MEB</th>
             <th className="px-4 py-3 font-medium">MEB PDF</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -39,13 +37,12 @@ export function StudentTable({ students }: { students: Student[] }) {
                   Download PDF
                 </a>
               </td>
-              <td className="px-4 py-3">
-                <Link href={`/admin/students/${student.id}/edit`} className="hover:underline">
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton action={deleteStudent.bind(null, student.id)} confirmMessage="Delete this student?" />
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/students/${student.id}/edit`}
+                  deleteAction={deleteStudent.bind(null, student.id)}
+                  deleteConfirmMessage="Delete this student?"
+                />
               </td>
             </tr>
           ))}

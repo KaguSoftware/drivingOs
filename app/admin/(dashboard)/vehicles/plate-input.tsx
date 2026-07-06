@@ -21,6 +21,10 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
   const lettersRef = useRef<HTMLInputElement>(null);
   const numbersRef = useRef<HTMLInputElement>(null);
 
+  const [focused, setFocused] = useState<string | null>(null);
+  const placeholder = (field: string, text: string) =>
+    focused === field ? "" : text;
+
   return (
     <div className="flex flex-col gap-1 text-sm">
       <span>Plate</span>
@@ -32,8 +36,10 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
             setProvince(next);
             if (next.length === 2) lettersRef.current?.focus();
           }}
+          onFocus={() => setFocused("province")}
+          onBlur={() => setFocused(null)}
           inputMode="numeric"
-          placeholder="34"
+          placeholder={placeholder("province", "34")}
           aria-label="Province code"
           className={`${partClass} w-14`}
         />
@@ -45,7 +51,9 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
             setLetters(next);
             if (next.length === 3) numbersRef.current?.focus();
           }}
-          placeholder="ABC"
+          onFocus={() => setFocused("letters")}
+          onBlur={() => setFocused(null)}
+          placeholder={placeholder("letters", "ABC")}
           aria-label="Letter group"
           className={`${partClass} w-20`}
         />
@@ -53,8 +61,10 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
           ref={numbersRef}
           value={numbers}
           onChange={(e) => setNumbers(sanitizeNumbers(e.target.value))}
+          onFocus={() => setFocused("numbers")}
+          onBlur={() => setFocused(null)}
           inputMode="numeric"
-          placeholder="1234"
+          placeholder={placeholder("numbers", "1234")}
           aria-label="Number group"
           className={`${partClass} w-24`}
         />

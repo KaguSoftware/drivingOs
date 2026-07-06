@@ -75,6 +75,7 @@ export async function deleteInstallment(id: string, studentId: string): Promise<
 
   revalidatePath("/admin/payments");
   revalidatePath(`/admin/payments/${studentId}`);
+  redirect(`/admin/payments/${studentId}`);
 }
 
 export async function recordPayment(formData: FormData): Promise<void> {

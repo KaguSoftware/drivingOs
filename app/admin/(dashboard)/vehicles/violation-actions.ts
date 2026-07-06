@@ -46,4 +46,5 @@ export async function deleteViolation(id: string, vehicleId: string): Promise<vo
   await repository.delete(id);
 
   revalidatePath(`/admin/vehicles/${vehicleId}`);
+  redirect(`/admin/vehicles/${vehicleId}`);
 }

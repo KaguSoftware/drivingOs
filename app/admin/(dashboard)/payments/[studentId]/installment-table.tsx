@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { PaymentInstallment } from "../payment-installment.model";
 import { RecordPaymentForm } from "./record-payment-form";
@@ -21,8 +20,7 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
             <th className="px-4 py-3 font-medium">Remaining</th>
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Record payment</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -36,18 +34,11 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
               <td className="px-4 py-3">
                 <RecordPaymentForm installmentId={installment.id} />
               </td>
-              <td className="px-4 py-3">
-                <Link
-                  href={`/admin/payments/${installment.studentId}/${installment.id}/edit`}
-                  className="hover:underline"
-                >
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton
-                  action={deleteInstallment.bind(null, installment.id, installment.studentId)}
-                  confirmMessage="Delete this installment?"
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/payments/${installment.studentId}/${installment.id}/edit`}
+                  deleteAction={deleteInstallment.bind(null, installment.id, installment.studentId)}
+                  deleteConfirmMessage="Delete this installment?"
                 />
               </td>
             </tr>

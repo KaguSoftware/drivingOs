@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { ExamSession } from "./exam-session.model";
 import { deleteExamSession } from "./actions";
@@ -17,8 +17,7 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
             <th className="px-4 py-3 font-medium">When</th>
             <th className="px-4 py-3 font-medium">Exam place</th>
             <th className="px-4 py-3 font-medium">Proctor</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -31,13 +30,12 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
               </td>
               <td className="px-4 py-3">{session.examPlaceName}</td>
               <td className="px-4 py-3">{session.instructorName}</td>
-              <td className="px-4 py-3">
-                <Link href={`/admin/exams/${session.id}/edit`} className="hover:underline">
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton action={deleteExamSession.bind(null, session.id)} confirmMessage="Delete this exam?" />
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/exams/${session.id}/edit`}
+                  deleteAction={deleteExamSession.bind(null, session.id)}
+                  deleteConfirmMessage="Delete this exam?"
+                />
               </td>
             </tr>
           ))}

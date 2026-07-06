@@ -70,4 +70,5 @@ export async function deleteVehicle(id: string): Promise<void> {
   await repository.delete(id);
 
   revalidatePath("/admin/vehicles");
+  redirect("/admin/vehicles");
 }

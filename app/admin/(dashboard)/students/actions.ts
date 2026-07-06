@@ -62,4 +62,5 @@ export async function deleteStudent(id: string): Promise<void> {
   await repository.delete(id);
 
   revalidatePath("/admin/students");
+  redirect("/admin/students");
 }

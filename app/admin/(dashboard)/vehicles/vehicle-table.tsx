@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { Vehicle } from "./vehicle.model";
 import { deleteVehicle } from "./actions";
@@ -18,8 +18,7 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
             <th className="px-4 py-3 font-medium">Brand / model</th>
             <th className="px-4 py-3 font-medium">Transmission</th>
             <th className="px-4 py-3 font-medium">License class</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -33,13 +32,12 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
               <td className="px-4 py-3">{vehicle.makeModel}</td>
               <td className="px-4 py-3">{vehicle.transmissionLabel()}</td>
               <td className="px-4 py-3">{vehicle.licenseClass}</td>
-              <td className="px-4 py-3">
-                <Link href={`/admin/vehicles/${vehicle.id}/edit`} className="hover:underline">
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton action={deleteVehicle.bind(null, vehicle.id)} confirmMessage="Delete this vehicle?" />
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/vehicles/${vehicle.id}/edit`}
+                  deleteAction={deleteVehicle.bind(null, vehicle.id)}
+                  deleteConfirmMessage="Delete this vehicle?"
+                />
               </td>
             </tr>
           ))}

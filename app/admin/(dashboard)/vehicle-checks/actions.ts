@@ -50,4 +50,5 @@ export async function deletePeriodicCheck(id: string): Promise<void> {
   await repository.delete(id);
 
   revalidatePath("/admin/vehicle-checks");
+  redirect("/admin/vehicle-checks");
 }

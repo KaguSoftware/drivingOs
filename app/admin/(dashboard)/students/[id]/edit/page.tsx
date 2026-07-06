@@ -1,6 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { DeleteButton } from "@/components/ui/delete-button";
 import { StudentRepository } from "../../student.repository";
 import { StudentForm } from "../../student-form";
+import { deleteStudent } from "../../actions";
 
 export default async function EditStudentPage({
   params,
@@ -13,7 +15,10 @@ export default async function EditStudentPage({
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Edit student</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Edit student</h1>
+        <DeleteButton action={deleteStudent.bind(null, id)} confirmMessage="Delete this student?" />
+      </div>
       <StudentForm student={student} />
     </section>
   );

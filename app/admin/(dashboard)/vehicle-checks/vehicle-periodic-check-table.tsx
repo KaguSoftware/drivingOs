@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
+import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { CheckStatus } from "./types";
 import type { VehiclePeriodicCheck } from "./vehicle-periodic-check.model";
@@ -27,8 +26,7 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
             <th className="px-4 py-3 font-medium">Status</th>
             <th className="px-4 py-3 font-medium">Cost</th>
             <th className="px-4 py-3 font-medium">Provider</th>
-            <th className="px-4 py-3 font-medium">Edit</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -44,13 +42,12 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
               </td>
               <td className="px-4 py-3">{check.cost ?? "-"}</td>
               <td className="px-4 py-3">{check.provider ?? "-"}</td>
-              <td className="px-4 py-3">
-                <Link href={`/admin/vehicle-checks/${check.id}/edit`} className="hover:underline">
-                  Edit
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <DeleteButton action={deletePeriodicCheck.bind(null, check.id)} confirmMessage="Delete this check?" />
+              <td className="px-4 py-3 text-right">
+                <RowActionsMenu
+                  editHref={`/admin/vehicle-checks/${check.id}/edit`}
+                  deleteAction={deletePeriodicCheck.bind(null, check.id)}
+                  deleteConfirmMessage="Delete this check?"
+                />
               </td>
             </tr>
           ))}

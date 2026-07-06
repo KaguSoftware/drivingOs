@@ -49,4 +49,5 @@ export async function deleteDamageRecord(id: string, vehicleId: string): Promise
   await repository.delete(id);
 
   revalidatePath(`/admin/vehicles/${vehicleId}`);
+  redirect(`/admin/vehicles/${vehicleId}`);
 }
