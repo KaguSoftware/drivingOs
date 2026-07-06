@@ -79,7 +79,7 @@ export function DateTimePicker({
       >
         {selectedDate
           ? `${selectedDate.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })} · ${timePart}`
-          : "Select date & time"}
+          : "Tarih ve saat seçin"}
       </button>
 
       {open && (
@@ -92,7 +92,7 @@ export function DateTimePicker({
             minDate={minDate}
           />
           <label className="flex items-center justify-between gap-2 text-sm">
-            Time
+            Saat
             <input
               type="time"
               value={timePart}

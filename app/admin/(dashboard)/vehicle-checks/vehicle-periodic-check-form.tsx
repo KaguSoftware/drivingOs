@@ -18,7 +18,7 @@ export function VehiclePeriodicCheckForm({
   return (
     <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Vehicle
+        Araç
         <select name="vehicle_id" required defaultValue={check?.vehicleId} className={inputClass}>
           {vehicles.map((vehicle) => (
             <option key={vehicle.id} value={vehicle.id}>
@@ -28,7 +28,7 @@ export function VehiclePeriodicCheckForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Check type
+        Kontrol türü
         <select name="check_type" required defaultValue={check?.checkType} className={inputClass}>
           {CHECK_TYPES.map((type) => (
             <option key={type} value={type}>
@@ -38,7 +38,7 @@ export function VehiclePeriodicCheckForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Due date
+        Vade tarihi
         <DatePicker
           name="due_date"
           required
@@ -47,15 +47,15 @@ export function VehiclePeriodicCheckForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Cost
+        Ücret
         <input name="cost" type="number" step="0.01" defaultValue={check?.cost ?? undefined} className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Provider
+        Sağlayıcı
         <input name="provider" defaultValue={check?.provider ?? undefined} className={inputClass} />
       </label>
       <Button type="submit">
-        {check ? "Save changes" : "Add check"}
+        {check ? "Değişiklikleri kaydet" : "Kontrol ekle"}
       </Button>
     </form>
   );

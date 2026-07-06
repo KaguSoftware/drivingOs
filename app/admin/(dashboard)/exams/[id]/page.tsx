@@ -29,14 +29,14 @@ export default async function ExamSessionPage({
         <div>
           <h1 className="text-2xl font-semibold">{session.examPlaceName}</h1>
           <p className="text-sm text-muted">
-            {session.startsAt().toLocaleString()} &middot; Proctor: {session.instructorName}
+            {session.startsAt().toLocaleString()} &middot; Gözetmen: {session.instructorName}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link href={`/admin/exams/${session.id}/edit`} className="hover:underline">
-            Edit
+            Düzenle
           </Link>
-          <DeleteButton action={deleteExamSession.bind(null, session.id)} confirmMessage="Delete this exam?" />
+          <DeleteButton action={deleteExamSession.bind(null, session.id)} confirmMessage="Bu sınav silinsin mi?" />
         </div>
       </div>
       <EnrollmentForm examSessionId={session.id} availableStudents={availableStudents} />

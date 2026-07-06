@@ -9,7 +9,7 @@ import { CHECK_TYPES, type CheckType, type NewVehiclePeriodicCheckInput } from "
 function parsePeriodicCheckInput(formData: FormData): NewVehiclePeriodicCheckInput {
   const checkType = formData.get("check_type") as string;
   if (!CHECK_TYPES.includes(checkType as CheckType)) {
-    throw new Error(`Invalid check type: ${checkType}`);
+    throw new Error(`Geçersiz kontrol türü: ${checkType}`);
   }
 
   const costRaw = String(formData.get("cost") ?? "").trim();

@@ -6,7 +6,7 @@ import { deleteExamPlace } from "./actions";
 
 export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
   if (places.length === 0) {
-    return <p className={emptyStateClass}>No exam places yet.</p>;
+    return <p className={emptyStateClass}>Henüz sınav yeri yok.</p>;
   }
 
   return (
@@ -14,8 +14,8 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Name</th>
-            <th className="px-4 py-3 font-medium">Address</th>
+            <th className="px-4 py-3 font-medium">Ad</th>
+            <th className="px-4 py-3 font-medium">Adres</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
                 <RowActionsMenu
                   editHref={`/admin/exam-places/${place.id}/edit`}
                   deleteAction={deleteExamPlace.bind(null, place.id)}
-                  deleteConfirmMessage="Delete this exam place?"
+                  deleteConfirmMessage="Bu sınav yeri silinsin mi?"
                 />
               </td>
             </tr>

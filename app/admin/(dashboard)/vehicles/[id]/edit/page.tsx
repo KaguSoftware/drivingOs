@@ -16,8 +16,8 @@ export default async function EditVehiclePage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit vehicle</h1>
-        <DeleteButton action={deleteVehicle.bind(null, id)} confirmMessage="Delete this vehicle?" />
+        <h1 className="text-2xl font-semibold">Aracı düzenle</h1>
+        <DeleteButton action={deleteVehicle.bind(null, id)} confirmMessage="Bu araç silinsin mi?" />
       </div>
       <VehicleForm vehicle={vehicle} />
     </section>

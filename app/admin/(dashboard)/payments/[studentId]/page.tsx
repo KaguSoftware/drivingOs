@@ -14,7 +14,7 @@ export default async function StudentInstallmentsPage({
   return (
     <section className="flex flex-col gap-6">
       <h1 className="text-2xl font-semibold">
-        {installments[0]?.studentName ?? "Student"} &middot; Installments
+        {installments[0]?.studentName ?? "Öğrenci"} &middot; Taksitler
       </h1>
       <InstallmentTable installments={installments} />
     </section>

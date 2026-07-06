@@ -1,7 +1,16 @@
-import type { VehicleRow } from "./types";
+import type { Transmission, VehicleRow } from "./types";
+
+const TRANSMISSION_LABELS: Record<string, string> = {
+  manual: "Manuel",
+  automatic: "Otomatik",
+};
 
 export class Vehicle {
   constructor(private readonly row: VehicleRow) {}
+
+  static transmissionLabelFor(transmission: Transmission): string {
+    return TRANSMISSION_LABELS[transmission] ?? transmission;
+  }
 
   get id() {
     return this.row.id;
@@ -20,8 +29,7 @@ export class Vehicle {
   }
 
   transmissionLabel() {
-    const value = this.row.transmission;
-    return value.charAt(0).toUpperCase() + value.slice(1);
+    return Vehicle.transmissionLabelFor(this.row.transmission);
   }
 
   get licenseClass() {

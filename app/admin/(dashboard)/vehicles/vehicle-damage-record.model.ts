@@ -1,14 +1,18 @@
 import type { DamageStatus, VehicleDamageRecordRow } from "./types";
 
 const DAMAGE_LABELS: Record<DamageStatus, string> = {
-  reported: "Reported",
-  waiting_parts: "Waiting on parts",
-  in_repair: "In repair",
-  resolved: "Resolved",
+  reported: "Bildirildi",
+  waiting_parts: "Parça bekleniyor",
+  in_repair: "Tamirde",
+  resolved: "Çözüldü",
 };
 
 export class VehicleDamageRecord {
   constructor(private readonly row: VehicleDamageRecordRow) {}
+
+  static statusLabelFor(status: DamageStatus): string {
+    return DAMAGE_LABELS[status];
+  }
 
   get id() {
     return this.row.id;
@@ -35,6 +39,6 @@ export class VehicleDamageRecord {
   }
 
   statusLabel(): string {
-    return DAMAGE_LABELS[this.row.status];
+    return VehicleDamageRecord.statusLabelFor(this.row.status);
   }
 }

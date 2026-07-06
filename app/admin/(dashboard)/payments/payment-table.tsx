@@ -4,7 +4,7 @@ import type { StudentBalance } from "./payment-installment.repository";
 
 export function PaymentTable({ balances }: { balances: StudentBalance[] }) {
   if (balances.length === 0) {
-    return <p className={emptyStateClass}>No installments yet.</p>;
+    return <p className={emptyStateClass}>Henüz taksit yok.</p>;
   }
 
   return (
@@ -12,8 +12,8 @@ export function PaymentTable({ balances }: { balances: StudentBalance[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Student</th>
-            <th className="px-4 py-3 font-medium">Remaining debt</th>
+            <th className="px-4 py-3 font-medium">Öğrenci</th>
+            <th className="px-4 py-3 font-medium">Kalan borç</th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>

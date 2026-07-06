@@ -11,9 +11,9 @@ export default async function StudentsPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Students</h1>
+        <h1 className="text-2xl font-semibold">Öğrenciler</h1>
         <Link href="/admin/students/new" className={primaryLinkClass}>
-          New student
+          Yeni öğrenci
         </Link>
       </div>
       <StudentTable students={students} />

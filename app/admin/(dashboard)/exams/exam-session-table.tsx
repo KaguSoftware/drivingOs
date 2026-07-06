@@ -6,7 +6,7 @@ import { deleteExamSession } from "./actions";
 
 export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
   if (sessions.length === 0) {
-    return <p className={emptyStateClass}>No upcoming exams scheduled.</p>;
+    return <p className={emptyStateClass}>Yaklaşan planlı sınav yok.</p>;
   }
 
   return (
@@ -14,9 +14,9 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">When</th>
-            <th className="px-4 py-3 font-medium">Exam place</th>
-            <th className="px-4 py-3 font-medium">Proctor</th>
+            <th className="px-4 py-3 font-medium">Zaman</th>
+            <th className="px-4 py-3 font-medium">Sınav yeri</th>
+            <th className="px-4 py-3 font-medium">Gözetmen</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -34,7 +34,7 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
                 <RowActionsMenu
                   editHref={`/admin/exams/${session.id}/edit`}
                   deleteAction={deleteExamSession.bind(null, session.id)}
-                  deleteConfirmMessage="Delete this exam?"
+                  deleteConfirmMessage="Bu sınav silinsin mi?"
                 />
               </td>
             </tr>

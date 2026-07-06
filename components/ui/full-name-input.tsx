@@ -8,8 +8,8 @@ export function FullNameInput({ defaultValue }: { defaultValue?: string }) {
       name="full_name"
       required
       pattern="[^0-9]*"
-      title="Name cannot contain numbers"
-      placeholder="John Doe"
+      title="Ad rakam içeremez"
+      placeholder="Ahmet Yılmaz"
       defaultValue={defaultValue}
       className={inputClass}
       onInput={(event) => {

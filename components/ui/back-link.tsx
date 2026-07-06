@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function BackLink({ href, label = "Back" }: { href: string; label?: string }) {
+export function BackLink({ href, label = "Geri"}: { href: string; label?: string }) {
   return (
     <Link
       href={href}

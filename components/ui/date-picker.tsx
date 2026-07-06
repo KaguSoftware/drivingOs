@@ -54,7 +54,7 @@ export function DatePicker({
       >
         {selectedDate
           ? selectedDate.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
-          : "Select date"}
+          : "Tarih seçin"}
       </button>
 
       {open && (

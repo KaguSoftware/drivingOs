@@ -11,7 +11,7 @@ export default async function DamagedVehiclesPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Damaged Vehicles</h1>
+      <h1 className="text-2xl font-semibold">Hasarlı Araçlar</h1>
       <DamagedVehicleTable vehicles={vehicles} damageRecords={damageRecords} />
     </section>
   );

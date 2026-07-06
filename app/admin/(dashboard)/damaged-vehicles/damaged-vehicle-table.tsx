@@ -11,7 +11,7 @@ export function DamagedVehicleTable({
   damageRecords: VehicleDamageRecord[];
 }) {
   if (vehicles.length === 0) {
-    return <p className={emptyStateClass}>No damaged vehicles right now.</p>;
+    return <p className={emptyStateClass}>Şu anda hasarlı araç yok.</p>;
   }
 
   const recordsByVehicle = new Map<string, VehicleDamageRecord[]>();
@@ -26,10 +26,10 @@ export function DamagedVehicleTable({
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Plate</th>
-            <th className="px-4 py-3 font-medium">Brand / model</th>
-            <th className="px-4 py-3 font-medium">License class</th>
-            <th className="px-4 py-3 font-medium">Damaged parts</th>
+            <th className="px-4 py-3 font-medium">Plaka</th>
+            <th className="px-4 py-3 font-medium">Marka / model</th>
+            <th className="px-4 py-3 font-medium">Ehliyet sınıfı</th>
+            <th className="px-4 py-3 font-medium">Hasarlı parçalar</th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>

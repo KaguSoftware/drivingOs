@@ -5,7 +5,7 @@ import { deleteViolation } from "../violation-actions";
 
 export function ViolationTable({ violations }: { violations: VehicleViolation[] }) {
   if (violations.length === 0) {
-    return <p className={emptyStateClass}>No violations recorded.</p>;
+    return <p className={emptyStateClass}>Kayıtlı ceza yok.</p>;
   }
 
   return (
@@ -13,10 +13,10 @@ export function ViolationTable({ violations }: { violations: VehicleViolation[] 
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Type</th>
-            <th className="px-4 py-3 font-medium">Date</th>
-            <th className="px-4 py-3 font-medium">Fine</th>
-            <th className="px-4 py-3 font-medium">Description</th>
+            <th className="px-4 py-3 font-medium">Tür</th>
+            <th className="px-4 py-3 font-medium">Tarih</th>
+            <th className="px-4 py-3 font-medium">Ceza</th>
+            <th className="px-4 py-3 font-medium">Açıklama</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -31,7 +31,7 @@ export function ViolationTable({ violations }: { violations: VehicleViolation[] 
                 <RowActionsMenu
                   editHref={`/admin/vehicles/${violation.vehicleId}/violations/${violation.id}/edit`}
                   deleteAction={deleteViolation.bind(null, violation.id, violation.vehicleId)}
-                  deleteConfirmMessage="Delete this violation?"
+                  deleteConfirmMessage="Bu ceza silinsin mi?"
                 />
               </td>
             </tr>

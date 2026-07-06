@@ -11,9 +11,9 @@ export default async function ExamPlacesPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Exam Places</h1>
+        <h1 className="text-2xl font-semibold">Sınav Yerleri</h1>
         <Link href="/admin/exam-places/new" className={primaryLinkClass}>
-          New exam place
+          Yeni sınav yeri
         </Link>
       </div>
       <ExamPlaceTable places={places} />

@@ -27,7 +27,7 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
 
   return (
     <div className="flex flex-col gap-1 text-sm">
-      <span>Plate</span>
+      <span>Plaka</span>
       <div className="flex items-center gap-2">
         <input
           value={province}
@@ -40,7 +40,7 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
           onBlur={() => setFocused(null)}
           inputMode="numeric"
           placeholder={placeholder("province", "34")}
-          aria-label="Province code"
+          aria-label="İl kodu"
           className={`${partClass} w-14`}
         />
         <input
@@ -54,7 +54,7 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
           onFocus={() => setFocused("letters")}
           onBlur={() => setFocused(null)}
           placeholder={placeholder("letters", "ABC")}
-          aria-label="Letter group"
+          aria-label="Harf grubu"
           className={`${partClass} w-20`}
         />
         <input
@@ -65,7 +65,7 @@ export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
           onBlur={() => setFocused(null)}
           inputMode="numeric"
           placeholder={placeholder("numbers", "1234")}
-          aria-label="Number group"
+          aria-label="Rakam grubu"
           className={`${partClass} w-24`}
         />
       </div>

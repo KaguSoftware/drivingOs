@@ -8,7 +8,7 @@ export function InstallmentForm({ students }: { students: Student[] }) {
   return (
     <form action={createInstallment} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Student
+        Öğrenci
         <select name="student_id" required className={inputClass}>
           {students.map((student) => (
             <option key={student.id} value={student.id}>
@@ -18,18 +18,18 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Amount
+        Tutar
         <input name="amount" type="number" step="0.01" required className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Due date (first installment if split)
+        Vade tarihi (bölünmüşse ilk taksit)
         <DatePicker name="due_date" required className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Number of months
+        Ay sayısı
         <input name="months" type="number" min={1} step={1} defaultValue={1} className={inputClass} />
       </label>
-      <Button type="submit">Add installment</Button>
+      <Button type="submit">Taksit ekle</Button>
     </form>
   );
 }

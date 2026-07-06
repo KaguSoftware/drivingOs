@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 export function RowActionsMenu({
   editHref,
   deleteAction,
-  deleteConfirmMessage = "Delete this? This cannot be undone.",
+  deleteConfirmMessage = "Bu silinsin mi? Bu işlem geri alınamaz.",
 }: {
   editHref: string;
   deleteAction: () => Promise<void>;
@@ -52,7 +52,7 @@ export function RowActionsMenu({
       <button
         ref={buttonRef}
         type="button"
-        aria-label="Row actions"
+        aria-label="Satır işlemleri"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
@@ -77,7 +77,7 @@ export function RowActionsMenu({
               onClick={() => setOpen(false)}
               className="block px-3 py-2 text-sm hover:bg-white"
             >
-              Edit
+              Düzenle
             </Link>
             <form
               action={deleteAction}
@@ -94,7 +94,7 @@ export function RowActionsMenu({
                 role="menuitem"
                 className="block w-full px-3 py-2 text-left text-sm text-danger hover:bg-white"
               >
-                Delete
+                Sil
               </button>
             </form>
           </div>,

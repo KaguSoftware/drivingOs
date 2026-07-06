@@ -14,11 +14,11 @@ export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
     <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
       <form action={action} className="flex flex-1 flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
-          Name
+          Ad
           <input name="name" required defaultValue={examPlace?.name} className={inputClass} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Address
+          Adres
           <input
             name="address"
             required
@@ -28,15 +28,15 @@ export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Notes
+          Notlar
           <input name="notes" defaultValue={examPlace?.notes ?? undefined} className={inputClass} />
         </label>
-        <Button type="submit">{examPlace ? "Save changes" : "Add exam place"}</Button>
+        <Button type="submit">{examPlace ? "Değişiklikleri kaydet" : "Sınav yeri ekle"}</Button>
       </form>
 
       {address.trim() && (
         <iframe
-          title="Address preview"
+          title="Adres önizleme"
           src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
           className="h-64 flex-1 rounded-lg border border-border"
           loading="lazy"

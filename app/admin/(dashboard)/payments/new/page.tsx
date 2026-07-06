@@ -9,8 +9,8 @@ export default async function NewInstallmentPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Back to payments" />
-      <h1 className="text-2xl font-semibold">New installment</h1>
+      <BackLink href="../" label="Ödemelere dön" />
+      <h1 className="text-2xl font-semibold">Yeni taksit</h1>
       <InstallmentForm students={students} />
     </section>
   );

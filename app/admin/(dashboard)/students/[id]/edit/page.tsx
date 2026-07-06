@@ -16,8 +16,8 @@ export default async function EditStudentPage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit student</h1>
-        <DeleteButton action={deleteStudent.bind(null, id)} confirmMessage="Delete this student?" />
+        <h1 className="text-2xl font-semibold">Öğrenciyi düzenle</h1>
+        <DeleteButton action={deleteStudent.bind(null, id)} confirmMessage="Bu öğrenci silinsin mi?" />
       </div>
       <StudentForm student={student} />
     </section>

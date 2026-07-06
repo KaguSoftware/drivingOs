@@ -12,7 +12,7 @@ export function TutorTable({
   stats: Map<string, InstructorStats>;
 }) {
   if (instructors.length === 0) {
-    return <p className={emptyStateClass}>No tutors yet. Add the first one.</p>;
+    return <p className={emptyStateClass}>Henüz eğitmen yok. İlkini ekleyin.</p>;
   }
 
   return (
@@ -20,10 +20,10 @@ export function TutorTable({
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Name</th>
-            <th className="px-4 py-3 font-medium">Phone</th>
-            <th className="px-4 py-3 font-medium">License classes</th>
-            <th className="px-4 py-3 font-medium">Pass rate</th>
+            <th className="px-4 py-3 font-medium">Ad Soyad</th>
+            <th className="px-4 py-3 font-medium">Telefon</th>
+            <th className="px-4 py-3 font-medium">Ehliyet sınıfları</th>
+            <th className="px-4 py-3 font-medium">Başarı oranı</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -32,7 +32,7 @@ export function TutorTable({
             const instructorStats = stats.get(instructor.id);
             const passRate =
               !instructorStats || instructorStats.total === 0
-                ? "No exams yet"
+                ? "Henüz sınav yok"
                 : `${Math.round((instructorStats.passed / instructorStats.total) * 100)}% (${instructorStats.passed}/${instructorStats.total})`;
 
             return (
@@ -45,7 +45,7 @@ export function TutorTable({
                   <RowActionsMenu
                     editHref={`/admin/tutors/${instructor.id}/edit`}
                     deleteAction={deleteInstructor.bind(null, instructor.id)}
-                    deleteConfirmMessage="Delete this tutor?"
+                    deleteConfirmMessage="Bu eğitmen silinsin mi?"
                   />
                 </td>
               </tr>

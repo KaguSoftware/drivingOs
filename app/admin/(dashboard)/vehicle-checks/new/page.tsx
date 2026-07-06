@@ -9,8 +9,8 @@ export default async function NewVehiclePeriodicCheckPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Back to vehicle checks" />
-      <h1 className="text-2xl font-semibold">New periodic check</h1>
+      <BackLink href="../" label="Araç kontrollerine dön" />
+      <h1 className="text-2xl font-semibold">Yeni periyodik kontrol</h1>
       <VehiclePeriodicCheckForm vehicles={vehicles} />
     </section>
   );

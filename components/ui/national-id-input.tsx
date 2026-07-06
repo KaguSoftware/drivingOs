@@ -17,7 +17,7 @@ export function NationalIdInput({
       required={required}
       pattern="\d{11}"
       maxLength={11}
-      title="Enter exactly 11 digits"
+      title="Tam olarak 11 hane girin"
       placeholder="12345678901"
       defaultValue={defaultValue}
       className={inputClass}

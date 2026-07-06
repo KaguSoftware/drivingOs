@@ -6,7 +6,7 @@ import { deleteVehicle } from "./actions";
 
 export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
   if (vehicles.length === 0) {
-    return <p className={emptyStateClass}>No vehicles yet.</p>;
+    return <p className={emptyStateClass}>Henüz araç yok.</p>;
   }
 
   return (
@@ -14,10 +14,10 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Plate</th>
-            <th className="px-4 py-3 font-medium">Brand / model</th>
-            <th className="px-4 py-3 font-medium">Transmission</th>
-            <th className="px-4 py-3 font-medium">License class</th>
+            <th className="px-4 py-3 font-medium">Plaka</th>
+            <th className="px-4 py-3 font-medium">Marka / model</th>
+            <th className="px-4 py-3 font-medium">Vites</th>
+            <th className="px-4 py-3 font-medium">Ehliyet sınıfı</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
                 <RowActionsMenu
                   editHref={`/admin/vehicles/${vehicle.id}/edit`}
                   deleteAction={deleteVehicle.bind(null, vehicle.id)}
-                  deleteConfirmMessage="Delete this vehicle?"
+                  deleteConfirmMessage="Bu araç silinsin mi?"
                 />
               </td>
             </tr>

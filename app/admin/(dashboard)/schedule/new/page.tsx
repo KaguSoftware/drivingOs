@@ -19,8 +19,8 @@ export default async function NewLessonPage({
 
   return (
     <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Back to schedule" />
-      <h1 className="text-2xl font-semibold">Book lesson</h1>
+      <BackLink href="../" label="Programa dön" />
+      <h1 className="text-2xl font-semibold">Ders planla</h1>
       <LessonForm
         students={toFormStudents(students)}
         instructors={toFormInstructors(instructors)}

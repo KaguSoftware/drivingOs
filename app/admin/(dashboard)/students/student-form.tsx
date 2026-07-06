@@ -13,22 +13,22 @@ export function StudentForm({ student }: { student?: Student }) {
   return (
     <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Full name
+        Ad Soyad
         <FullNameInput defaultValue={student?.fullName} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Phone
+        Telefon
         <div className="flex items-center rounded-md border border-border bg-surface text-sm">
           <span className="px-3 py-2 text-muted">+90</span>
           <PhoneInput defaultValue={student?.phone.replace(/^\+90/, "")} />
         </div>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        National ID (TC Kimlik No)
+        T.C. Kimlik No
         <NationalIdInput defaultValue={student?.nationalId} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        License class
+        Ehliyet sınıfı
         <select name="license_class" required defaultValue={student?.licenseClass} className={inputClass}>
           {LICENSE_CLASSES.map((licenseClass) => (
             <option key={licenseClass} value={licenseClass}>
@@ -38,7 +38,7 @@ export function StudentForm({ student }: { student?: Student }) {
         </select>
       </label>
       <Button type="submit">
-        {student ? "Save changes" : "Register student"}
+        {student ? "Değişiklikleri kaydet" : "Öğrenci kaydet"}
       </Button>
     </form>
   );

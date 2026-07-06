@@ -20,8 +20,8 @@ export default async function EditExamSessionPage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit exam</h1>
-        <DeleteButton action={deleteExamSession.bind(null, id)} confirmMessage="Delete this exam?" />
+        <h1 className="text-2xl font-semibold">Sınavı düzenle</h1>
+        <DeleteButton action={deleteExamSession.bind(null, id)} confirmMessage="Bu sınav silinsin mi?" />
       </div>
       <ExamSessionForm examPlaces={examPlaces} instructors={instructors} session={session} />
     </section>

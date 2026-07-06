@@ -9,7 +9,7 @@ export function EditInstallmentForm({ installment }: { installment: PaymentInsta
     <form action={updateInstallment.bind(null, installment.id)} className="flex max-w-md flex-col gap-4">
       <input type="hidden" name="student_id" value={installment.studentId} />
       <label className="flex flex-col gap-1 text-sm">
-        Amount
+        Tutar
         <input
           name="amount"
           type="number"
@@ -20,7 +20,7 @@ export function EditInstallmentForm({ installment }: { installment: PaymentInsta
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Due date
+        Vade tarihi
         <DatePicker
           name="due_date"
           required
@@ -28,7 +28,7 @@ export function EditInstallmentForm({ installment }: { installment: PaymentInsta
           className={inputClass}
         />
       </label>
-      <Button type="submit">Save changes</Button>
+      <Button type="submit">Değişiklikleri kaydet</Button>
     </form>
   );
 }

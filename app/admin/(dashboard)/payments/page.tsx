@@ -11,9 +11,9 @@ export default async function PaymentsPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Payment Control</h1>
+        <h1 className="text-2xl font-semibold">Ödeme Takibi</h1>
         <Link href="/admin/payments/new" className={primaryLinkClass}>
-          New installment
+          Yeni taksit
         </Link>
       </div>
       <PaymentTable balances={balances} />

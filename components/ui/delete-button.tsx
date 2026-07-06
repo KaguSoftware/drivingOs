@@ -4,7 +4,7 @@ import { buttonClasses } from "./button";
 
 export function DeleteButton({
   action,
-  confirmMessage = "Delete this? This cannot be undone.",
+  confirmMessage = "Bu silinsin mi? Bu işlem geri alınamaz.",
 }: {
   action: () => Promise<void>;
   confirmMessage?: string;
@@ -19,7 +19,7 @@ export function DeleteButton({
       }}
     >
       <button type="submit" className={buttonClasses("danger")}>
-        Delete
+        Sil
       </button>
     </form>
   );

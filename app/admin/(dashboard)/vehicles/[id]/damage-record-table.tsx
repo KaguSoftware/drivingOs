@@ -5,7 +5,7 @@ import { deleteDamageRecord } from "../damage-record-actions";
 
 export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] }) {
   if (records.length === 0) {
-    return <p className={emptyStateClass}>No damage recorded.</p>;
+    return <p className={emptyStateClass}>Kayıtlı hasar yok.</p>;
   }
 
   return (
@@ -13,9 +13,9 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Part</th>
-            <th className="px-4 py-3 font-medium">Status</th>
-            <th className="px-4 py-3 font-medium">Notes</th>
+            <th className="px-4 py-3 font-medium">Parça</th>
+            <th className="px-4 py-3 font-medium">Durum</th>
+            <th className="px-4 py-3 font-medium">Notlar</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -29,7 +29,7 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
                 <RowActionsMenu
                   editHref={`/admin/vehicles/${record.vehicleId}/damage-records/${record.id}/edit`}
                   deleteAction={deleteDamageRecord.bind(null, record.id, record.vehicleId)}
-                  deleteConfirmMessage="Delete this damage record?"
+                  deleteConfirmMessage="Bu hasar kaydı silinsin mi?"
                 />
               </td>
             </tr>

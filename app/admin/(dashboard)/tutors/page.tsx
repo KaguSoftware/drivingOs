@@ -13,9 +13,9 @@ export default async function TutorsPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Tutors</h1>
+        <h1 className="text-2xl font-semibold">Eğitmenler</h1>
         <Link href="/admin/tutors/new" className={primaryLinkClass}>
-          New tutor
+          Yeni eğitmen
         </Link>
       </div>
       <TutorTable instructors={instructors} stats={stats} />

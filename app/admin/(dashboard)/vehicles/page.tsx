@@ -11,9 +11,9 @@ export default async function VehiclesPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Vehicles</h1>
+        <h1 className="text-2xl font-semibold">Araçlar</h1>
         <Link href="/admin/vehicles/new" className={primaryLinkClass}>
-          New vehicle
+          Yeni araç
         </Link>
       </div>
       <VehicleTable vehicles={vehicles} />

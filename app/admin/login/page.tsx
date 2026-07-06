@@ -15,7 +15,7 @@ export default async function LoginPage({
         <h1 className="mb-6 text-xl font-semibold text-primary">Driving School OS</h1>
         <form action={login} className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-sm">
-            Email
+            E-posta
             <input
               name="email"
               type="email"
@@ -24,7 +24,7 @@ export default async function LoginPage({
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            Password
+            Şifre
             <input
               name="password"
               type="password"
@@ -34,10 +34,10 @@ export default async function LoginPage({
           </label>
           {error && (
             <p className="text-sm text-danger">
-              Invalid email or password.
+              Geçersiz e-posta veya şifre.
             </p>
           )}
-          <Button type="submit">Log in</Button>
+          <Button type="submit">Giriş yap</Button>
         </form>
       </div>
     </main>

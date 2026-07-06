@@ -1,10 +1,10 @@
 import type { PaymentInstallmentRow, PaymentStatus } from "./types";
 
 const STATUS_LABELS: Record<PaymentStatus, string> = {
-  pending: "Pending",
-  partial: "Partially paid",
-  paid: "Paid",
-  overdue: "Overdue",
+  pending: "Bekliyor",
+  partial: "Kısmen ödendi",
+  paid: "Ödendi",
+  overdue: "Gecikmiş",
 };
 
 export class PaymentInstallment {

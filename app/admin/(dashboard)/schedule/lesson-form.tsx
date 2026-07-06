@@ -75,7 +75,7 @@ export function LessonForm({
   return (
     <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Vehicle
+        Araç
         <select
           name="vehicle_id"
           required
@@ -84,7 +84,7 @@ export function LessonForm({
           className={inputClass}
         >
           <option value="" disabled>
-            Select a vehicle
+            Bir araç seçin
           </option>
           {vehicles.map((vehicle) => (
             <option key={vehicle.id} value={vehicle.id}>
@@ -94,9 +94,9 @@ export function LessonForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Student
+        Öğrenci
         {licenseClass && (
-          <span className="text-xs text-muted">Showing class {licenseClass} students</span>
+          <span className="text-xs text-muted">{licenseClass} sınıfı öğrenciler gösteriliyor</span>
         )}
         <select name="student_id" required defaultValue={lesson?.studentId} className={inputClass}>
           {eligibleStudents.map((student) => (
@@ -107,9 +107,9 @@ export function LessonForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Instructor
+        Eğitmen
         {licenseClass && (
-          <span className="text-xs text-muted">Showing class {licenseClass} instructors</span>
+          <span className="text-xs text-muted">{licenseClass} sınıfı eğitmenler gösteriliyor</span>
         )}
         <select name="instructor_id" required defaultValue={lesson?.instructorId} className={inputClass}>
           {eligibleInstructors.map((instructor) => (
@@ -120,7 +120,7 @@ export function LessonForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Starts at
+        Başlangıç
         <DateTimePicker
           name="starts_at"
           required
@@ -131,7 +131,7 @@ export function LessonForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Duration
+        Süre
         <select
           value={durationMinutes}
           onChange={(event) => setDurationMinutes(Number(event.target.value))}
@@ -145,7 +145,7 @@ export function LessonForm({
         </select>
       </label>
       <input type="hidden" name="ends_at" value={endsAt} />
-      <Button type="submit">{lesson ? "Save changes" : "Book lesson"}</Button>
+      <Button type="submit">{lesson ? "Değişiklikleri kaydet" : "Ders planla"}</Button>
     </form>
   );
 }

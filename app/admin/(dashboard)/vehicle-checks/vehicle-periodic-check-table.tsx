@@ -12,7 +12,7 @@ const STATUS_COLORS: Record<CheckStatus, string> = {
 
 export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicCheck[] }) {
   if (checks.length === 0) {
-    return <p className={emptyStateClass}>No periodic checks yet.</p>;
+    return <p className={emptyStateClass}>Henüz periyodik kontrol yok.</p>;
   }
 
   return (
@@ -20,12 +20,12 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Vehicle</th>
-            <th className="px-4 py-3 font-medium">Type</th>
-            <th className="px-4 py-3 font-medium">Due date</th>
-            <th className="px-4 py-3 font-medium">Status</th>
-            <th className="px-4 py-3 font-medium">Cost</th>
-            <th className="px-4 py-3 font-medium">Provider</th>
+            <th className="px-4 py-3 font-medium">Araç</th>
+            <th className="px-4 py-3 font-medium">Tür</th>
+            <th className="px-4 py-3 font-medium">Vade tarihi</th>
+            <th className="px-4 py-3 font-medium">Durum</th>
+            <th className="px-4 py-3 font-medium">Ücret</th>
+            <th className="px-4 py-3 font-medium">Sağlayıcı</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -46,7 +46,7 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
                 <RowActionsMenu
                   editHref={`/admin/vehicle-checks/${check.id}/edit`}
                   deleteAction={deletePeriodicCheck.bind(null, check.id)}
-                  deleteConfirmMessage="Delete this check?"
+                  deleteConfirmMessage="Bu kontrol silinsin mi?"
                 />
               </td>
             </tr>

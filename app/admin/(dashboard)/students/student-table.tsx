@@ -5,7 +5,7 @@ import { deleteStudent } from "./actions";
 
 export function StudentTable({ students }: { students: Student[] }) {
   if (students.length === 0) {
-    return <p className={emptyStateClass}>No students yet. Add the first one.</p>;
+    return <p className={emptyStateClass}>Henüz öğrenci yok. İlkini ekleyin.</p>;
   }
 
   return (
@@ -13,11 +13,11 @@ export function StudentTable({ students }: { students: Student[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Name</th>
-            <th className="px-4 py-3 font-medium">Phone</th>
-            <th className="px-4 py-3 font-medium">Class</th>
-            <th className="px-4 py-3 font-medium">Theory</th>
-            <th className="px-4 py-3 font-medium">Practice</th>
+            <th className="px-4 py-3 font-medium">Ad Soyad</th>
+            <th className="px-4 py-3 font-medium">Telefon</th>
+            <th className="px-4 py-3 font-medium">Sınıf</th>
+            <th className="px-4 py-3 font-medium">Teori</th>
+            <th className="px-4 py-3 font-medium">Direksiyon</th>
             <th className="px-4 py-3 font-medium">MEB</th>
             <th className="px-4 py-3 font-medium">MEB PDF</th>
             <th className="px-4 py-3 font-medium"></th>
@@ -34,14 +34,14 @@ export function StudentTable({ students }: { students: Student[] }) {
               <td className="px-4 py-3">{student.mebLabel()}</td>
               <td className="px-4 py-3">
                 <a href={`/api/students/${student.id}/meb-pdf`} className="hover:underline">
-                  Download PDF
+                  PDF indir
                 </a>
               </td>
               <td className="px-4 py-3 text-right">
                 <RowActionsMenu
                   editHref={`/admin/students/${student.id}/edit`}
                   deleteAction={deleteStudent.bind(null, student.id)}
-                  deleteConfirmMessage="Delete this student?"
+                  deleteConfirmMessage="Bu öğrenci silinsin mi?"
                 />
               </td>
             </tr>

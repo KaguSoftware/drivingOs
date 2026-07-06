@@ -11,18 +11,18 @@ export function TutorForm({ instructor }: { instructor?: Instructor }) {
   return (
     <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Full name
+        Ad Soyad
         <FullNameInput defaultValue={instructor?.fullName} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Phone
+        Telefon
         <div className="flex items-center rounded-md border border-border bg-surface text-sm">
           <span className="px-3 py-2 text-muted">+90</span>
           <PhoneInput defaultValue={instructor?.phone.replace(/^\+90/, "")} />
         </div>
       </label>
       <fieldset className="flex flex-col gap-1 text-sm">
-        <legend className="mb-1">License classes</legend>
+        <legend className="mb-1">Ehliyet sınıfları</legend>
         <div className="flex flex-col divide-y divide-border rounded-md border border-border bg-surface">
           {LICENSE_CLASSES.map((licenseClass) => (
             <label
@@ -41,7 +41,7 @@ export function TutorForm({ instructor }: { instructor?: Instructor }) {
         </div>
       </fieldset>
       <Button type="submit">
-        {instructor ? "Save changes" : "Register tutor"}
+        {instructor ? "Değişiklikleri kaydet" : "Eğitmen kaydet"}
       </Button>
     </form>
   );

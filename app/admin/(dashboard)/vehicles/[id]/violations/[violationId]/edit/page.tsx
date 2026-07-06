@@ -16,8 +16,8 @@ export default async function EditViolationPage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit violation</h1>
-        <DeleteButton action={deleteViolation.bind(null, violationId, id)} confirmMessage="Delete this violation?" />
+        <h1 className="text-2xl font-semibold">Cezayı düzenle</h1>
+        <DeleteButton action={deleteViolation.bind(null, violationId, id)} confirmMessage="Bu ceza silinsin mi?" />
       </div>
       <ViolationForm vehicleId={id} violation={violation} />
     </section>

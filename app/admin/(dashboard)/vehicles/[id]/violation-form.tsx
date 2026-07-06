@@ -17,7 +17,7 @@ export function ViolationForm({
     <form action={action} className="flex max-w-md flex-col gap-4">
       <input type="hidden" name="vehicle_id" value={vehicleId} />
       <label className="flex flex-col gap-1 text-sm">
-        Violation type
+        Ceza türü
         <input
           name="violation_type"
           required
@@ -26,7 +26,7 @@ export function ViolationForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Date
+        Tarih
         <DatePicker
           name="violation_date"
           required
@@ -35,7 +35,7 @@ export function ViolationForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Fine amount
+        Ceza tutarı
         <input
           name="fine_amount"
           type="number"
@@ -45,11 +45,11 @@ export function ViolationForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Description
+        Açıklama
         <input name="description" defaultValue={violation?.description ?? undefined} className={inputClass} />
       </label>
       <Button type="submit">
-        {violation ? "Save changes" : "Add violation"}
+        {violation ? "Değişiklikleri kaydet" : "Ceza ekle"}
       </Button>
     </form>
   );

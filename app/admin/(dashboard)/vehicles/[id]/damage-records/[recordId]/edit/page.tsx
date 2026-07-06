@@ -16,10 +16,10 @@ export default async function EditDamageRecordPage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit damage record</h1>
+        <h1 className="text-2xl font-semibold">Hasar kaydını düzenle</h1>
         <DeleteButton
           action={deleteDamageRecord.bind(null, recordId, id)}
-          confirmMessage="Delete this damage record?"
+          confirmMessage="Bu hasar kaydı silinsin mi?"
         />
       </div>
       <DamageRecordForm vehicleId={id} record={record} />

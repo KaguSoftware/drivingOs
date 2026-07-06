@@ -60,26 +60,26 @@ export default async function SchedulePage({
               href={`/admin/schedule?week=${toDateParam(weekStart)}`}
               className={`px-3 py-1.5 text-sm ${!isMonthView ? "bg-primary text-primary-foreground" : ""}`}
             >
-              Week
+              Hafta
             </Link>
             <Link
               href={`/admin/schedule?view=month&month=${toMonthParam(monthStart)}`}
               className={`px-3 py-1.5 text-sm ${isMonthView ? "bg-primary text-primary-foreground" : ""}`}
             >
-              Month
+              Ay
             </Link>
           </div>
           <Link href={prevHref} className={buttonClasses("secondary")}>
-            Previous
+            Önceki
           </Link>
           <Link href={nextHref} className={buttonClasses("secondary")}>
-            Next
+            Sonraki
           </Link>
           <Link href="/admin/schedule/new" className={primaryLinkClass}>
-            New lesson
+            Yeni ders
           </Link>
           <Link href="/admin/exams/new" className={primaryLinkClass}>
-            New exam
+            Yeni sınav
           </Link>
         </div>
       </div>

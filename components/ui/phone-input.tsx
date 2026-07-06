@@ -9,7 +9,7 @@ export function PhoneInput({ defaultValue }: { defaultValue?: string }) {
       required
       pattern="\d{10}"
       maxLength={10}
-      title="Enter exactly 10 digits"
+      title="Tam olarak 10 hane girin"
       placeholder="5551234567"
       defaultValue={defaultValue}
       className="w-full bg-transparent py-2 pr-3 text-sm outline-none"

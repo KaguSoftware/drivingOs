@@ -46,7 +46,7 @@ export default async function DashboardLayout({
               type="submit"
               className="w-full whitespace-nowrap rounded-lg px-3 py-2 text-left text-sm text-sidebar-muted opacity-0 transition-opacity duration-200 hover:bg-background hover:text-sidebar-foreground group-hover/sidebar:opacity-100"
             >
-              Log out
+              Çıkış yap
             </button>
           </form>
         </div>

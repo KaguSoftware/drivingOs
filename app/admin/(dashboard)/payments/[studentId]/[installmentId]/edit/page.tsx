@@ -16,10 +16,10 @@ export default async function EditInstallmentPage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit installment</h1>
+        <h1 className="text-2xl font-semibold">Taksiti düzenle</h1>
         <DeleteButton
           action={deleteInstallment.bind(null, installmentId, studentId)}
-          confirmMessage="Delete this installment?"
+          confirmMessage="Bu taksit silinsin mi?"
         />
       </div>
       <EditInstallmentForm installment={installment} />

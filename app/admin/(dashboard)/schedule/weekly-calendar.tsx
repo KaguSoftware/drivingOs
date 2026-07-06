@@ -4,7 +4,7 @@ import type { Lesson } from "./lesson.model";
 import type { ExamSession } from "../exams/exam-session.model";
 import { deleteLesson } from "./actions";
 
-const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const DAY_LABELS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 const HOURS = Array.from({ length: 13 }, (_, i) => 8 + i); // 08:00-20:00
 
 function isSameDay(a: Date, b: Date): boolean {
@@ -79,7 +79,7 @@ export function WeeklyCalendar({
                     <Link
                       href={`/admin/schedule/new?starts_at=${encodeURIComponent(toLocalDateTimeValue(slotStart))}`}
                       className="absolute inset-0 flex items-center justify-center text-xs text-muted opacity-0 transition-opacity hover:bg-background/60 group-hover:opacity-100"
-                      aria-label={`Book lesson at ${String(hour).padStart(2, "0")}:00`}
+                      aria-label={`${String(hour).padStart(2, "0")}:00 için ders planla`}
                     >
                       +
                     </Link>
@@ -99,11 +99,11 @@ export function WeeklyCalendar({
                       </span>
                       <div className="flex items-center gap-2">
                         <Link href={`/admin/schedule/${lesson.id}/edit`} className="hover:underline">
-                          Edit
+                          Düzenle
                         </Link>
                         <DeleteButton
                           action={deleteLesson.bind(null, lesson.id)}
-                          confirmMessage="Delete this lesson?"
+                          confirmMessage="Bu ders silinsin mi?"
                         />
                       </div>
                     </div>
@@ -114,7 +114,7 @@ export function WeeklyCalendar({
                       href={`/admin/exams/${session.id}`}
                       className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground hover:opacity-90"
                     >
-                      Exam &middot; {session.examPlaceName}
+                      Sınav &middot; {session.examPlaceName}
                     </Link>
                   ))}
                 </div>

@@ -6,7 +6,7 @@ import { deleteInstallment } from "../actions";
 
 export function InstallmentTable({ installments }: { installments: PaymentInstallment[] }) {
   if (installments.length === 0) {
-    return <p className={emptyStateClass}>No installments for this student.</p>;
+    return <p className={emptyStateClass}>Bu öğrenci için taksit yok.</p>;
   }
 
   return (
@@ -14,12 +14,12 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Due date</th>
-            <th className="px-4 py-3 font-medium">Amount</th>
-            <th className="px-4 py-3 font-medium">Paid</th>
-            <th className="px-4 py-3 font-medium">Remaining</th>
-            <th className="px-4 py-3 font-medium">Status</th>
-            <th className="px-4 py-3 font-medium">Record payment</th>
+            <th className="px-4 py-3 font-medium">Vade tarihi</th>
+            <th className="px-4 py-3 font-medium">Tutar</th>
+            <th className="px-4 py-3 font-medium">Ödenen</th>
+            <th className="px-4 py-3 font-medium">Kalan</th>
+            <th className="px-4 py-3 font-medium">Durum</th>
+            <th className="px-4 py-3 font-medium">Ödeme kaydet</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>
@@ -38,7 +38,7 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
                 <RowActionsMenu
                   editHref={`/admin/payments/${installment.studentId}/${installment.id}/edit`}
                   deleteAction={deleteInstallment.bind(null, installment.id, installment.studentId)}
-                  deleteConfirmMessage="Delete this installment?"
+                  deleteConfirmMessage="Bu taksit silinsin mi?"
                 />
               </td>
             </tr>

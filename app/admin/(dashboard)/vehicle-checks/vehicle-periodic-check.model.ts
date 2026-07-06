@@ -8,9 +8,9 @@ const CHECK_TYPE_LABELS: Record<CheckType, string> = {
 };
 
 const STATUS_LABELS: Record<CheckStatus, string> = {
-  ok: "OK",
-  due_soon: "Due soon",
-  overdue: "Overdue",
+  ok: "Sorun yok",
+  due_soon: "Yaklaşıyor",
+  overdue: "Gecikmiş",
 };
 
 const DUE_SOON_WINDOW_DAYS = 30;

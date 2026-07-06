@@ -25,7 +25,7 @@ export function ExamSessionForm({
   return (
     <form action={action} className="flex max-w-md flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
-        Exam place
+        Sınav yeri
         <select name="exam_place_id" required defaultValue={session?.examPlaceId} className={inputClass}>
           {examPlaces.map((place) => (
             <option key={place.id} value={place.id}>
@@ -35,7 +35,7 @@ export function ExamSessionForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Proctor (instructor)
+        Gözetmen (eğitmen)
         <select name="instructor_id" required defaultValue={session?.instructorId ?? undefined} className={inputClass}>
           {instructors.map((instructor) => (
             <option key={instructor.id} value={instructor.id}>
@@ -45,7 +45,7 @@ export function ExamSessionForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Starts at
+        Başlangıç
         <DateTimePicker
           name="starts_at"
           required
@@ -55,7 +55,7 @@ export function ExamSessionForm({
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Ends at
+        Bitiş
         <DateTimePicker
           name="ends_at"
           required
@@ -63,7 +63,7 @@ export function ExamSessionForm({
           className={inputClass}
         />
       </label>
-      <Button type="submit">{session ? "Save changes" : "Schedule exam"}</Button>
+      <Button type="submit">{session ? "Değişiklikleri kaydet" : "Sınav planla"}</Button>
     </form>
   );
 }

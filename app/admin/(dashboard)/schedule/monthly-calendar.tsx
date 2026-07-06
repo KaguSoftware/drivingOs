@@ -3,7 +3,7 @@ import type { Lesson } from "./lesson.model";
 import type { ExamSession } from "../exams/exam-session.model";
 import { toDateParam } from "./date-utils";
 
-const DAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const DAY_LABELS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
 
 function isSameDay(a: Date, b: Date): boolean {
   return (
@@ -66,12 +66,12 @@ export function MonthlyCalendar({
               </span>
               {dayLessons.length > 0 && (
                 <span className="rounded-md bg-primary px-1.5 py-0.5 text-primary-foreground">
-                  {dayLessons.length} lesson{dayLessons.length === 1 ? "" : "s"}
+                  {dayLessons.length} ders
                 </span>
               )}
               {dayExamSessions.length > 0 && (
                 <span className="rounded-md bg-primary px-1.5 py-0.5 text-primary-foreground">
-                  {dayExamSessions.length} exam{dayExamSessions.length === 1 ? "" : "s"}
+                  {dayExamSessions.length} sınav
                 </span>
               )}
             </Link>

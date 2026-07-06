@@ -44,7 +44,7 @@ export class Lesson {
     const digits = phone.replace(/\D/g, "");
     const date = this.startsAt().toLocaleDateString();
     const time = this.startsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    const message = `Hi ${this.studentName}, reminder for your driving lesson on ${date} at ${time}.`;
+    const message = `Merhaba ${this.studentName}, ${date} tarihinde saat ${time}'da direksiyon dersiniz olduğunu hatırlatmak isteriz.`;
     return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   }
 }

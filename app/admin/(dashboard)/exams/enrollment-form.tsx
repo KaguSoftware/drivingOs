@@ -11,14 +11,14 @@ export function EnrollmentForm({
   availableStudents: Student[];
 }) {
   if (availableStudents.length === 0) {
-    return <p className="text-sm text-muted">All students are already enrolled.</p>;
+    return <p className="text-sm text-muted">Tüm öğrenciler zaten kayıtlı.</p>;
   }
 
   return (
     <form action={enrollStudent} className="flex max-w-md items-end gap-3">
       <input type="hidden" name="exam_session_id" value={examSessionId} />
       <label className="flex flex-1 flex-col gap-1 text-sm">
-        Student
+        Öğrenci
         <select name="student_id" required className={inputClass}>
           {availableStudents.map((student) => (
             <option key={student.id} value={student.id}>
@@ -27,7 +27,7 @@ export function EnrollmentForm({
           ))}
         </select>
       </label>
-      <Button type="submit">Enroll</Button>
+      <Button type="submit">Kaydet</Button>
     </form>
   );
 }

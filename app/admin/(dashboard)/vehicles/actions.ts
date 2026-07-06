@@ -16,7 +16,7 @@ import {
 function parseVehicleInput(formData: FormData): NewVehicleInput {
   const transmission = formData.get("transmission") as string;
   if (!TRANSMISSIONS.includes(transmission as Transmission)) {
-    throw new Error(`Invalid transmission: ${transmission}`);
+    throw new Error(`Geçersiz vites türü: ${transmission}`);
   }
 
   const licenseClass = formData.get("license_class") as string;
@@ -26,7 +26,7 @@ function parseVehicleInput(formData: FormData): NewVehicleInput {
 
   const plate = String(formData.get("plate") ?? "").trim();
   if (!isValidPlate(plate)) {
-    throw new Error(`Invalid plate: ${plate}`);
+    throw new Error(`Geçersiz plaka: ${plate}`);
   }
 
   return {

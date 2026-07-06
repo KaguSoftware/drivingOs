@@ -11,8 +11,8 @@ export default async function NewExamSessionPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Back to exams" />
-      <h1 className="text-2xl font-semibold">Schedule exam</h1>
+      <BackLink href="../" label="Sınavlara dön" />
+      <h1 className="text-2xl font-semibold">Sınav planla</h1>
       <ExamSessionForm examPlaces={examPlaces} instructors={instructors} />
     </section>
   );

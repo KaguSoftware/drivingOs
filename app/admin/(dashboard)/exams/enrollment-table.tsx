@@ -11,7 +11,7 @@ export function EnrollmentTable({
   examSessionId: string;
 }) {
   if (enrollments.length === 0) {
-    return <p className={emptyStateClass}>No students enrolled yet.</p>;
+    return <p className={emptyStateClass}>Henüz kayıtlı öğrenci yok.</p>;
   }
 
   return (
@@ -19,8 +19,8 @@ export function EnrollmentTable({
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Student</th>
-            <th className="px-4 py-3 font-medium">Delete</th>
+            <th className="px-4 py-3 font-medium">Öğrenci</th>
+            <th className="px-4 py-3 font-medium">Sil</th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -30,7 +30,7 @@ export function EnrollmentTable({
               <td className="px-4 py-3">
                 <DeleteButton
                   action={deleteEnrollment.bind(null, enrollment.id, examSessionId)}
-                  confirmMessage="Remove this enrollment?"
+                  confirmMessage="Bu kayıt kaldırılsın mı?"
                 />
               </td>
             </tr>

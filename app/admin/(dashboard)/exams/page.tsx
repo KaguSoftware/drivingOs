@@ -11,9 +11,9 @@ export default async function ExamsPage() {
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Exams</h1>
+        <h1 className="text-2xl font-semibold">Sınavlar</h1>
         <Link href="/admin/exams/new" className={primaryLinkClass}>
-          Schedule exam
+          Sınav planla
         </Link>
       </div>
       <ExamSessionTable sessions={sessions} />

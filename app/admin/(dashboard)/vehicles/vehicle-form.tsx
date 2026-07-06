@@ -3,7 +3,7 @@ import { PlateInput } from "./plate-input";
 import { inputClass } from "@/components/ui/input-classes";
 import { Button } from "@/components/ui/button";
 import { LICENSE_CLASSES, TRANSMISSIONS } from "./types";
-import type { Vehicle } from "./vehicle.model";
+import { Vehicle } from "./vehicle.model";
 
 export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
   const action = vehicle ? updateVehicle.bind(null, vehicle.id) : createVehicle;
@@ -13,7 +13,7 @@ export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
     <form action={action} className="flex max-w-md flex-col gap-4">
       <PlateInput defaultValue={vehicle?.plate} />
       <label className="flex flex-col gap-1 text-sm">
-        Brand
+        Marka
         <input name="make" required placeholder="Renault" defaultValue={make} className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
@@ -21,17 +21,17 @@ export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
         <input name="model" required placeholder="Twingo" defaultValue={model} className={inputClass} />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Transmission
+        Vites
         <select name="transmission" required defaultValue={vehicle?.transmission} className={inputClass}>
           {TRANSMISSIONS.map((transmission) => (
             <option key={transmission} value={transmission}>
-              {transmission.charAt(0).toUpperCase() + transmission.slice(1)}
+              {Vehicle.transmissionLabelFor(transmission)}
             </option>
           ))}
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        License class
+        Ehliyet sınıfı
         <select name="license_class" required defaultValue={vehicle?.licenseClass} className={inputClass}>
           {LICENSE_CLASSES.map((licenseClass) => (
             <option key={licenseClass} value={licenseClass}>
@@ -41,7 +41,7 @@ export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
         </select>
       </label>
       <Button type="submit">
-        {vehicle ? "Save changes" : "Add vehicle"}
+        {vehicle ? "Değişiklikleri kaydet" : "Araç ekle"}
       </Button>
     </form>
   );

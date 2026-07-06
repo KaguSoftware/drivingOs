@@ -9,22 +9,22 @@ import { LICENSE_CLASSES, type LicenseClass, type NewStudentInput } from "./type
 function parseStudentInput(formData: FormData): NewStudentInput {
   const licenseClass = formData.get("license_class") as string;
   if (!LICENSE_CLASSES.includes(licenseClass as LicenseClass)) {
-    throw new Error(`Invalid license class: ${licenseClass}`);
+    throw new Error(`Geçersiz ehliyet sınıfı: ${licenseClass}`);
   }
 
   const fullName = String(formData.get("full_name") ?? "").trim();
   if (/[0-9]/.test(fullName)) {
-    throw new Error("Full name cannot contain numbers");
+    throw new Error("Ad Soyad rakam içeremez");
   }
 
   const phone = String(formData.get("phone") ?? "").trim();
   if (!/^\d{10}$/.test(phone)) {
-    throw new Error("Phone must be exactly 10 digits");
+    throw new Error("Telefon tam olarak 10 haneli olmalı");
   }
 
   const nationalId = String(formData.get("national_id") ?? "").trim();
   if (!/^\d{11}$/.test(nationalId)) {
-    throw new Error("National ID must be exactly 11 digits");
+    throw new Error("T.C. Kimlik No tam olarak 11 haneli olmalı");
   }
 
   return {

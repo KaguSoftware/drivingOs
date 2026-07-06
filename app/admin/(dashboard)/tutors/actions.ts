@@ -10,22 +10,22 @@ import type { NewInstructorInput } from "./types";
 function parseInstructorInput(formData: FormData): NewInstructorInput {
   const licenseClasses = formData.getAll("license_classes") as string[];
   if (licenseClasses.length === 0) {
-    throw new Error("Select at least one license class");
+    throw new Error("En az bir ehliyet sınıfı seçin");
   }
   for (const licenseClass of licenseClasses) {
     if (!LICENSE_CLASSES.includes(licenseClass as LicenseClass)) {
-      throw new Error(`Invalid license class: ${licenseClass}`);
+      throw new Error(`Geçersiz ehliyet sınıfı: ${licenseClass}`);
     }
   }
 
   const fullName = String(formData.get("full_name") ?? "").trim();
   if (/[0-9]/.test(fullName)) {
-    throw new Error("Full name cannot contain numbers");
+    throw new Error("Ad Soyad rakam içeremez");
   }
 
   const phone = String(formData.get("phone") ?? "").trim();
   if (!/^\d{10}$/.test(phone)) {
-    throw new Error("Phone must be exactly 10 digits");
+    throw new Error("Telefon tam olarak 10 haneli olmalı");
   }
 
   return {

@@ -12,21 +12,21 @@ function MebDocument({ student }: { student: Student }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <Text style={styles.title}>MEB Enrollment Form</Text>
+        <Text style={styles.title}>MEB Kayıt Formu</Text>
         <View style={styles.row}>
-          <Text style={styles.label}>Full name</Text>
+          <Text style={styles.label}>Ad Soyad</Text>
           <Text>{student.fullName}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>National ID</Text>
+          <Text style={styles.label}>T.C. Kimlik No</Text>
           <Text>{student.nationalId}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>License class</Text>
+          <Text style={styles.label}>Ehliyet sınıfı</Text>
           <Text>{student.licenseClass}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>MEB paperwork status</Text>
+          <Text style={styles.label}>MEB evrak durumu</Text>
           <Text>{student.mebLabel()}</Text>
         </View>
       </Page>

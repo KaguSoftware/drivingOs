@@ -13,7 +13,7 @@ export function RecordPaymentForm({ installmentId }: { installmentId: string }) 
         className="w-24 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
       <Button type="submit" className="px-3 py-1">
-        Pay
+        Öde
       </Button>
     </form>
   );

@@ -1,16 +1,16 @@
 import type { MebStatus, ProgressStatus, StudentRow } from "./types";
 
 const PROGRESS_LABELS: Record<ProgressStatus, string> = {
-  not_started: "Not started",
-  in_progress: "In progress",
-  completed: "Completed",
+  not_started: "Başlanmadı",
+  in_progress: "Devam ediyor",
+  completed: "Tamamlandı",
 };
 
 const MEB_LABELS: Record<MebStatus, string> = {
-  missing_documents: "Missing documents",
-  submitted: "Submitted",
-  approved: "Approved",
-  rejected: "Rejected",
+  missing_documents: "Belgeler eksik",
+  submitted: "Gönderildi",
+  approved: "Onaylandı",
+  rejected: "Reddedildi",
 };
 
 export class Student {

@@ -9,7 +9,7 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "Driving School OS",
-  description: "Operating system for driving schools",
+  description: "Sürücü kursları için işletim sistemi",
 };
 
 export default function RootLayout({
