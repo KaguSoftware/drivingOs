@@ -1,4 +1,5 @@
 import { NationalIdInput } from "@/components/ui/national-id-input";
+import { Button } from "@/components/ui/button";
 
 export function NationalIdLookupForm({ defaultValue }: { defaultValue?: string }) {
   return (
@@ -7,12 +8,7 @@ export function NationalIdLookupForm({ defaultValue }: { defaultValue?: string }
         TC Kimlik No
         <NationalIdInput defaultValue={defaultValue} required={false} />
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
-        Sorgula
-      </button>
+      <Button type="submit">Sorgula</Button>
     </form>
   );
 }

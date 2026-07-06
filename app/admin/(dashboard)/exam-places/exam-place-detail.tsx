@@ -13,12 +13,12 @@ export function ExamPlaceDetail({
     <div className="flex flex-col gap-4">
       <div>
         <h1 className="text-2xl font-semibold">{name}</h1>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{address}</p>
+        <p className="mt-1 text-sm text-muted">{address}</p>
       </div>
 
       {notes && (
-        <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900">
-          <h2 className="mb-1 text-sm font-medium text-zinc-500 dark:text-zinc-400">Notes</h2>
+        <div className="rounded-lg border border-border bg-surface p-4">
+          <h2 className="mb-1 text-sm font-medium text-muted">Notes</h2>
           <p className="text-base leading-relaxed">{notes}</p>
         </div>
       )}
@@ -28,10 +28,10 @@ export function ExamPlaceDetail({
         <iframe
           title={name}
           src={mapsEmbedUrl}
-          className="h-96 w-full rounded-lg border border-zinc-200 dark:border-zinc-800"
+          className="h-96 w-full rounded-lg border border-border"
           loading="lazy"
         />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+        <p className="text-xs text-muted">
           This is a demo embed with no API key. Live geocoding and address autocomplete would
           require setting NEXT_PUBLIC_GOOGLE_MAPS_API_KEY.
         </p>

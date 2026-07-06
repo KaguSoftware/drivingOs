@@ -1,12 +1,11 @@
 import { createLesson, updateLesson } from "./actions";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import type { Student } from "../students/student.model";
 import type { Instructor } from "../tutors/instructor.model";
 import type { Vehicle } from "../vehicles/vehicle.model";
 import type { Lesson } from "./lesson.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-left text-sm dark:border-zinc-700";
 
 function toLocalDateTimeValue(date: Date): string {
   const offsetMs = date.getTimezoneOffset() * 60 * 1000;
@@ -76,12 +75,7 @@ export function LessonForm({
           className={inputClass}
         />
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
-        {lesson ? "Save changes" : "Book lesson"}
-      </button>
+      <Button type="submit">{lesson ? "Save changes" : "Book lesson"}</Button>
     </form>
   );
 }

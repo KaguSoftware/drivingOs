@@ -1,9 +1,8 @@
 import { createDamageRecord, updateDamageRecord } from "../damage-record-actions";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import { DAMAGE_STATUSES } from "../types";
 import type { VehicleDamageRecord } from "../vehicle-damage-record.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
 
 export function DamageRecordForm({
   vehicleId,
@@ -35,12 +34,9 @@ export function DamageRecordForm({
         Notes
         <input name="notes" defaultValue={record?.notes ?? undefined} className={inputClass} />
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
+      <Button type="submit">
         {record ? "Save changes" : "Add damage record"}
-      </button>
+      </Button>
     </form>
   );
 }

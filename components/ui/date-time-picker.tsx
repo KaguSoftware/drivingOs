@@ -57,7 +57,7 @@ export function DateTimePicker({
         type="button"
         onClick={() => setOpen((isOpen) => !isOpen)}
         className={
-          className ?? "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-left text-sm dark:border-zinc-700"
+          className ?? "w-full rounded-md border border-border bg-surface px-3 py-2 text-left text-sm"
         }
       >
         {selectedDate
@@ -66,7 +66,7 @@ export function DateTimePicker({
       </button>
 
       {open && (
-        <div className="absolute z-10 mt-1 flex flex-col gap-3 rounded-lg border border-zinc-200 bg-[var(--background)] p-3 shadow-lg dark:border-zinc-800">
+        <div className="absolute z-10 mt-1 flex flex-col gap-3 rounded-lg border border-border bg-surface p-3 shadow-lg">
           <CalendarGrid
             viewDate={viewDate}
             onViewDateChange={setViewDate}
@@ -79,7 +79,7 @@ export function DateTimePicker({
               type="time"
               value={timePart}
               onChange={(event) => setTimePart(event.target.value)}
-              className="rounded-md border border-zinc-300 bg-transparent px-2 py-1 text-sm dark:border-zinc-700"
+              className="rounded-md border border-border bg-surface px-2 py-1 text-sm"
             />
           </label>
         </div>

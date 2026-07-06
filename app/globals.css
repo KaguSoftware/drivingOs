@@ -1,28 +1,41 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --background: #faf6ec;
+  --surface: #ffffff;
   --foreground: #1e293b;
-  --color-primary: #1e3a8a;
-  --color-primary-hover: #1e40af;
-  --color-accent: #b45309;
+  --muted: #6b6255;
+  --border: #e4dcc9;
+  --primary: #1e3a8a;
+  --primary-hover: #17296b;
+  --primary-foreground: #faf6ec;
+  --danger: #b91c1c;
+  --danger-hover: #991b1b;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e293b;
+  --sidebar-muted: #6b6255;
+  --sidebar-border: #e4dcc9;
+  --sidebar-active: #1e3a8a;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #101b33;
-    --foreground: #faf6ec;
-    --color-primary: #93c5fd;
-    --color-primary-hover: #bfdbfe;
-    --color-accent: #d97706;
-  }
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-active: var(--sidebar-active);
+  --font-sans: var(--font-jakarta);
 }
 
 body {

@@ -23,7 +23,7 @@ export default async function VehicleDetailPage({
     <section className="flex flex-col gap-8">
       <div>
         <h1 className="text-2xl font-semibold">{vehicle.plate}</h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="text-sm text-muted">
           {vehicle.makeModel} &middot; {vehicle.transmissionLabel()} &middot; {vehicle.licenseClass}
         </p>
       </div>

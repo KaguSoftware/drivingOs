@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DASHBOARD_PATH_PREFIXES } from "@/lib/routes";
+import { NAV_ICONS } from "./nav-icons";
 
 const NAV_LABELS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], string> = {
   "/admin/students": "Students",
@@ -18,28 +19,36 @@ const NAV_LABELS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], string> = {
 const NAV_ITEMS = DASHBOARD_PATH_PREFIXES.map((href) => ({
   href,
   label: NAV_LABELS[href],
+  Icon: NAV_ICONS[href],
 }));
 
 export function SidebarNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-2">
-      {NAV_ITEMS.map((item) => {
-        const isActive =
-          pathname === item.href || pathname.startsWith(`${item.href}/`);
+    <nav className="flex flex-col gap-1">
+      {NAV_ITEMS.map(({ href, label, Icon }) => {
+        const isActive = pathname === href || pathname.startsWith(`${href}/`);
         return (
           <Link
-            key={item.href}
-            href={item.href}
+            key={href}
+            href={href}
             aria-current={isActive ? "page" : undefined}
-            className={
+            className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
               isActive
-                ? "rounded-md px-3 py-2 text-sm font-medium bg-blue-50 text-blue-900 dark:bg-blue-700/10 dark:text-blue-200"
-                : "rounded-md px-3 py-2 text-sm text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
-            }
+                ? "bg-sidebar-active font-medium text-primary-foreground"
+                : "text-sidebar-muted hover:bg-background hover:text-sidebar-foreground"
+            }`}
           >
-            {item.label}
+            {isActive && (
+              <span className="absolute -left-4 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-primary" />
+            )}
+            <Icon
+              className={`h-[18px] w-[18px] shrink-0 transition-colors ${
+                isActive ? "text-primary-foreground" : "text-sidebar-muted group-hover:text-sidebar-foreground"
+              }`}
+            />
+            <span className="truncate">{label}</span>
           </Link>
         );
       })}

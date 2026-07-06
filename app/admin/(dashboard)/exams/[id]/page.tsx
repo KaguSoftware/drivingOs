@@ -28,7 +28,7 @@ export default async function ExamSessionPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold">{session.examPlaceName}</h1>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-muted">
             {session.startsAt().toLocaleString()} &middot; Proctor: {session.instructorName}
           </p>
         </div>

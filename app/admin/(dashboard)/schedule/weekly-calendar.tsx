@@ -31,16 +31,16 @@ export function WeeklyCalendar({
   });
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className="overflow-x-auto rounded-lg border border-border">
       <div
         className="grid min-w-[900px]"
         style={{ gridTemplateColumns: `80px repeat(7, 1fr)` }}
       >
-        <div className="border-b border-r border-zinc-200 bg-zinc-50 p-2 dark:border-zinc-800 dark:bg-zinc-900" />
+        <div className="border-b border-r border-border bg-background p-2" />
         {days.map((day) => (
           <div
             key={day.label}
-            className="border-b border-zinc-200 bg-zinc-50 p-2 text-center text-sm font-medium dark:border-zinc-800 dark:bg-zinc-900"
+            className="border-b border-border bg-background p-2 text-center text-sm font-medium"
           >
             {day.label} {day.date.getDate()}
           </div>
@@ -48,7 +48,7 @@ export function WeeklyCalendar({
 
         {HOURS.map((hour) => (
           <div key={hour} className="contents">
-            <div className="border-b border-r border-zinc-200 p-2 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+            <div className="border-b border-r border-border p-2 text-xs text-muted">
               {String(hour).padStart(2, "0")}:00
             </div>
             {days.map((day) => {
@@ -61,12 +61,12 @@ export function WeeklyCalendar({
               return (
                 <div
                   key={day.label}
-                  className="flex flex-col gap-1 border-b border-l border-zinc-200 p-1 dark:border-zinc-800"
+                  className="flex flex-col gap-1 border-b border-l border-border p-1"
                 >
                   {cellLessons.map((lesson) => (
                     <div
                       key={lesson.id}
-                      className="flex flex-col gap-1 rounded-md bg-blue-800 px-2 py-1 text-xs text-white shadow-sm dark:bg-blue-700"
+                      className="flex flex-col gap-1 rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground shadow-sm"
                     >
                       <a href={lesson.whatsAppLink()} target="_blank" rel="noreferrer" className="hover:underline">
                         {lesson.studentName} &middot; {lesson.vehiclePlate}
@@ -86,7 +86,7 @@ export function WeeklyCalendar({
                     <Link
                       key={session.id}
                       href={`/admin/exams/${session.id}`}
-                      className="rounded-md bg-amber-600 px-2 py-1 text-xs text-white hover:opacity-90"
+                      className="rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground hover:opacity-90"
                     >
                       Exam &middot; {session.examPlaceName}
                     </Link>

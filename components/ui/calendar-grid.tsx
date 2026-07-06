@@ -31,7 +31,7 @@ export function CalendarGrid({
         <button
           type="button"
           onClick={() => onViewDateChange(new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1))}
-          className="rounded p-1 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          className="rounded p-1 text-sm hover:bg-background"
         >
           &lsaquo;
         </button>
@@ -41,12 +41,12 @@ export function CalendarGrid({
         <button
           type="button"
           onClick={() => onViewDateChange(new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1))}
-          className="rounded p-1 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          className="rounded p-1 text-sm hover:bg-background"
         >
           &rsaquo;
         </button>
       </div>
-      <div className="mb-1 grid grid-cols-7 gap-1 text-center text-xs text-zinc-500 dark:text-zinc-400">
+      <div className="mb-1 grid grid-cols-7 gap-1 text-center text-xs text-muted">
         {WEEKDAY_LABELS.map((label) => (
           <span key={label}>{label}</span>
         ))}
@@ -60,8 +60,8 @@ export function CalendarGrid({
               onClick={() => onSelectDate(day)}
               className={
                 selectedDate && isSameDay(day, selectedDate)
-                  ? "rounded-md bg-blue-800 py-1 text-sm text-white dark:bg-blue-700"
-                  : "rounded-md py-1 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                  ? "rounded-md bg-primary py-1 text-sm text-primary-foreground"
+                  : "rounded-md py-1 text-sm hover:bg-background"
               }
             >
               {day.getDate()}

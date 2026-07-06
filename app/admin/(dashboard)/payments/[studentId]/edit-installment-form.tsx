@@ -1,9 +1,8 @@
 import { updateInstallment } from "../actions";
 import { DatePicker } from "@/components/ui/date-picker";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import type { PaymentInstallment } from "../payment-installment.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-left text-sm dark:border-zinc-700";
 
 export function EditInstallmentForm({ installment }: { installment: PaymentInstallment }) {
   return (
@@ -29,12 +28,7 @@ export function EditInstallmentForm({ installment }: { installment: PaymentInsta
           className={inputClass}
         />
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
-        Save changes
-      </button>
+      <Button type="submit">Save changes</Button>
     </form>
   );
 }

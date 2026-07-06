@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { createExamPlace, updateExamPlace } from "./actions";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import type { ExamPlace } from "./exam-place.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
 
 export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
   const [address, setAddress] = useState(examPlace?.address ?? "");
@@ -32,19 +31,14 @@ export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
           Notes
           <input name="notes" defaultValue={examPlace?.notes ?? undefined} className={inputClass} />
         </label>
-        <button
-          type="submit"
-          className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-        >
-          {examPlace ? "Save changes" : "Add exam place"}
-        </button>
+        <Button type="submit">{examPlace ? "Save changes" : "Add exam place"}</Button>
       </form>
 
       {address.trim() && (
         <iframe
           title="Address preview"
           src={`https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`}
-          className="h-64 flex-1 rounded-lg border border-zinc-200 dark:border-zinc-800"
+          className="h-64 flex-1 rounded-lg border border-border"
           loading="lazy"
         />
       )}

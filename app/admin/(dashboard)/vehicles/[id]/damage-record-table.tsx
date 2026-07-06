@@ -1,21 +1,18 @@
 import Link from "next/link";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { VehicleDamageRecord } from "../vehicle-damage-record.model";
 import { deleteDamageRecord } from "../damage-record-actions";
 
 export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] }) {
   if (records.length === 0) {
-    return (
-      <p className="rounded-lg border border-dashed border-zinc-300 p-8 text-center text-zinc-500 dark:border-zinc-700">
-        No damage recorded.
-      </p>
-    );
+    return <p className={emptyStateClass}>No damage recorded.</p>;
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className={tableWrapperClass}>
       <table className="w-full text-left text-sm">
-        <thead className="bg-zinc-50 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+        <thead className={theadClass}>
           <tr>
             <th className="px-4 py-3 font-medium">Part</th>
             <th className="px-4 py-3 font-medium">Status</th>
@@ -24,7 +21,7 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
             <th className="px-4 py-3 font-medium">Delete</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+        <tbody className={tbodyClass}>
           {records.map((record) => (
             <tr key={record.id}>
               <td className="px-4 py-3 font-medium">{record.partName}</td>

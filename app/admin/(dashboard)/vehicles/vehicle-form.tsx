@@ -1,10 +1,9 @@
 import { createVehicle, updateVehicle } from "./actions";
 import { PlateInput } from "./plate-input";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import { LICENSE_CLASSES, TRANSMISSIONS } from "./types";
 import type { Vehicle } from "./vehicle.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
 
 export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
   const action = vehicle ? updateVehicle.bind(null, vehicle.id) : createVehicle;
@@ -41,12 +40,9 @@ export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
           ))}
         </select>
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
+      <Button type="submit">
         {vehicle ? "Save changes" : "Add vehicle"}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { buttonClasses, primaryLinkClass } from "@/components/ui/button";
 import { LessonRepository } from "./lesson.repository";
 import { ExamSessionRepository } from "../exams/exam-session.repository";
 import { WeeklyCalendar } from "./weekly-calendar";
@@ -39,26 +40,20 @@ export default async function SchedulePage({
         <div className="flex items-center gap-2">
           <Link
             href={`/admin/schedule?week=${prevWeek.toISOString().slice(0, 10)}`}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700"
+            className={buttonClasses("secondary")}
           >
             Previous
           </Link>
           <Link
             href={`/admin/schedule?week=${nextWeek.toISOString().slice(0, 10)}`}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700"
+            className={buttonClasses("secondary")}
           >
             Next
           </Link>
-          <Link
-            href="/admin/schedule/new"
-            className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-          >
+          <Link href="/admin/schedule/new" className={primaryLinkClass}>
             New lesson
           </Link>
-          <Link
-            href="/admin/exams/new"
-            className="rounded-md bg-amber-600 px-4 py-2 text-sm font-medium text-white"
-          >
+          <Link href="/admin/exams/new" className={primaryLinkClass}>
             New exam
           </Link>
         </div>

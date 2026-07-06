@@ -1,25 +1,22 @@
 import Link from "next/link";
+import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { StudentBalance } from "./payment-installment.repository";
 
 export function PaymentTable({ balances }: { balances: StudentBalance[] }) {
   if (balances.length === 0) {
-    return (
-      <p className="rounded-lg border border-dashed border-zinc-300 p-8 text-center text-zinc-500 dark:border-zinc-700">
-        No installments yet.
-      </p>
-    );
+    return <p className={emptyStateClass}>No installments yet.</p>;
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+    <div className={tableWrapperClass}>
       <table className="w-full text-left text-sm">
-        <thead className="bg-zinc-50 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
+        <thead className={theadClass}>
           <tr>
             <th className="px-4 py-3 font-medium">Student</th>
             <th className="px-4 py-3 font-medium">Remaining debt</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+        <tbody className={tbodyClass}>
           {balances.map((balance) => (
             <tr key={balance.studentId}>
               <td className="px-4 py-3 font-medium">

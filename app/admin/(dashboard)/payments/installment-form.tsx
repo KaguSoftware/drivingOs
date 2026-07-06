@@ -1,9 +1,8 @@
 import { createInstallment } from "./actions";
 import { DatePicker } from "@/components/ui/date-picker";
+import { inputClass } from "@/components/ui/input-classes";
+import { Button } from "@/components/ui/button";
 import type { Student } from "../students/student.model";
-
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-left text-sm dark:border-zinc-700";
 
 export function InstallmentForm({ students }: { students: Student[] }) {
   return (
@@ -30,12 +29,7 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         Number of months
         <input name="months" type="number" min={1} step={1} defaultValue={1} className={inputClass} />
       </label>
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
-        Add installment
-      </button>
+      <Button type="submit">Add installment</Button>
     </form>
   );
 }

@@ -4,7 +4,7 @@ export function BackLink({ href, label = "Back" }: { href: string; label?: strin
   return (
     <Link
       href={href}
-      className="inline-flex w-fit items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
+      className="inline-flex w-fit items-center gap-1 text-sm text-muted hover:text-foreground"
     >
       <span aria-hidden>←</span>
       {label}

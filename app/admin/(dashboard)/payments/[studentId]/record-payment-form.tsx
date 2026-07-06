@@ -1,4 +1,5 @@
 import { recordPayment } from "../actions";
+import { Button } from "@/components/ui/button";
 
 export function RecordPaymentForm({ installmentId }: { installmentId: string }) {
   return (
@@ -9,14 +10,11 @@ export function RecordPaymentForm({ installmentId }: { installmentId: string }) 
         type="number"
         step="0.01"
         required
-        className="w-24 rounded-md border border-zinc-300 bg-transparent px-2 py-1 text-sm dark:border-zinc-700"
+        className="w-24 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
-      <button
-        type="submit"
-        className="rounded-md bg-blue-800 px-3 py-1 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-900 dark:bg-blue-700 dark:hover:bg-blue-300"
-      >
+      <Button type="submit" className="px-3 py-1">
         Pay
-      </button>
+      </Button>
     </form>
   );
 }

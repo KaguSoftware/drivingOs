@@ -1,7 +1,6 @@
 "use client";
 
-const inputClass =
-  "w-full rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-sm dark:border-zinc-700";
+import { inputClass } from "./input-classes";
 
 export function FullNameInput({ defaultValue }: { defaultValue?: string }) {
   return (

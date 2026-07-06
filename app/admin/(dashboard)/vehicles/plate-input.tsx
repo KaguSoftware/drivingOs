@@ -10,7 +10,7 @@ import {
 } from "./plate";
 
 const partClass =
-  "rounded-md border border-zinc-300 bg-transparent px-3 py-2 text-center text-sm uppercase tracking-widest dark:border-zinc-700";
+  "rounded-md border border-border bg-surface px-3 py-2 text-center text-sm uppercase tracking-widest";
 
 export function PlateInput({ defaultValue = "" }: { defaultValue?: string }) {
   const initial = parsePlate(defaultValue);

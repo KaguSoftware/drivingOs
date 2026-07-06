@@ -1,5 +1,7 @@
 "use client";
 
+import { buttonClasses } from "./button";
+
 export function DeleteButton({
   action,
   confirmMessage = "Delete this? This cannot be undone.",
@@ -16,7 +18,7 @@ export function DeleteButton({
         }
       }}
     >
-      <button type="submit" className="text-sm text-red-600 hover:underline dark:text-red-400">
+      <button type="submit" className={buttonClasses("danger")}>
         Delete
       </button>
     </form>
