@@ -9,14 +9,14 @@ export async function proxy(request: NextRequest) {
   const isDashboardRoute = DASHBOARD_PATH_PREFIXES.some(
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
-  const isLoginRoute = pathname === "/admin/login";
+  const isLoginRoute = pathname === "/admin/giris";
 
   if (isDashboardRoute && !user) {
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    return NextResponse.redirect(new URL("/admin/giris", request.url));
   }
 
   if (isLoginRoute && user) {
-    return NextResponse.redirect(new URL("/admin/students", request.url));
+    return NextResponse.redirect(new URL("/admin/ogrenciler", request.url));
   }
 
   return response;
