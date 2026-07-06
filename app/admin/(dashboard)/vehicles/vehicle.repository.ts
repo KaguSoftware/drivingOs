@@ -26,6 +26,19 @@ export class VehicleRepository {
     return (data as VehicleRow[]).map((row) => new Vehicle(row));
   }
 
+  async listByIds(ids: string[]): Promise<Vehicle[]> {
+    if (ids.length === 0) return [];
+
+    const { data, error } = await this.supabase
+      .from("vehicles")
+      .select("*")
+      .in("id", ids)
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(`Failed to list vehicles: ${error.message}`);
+    return (data as VehicleRow[]).map((row) => new Vehicle(row));
+  }
+
   async findById(id: string): Promise<Vehicle> {
     const { data, error } = await this.supabase
       .from("vehicles")

@@ -1,7 +1,6 @@
 import { createInstructor, updateInstructor } from "./actions";
 import { FullNameInput } from "@/components/ui/full-name-input";
 import { PhoneInput } from "@/components/ui/phone-input";
-import { inputClass } from "@/components/ui/input-classes";
 import { Button } from "@/components/ui/button";
 import { LICENSE_CLASSES } from "../students/types";
 import type { Instructor } from "./instructor.model";
@@ -22,22 +21,25 @@ export function TutorForm({ instructor }: { instructor?: Instructor }) {
           <PhoneInput defaultValue={instructor?.phone.replace(/^\+90/, "")} />
         </div>
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        License classes
-        <select
-          name="license_classes"
-          multiple
-          required
-          defaultValue={instructor?.licenseClasses as string[] | undefined}
-          className={`${inputClass} h-32`}
-        >
+      <fieldset className="flex flex-col gap-1 text-sm">
+        <legend className="mb-1">License classes</legend>
+        <div className="flex flex-col divide-y divide-border rounded-md border border-border bg-surface">
           {LICENSE_CLASSES.map((licenseClass) => (
-            <option key={licenseClass} value={licenseClass}>
+            <label
+              key={licenseClass}
+              className="flex items-center gap-3 px-3 py-2 hover:bg-background"
+            >
+              <input
+                type="checkbox"
+                name="license_classes"
+                value={licenseClass}
+                defaultChecked={instructor?.licenseClasses.includes(licenseClass)}
+              />
               {licenseClass}
-            </option>
+            </label>
           ))}
-        </select>
-      </label>
+        </div>
+      </fieldset>
       <Button type="submit">
         {instructor ? "Save changes" : "Register tutor"}
       </Button>

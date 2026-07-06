@@ -51,6 +51,7 @@ export function ExamSessionForm({
           required
           defaultValue={session ? toLocalDateTimeValue(session.startsAt()) : undefined}
           className={inputClass}
+          minDate={new Date()}
         />
       </label>
       <label className="flex flex-col gap-1 text-sm">

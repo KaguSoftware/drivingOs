@@ -16,6 +16,17 @@ export class VehicleDamageRecordRepository {
     return (data as VehicleDamageRecordRow[]).map((row) => new VehicleDamageRecord(row));
   }
 
+  async listOpen(): Promise<VehicleDamageRecord[]> {
+    const { data, error } = await this.supabase
+      .from("vehicle_damage_records")
+      .select("*")
+      .neq("status", "resolved")
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(`Failed to list open damage records: ${error.message}`);
+    return (data as VehicleDamageRecordRow[]).map((row) => new VehicleDamageRecord(row));
+  }
+
   async create(input: NewVehicleDamageRecordInput): Promise<VehicleDamageRecord> {
     const { data, error } = await this.supabase
       .from("vehicle_damage_records")

@@ -22,12 +22,12 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-background">
-      <aside className="flex w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar px-4 py-6">
+      <aside className="group/sidebar flex w-20 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar px-4 py-6 transition-[width] duration-200 ease-in-out hover:w-64">
         <Link href="/admin/students" className="mb-8 flex items-center gap-2.5 px-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
             DO
           </span>
-          <span className="text-base font-semibold tracking-tight text-sidebar-foreground">
+          <span className="whitespace-nowrap text-base font-semibold tracking-tight text-sidebar-foreground opacity-0 transition-opacity duration-200 group-hover/sidebar:opacity-100">
             Driving School OS
           </span>
         </Link>
@@ -37,12 +37,14 @@ export default async function DashboardLayout({
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar-active text-xs font-semibold text-primary-foreground">
               {initial}
             </span>
-            <p className="truncate text-xs text-sidebar-muted">{user.email}</p>
+            <p className="truncate whitespace-nowrap text-xs text-sidebar-muted opacity-0 transition-opacity duration-200 group-hover/sidebar:opacity-100">
+              {user.email}
+            </p>
           </div>
           <form action={logout}>
             <button
               type="submit"
-              className="w-full rounded-lg px-3 py-2 text-left text-sm text-sidebar-muted transition-colors hover:bg-background hover:text-sidebar-foreground"
+              className="w-full whitespace-nowrap rounded-lg px-3 py-2 text-left text-sm text-sidebar-muted opacity-0 transition-opacity duration-200 hover:bg-background hover:text-sidebar-foreground group-hover/sidebar:opacity-100"
             >
               Log out
             </button>

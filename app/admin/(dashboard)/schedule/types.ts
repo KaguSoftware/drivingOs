@@ -22,3 +22,23 @@ export interface NewLessonInput {
   starts_at: string;
   ends_at: string;
 }
+
+// Plain, serializable shapes for passing into the client-side LessonForm
+// (class instances lose their prototype methods across the RSC boundary).
+export interface LessonFormStudent {
+  id: string;
+  fullName: string;
+  licenseClass: string;
+}
+
+export interface LessonFormInstructor {
+  id: string;
+  fullName: string;
+  licenseClasses: string[];
+}
+
+export interface LessonFormVehicle {
+  id: string;
+  plate: string;
+  licenseClass: string;
+}

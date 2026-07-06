@@ -4,8 +4,14 @@ import { StudentRepository } from "../../students/student.repository";
 import { InstructorRepository } from "../../tutors/instructor.repository";
 import { VehicleRepository } from "../../vehicles/vehicle.repository";
 import { LessonForm } from "../lesson-form";
+import { toFormInstructors, toFormStudents, toFormVehicles } from "../form-data";
 
-export default async function NewLessonPage() {
+export default async function NewLessonPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ starts_at?: string }>;
+}) {
+  const { starts_at } = await searchParams;
   const supabase = await createSupabaseServerClient();
   const students = await new StudentRepository(supabase).listAll();
   const instructors = await new InstructorRepository(supabase).listAll();
@@ -15,7 +21,12 @@ export default async function NewLessonPage() {
     <section className="flex flex-col gap-6">
       <BackLink href="../" label="Back to schedule" />
       <h1 className="text-2xl font-semibold">Book lesson</h1>
-      <LessonForm students={students} instructors={instructors} vehicles={vehicles} />
+      <LessonForm
+        students={toFormStudents(students)}
+        instructors={toFormInstructors(instructors)}
+        vehicles={toFormVehicles(vehicles)}
+        defaultStartsAt={starts_at}
+      />
     </section>
   );
 }

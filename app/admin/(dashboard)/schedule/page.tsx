@@ -4,50 +4,75 @@ import { buttonClasses, primaryLinkClass } from "@/components/ui/button";
 import { LessonRepository } from "./lesson.repository";
 import { ExamSessionRepository } from "../exams/exam-session.repository";
 import { WeeklyCalendar } from "./weekly-calendar";
-
-function startOfWeek(date: Date): Date {
-  const day = date.getDay();
-  const diff = (day === 0 ? -6 : 1) - day; // Monday as first day
-  const monday = new Date(date);
-  monday.setHours(0, 0, 0, 0);
-  monday.setDate(monday.getDate() + diff);
-  return monday;
-}
+import { MonthlyCalendar } from "./monthly-calendar";
+import {
+  addMonths,
+  parseDateParam,
+  parseMonthParam,
+  startOfMonth,
+  startOfWeek,
+  toDateParam,
+  toMonthParam,
+  weekLabel,
+} from "./date-utils";
 
 export default async function SchedulePage({
   searchParams,
 }: {
-  searchParams: Promise<{ week?: string }>;
+  searchParams: Promise<{ view?: string; week?: string; month?: string }>;
 }) {
-  const { week } = await searchParams;
-  const weekStart = startOfWeek(week ? new Date(week) : new Date());
-  const weekEnd = new Date(weekStart);
-  weekEnd.setDate(weekEnd.getDate() + 7);
-
-  const prevWeek = new Date(weekStart);
-  prevWeek.setDate(prevWeek.getDate() - 7);
-  const nextWeek = new Date(weekStart);
-  nextWeek.setDate(nextWeek.getDate() + 7);
+  const { view, week, month } = await searchParams;
+  const isMonthView = view === "month";
 
   const supabase = await createSupabaseServerClient();
-  const lessons = await new LessonRepository(supabase).listForWeek(weekStart, weekEnd);
-  const examSessions = await new ExamSessionRepository(supabase).listForWeek(weekStart, weekEnd);
+  const lessonRepository = new LessonRepository(supabase);
+  const examSessionRepository = new ExamSessionRepository(supabase);
+
+  const weekStart = startOfWeek(week ? parseDateParam(week) : new Date());
+  const monthStart = startOfMonth(month ? parseMonthParam(month) : new Date());
+
+  const rangeStart = isMonthView ? new Date(monthStart.getFullYear(), monthStart.getMonth(), 1 - 7) : weekStart;
+  const rangeEnd = isMonthView
+    ? new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 7)
+    : new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 7);
+
+  const lessons = await lessonRepository.listForWeek(rangeStart, rangeEnd);
+  const examSessions = await examSessionRepository.listForWeek(rangeStart, rangeEnd);
+
+  const prevHref = isMonthView
+    ? `/admin/schedule?view=month&month=${toMonthParam(addMonths(monthStart, -1))}`
+    : `/admin/schedule?week=${toDateParam(new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() - 7))}`;
+  const nextHref = isMonthView
+    ? `/admin/schedule?view=month&month=${toMonthParam(addMonths(monthStart, 1))}`
+    : `/admin/schedule?week=${toDateParam(new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 7))}`;
 
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Weekly Schedule</h1>
+        <h1 className="text-2xl font-semibold">
+          {isMonthView
+            ? monthStart.toLocaleDateString(undefined, { month: "long", year: "numeric" })
+            : weekLabel(weekStart)}
+        </h1>
         <div className="flex items-center gap-2">
-          <Link
-            href={`/admin/schedule?week=${prevWeek.toISOString().slice(0, 10)}`}
-            className={buttonClasses("secondary")}
-          >
+          <div className="flex overflow-hidden rounded-md border border-border">
+            <Link
+              href={`/admin/schedule?week=${toDateParam(weekStart)}`}
+              className={`px-3 py-1.5 text-sm ${!isMonthView ? "bg-primary text-primary-foreground" : ""}`}
+            >
+              Week
+            </Link>
+            <Link
+              href={`/admin/schedule?view=month&month=${toMonthParam(monthStart)}`}
+              className={`px-3 py-1.5 text-sm ${isMonthView ? "bg-primary text-primary-foreground" : ""}`}
+            >
+              Month
+            </Link>
+          </div>
+          <Link href={prevHref} className={buttonClasses("secondary")}>
             Previous
           </Link>
-          <Link
-            href={`/admin/schedule?week=${nextWeek.toISOString().slice(0, 10)}`}
-            className={buttonClasses("secondary")}
-          >
+          <Link href={nextHref} className={buttonClasses("secondary")}>
             Next
           </Link>
           <Link href="/admin/schedule/new" className={primaryLinkClass}>
@@ -58,7 +83,11 @@ export default async function SchedulePage({
           </Link>
         </div>
       </div>
-      <WeeklyCalendar weekStart={weekStart} lessons={lessons} examSessions={examSessions} />
+      {isMonthView ? (
+        <MonthlyCalendar monthStart={monthStart} lessons={lessons} examSessions={examSessions} />
+      ) : (
+        <WeeklyCalendar weekStart={weekStart} lessons={lessons} examSessions={examSessions} />
+      )}
     </section>
   );
 }

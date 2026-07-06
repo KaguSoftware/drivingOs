@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { assertNotPast } from "@/lib/scheduling-guards";
 import { ExamSession } from "./exam-session.model";
 import type { ExamSessionRow, NewExamSessionInput } from "./types";
 
@@ -42,6 +43,8 @@ export class ExamSessionRepository {
   }
 
   async create(input: NewExamSessionInput): Promise<ExamSession> {
+    assertNotPast(input.starts_at);
+
     const { data, error } = await this.supabase
       .from("exam_sessions")
       .insert(input)
@@ -53,6 +56,8 @@ export class ExamSessionRepository {
   }
 
   async update(id: string, input: NewExamSessionInput): Promise<ExamSession> {
+    assertNotPast(input.starts_at);
+
     const { data, error } = await this.supabase
       .from("exam_sessions")
       .update(input)
