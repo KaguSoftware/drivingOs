@@ -37,8 +37,3 @@ supabase/migrations/        SQL migrations (append-only)
 AGENTS.md                   the agent contract — read first
 ```
 
-## Current status
-
-- ✅ Student registry: list + register (domain model, repository, server action)
-- ✅ Core schema: students, instructors, vehicles (RLS placeholders)
-- ❌ Scheduling, payments/taksit, exams/documents, auth flow — yours to build
