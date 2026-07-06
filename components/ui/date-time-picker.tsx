@@ -78,7 +78,7 @@ export function DateTimePicker({
         }
       >
         {selectedDate
-          ? `${selectedDate.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })} · ${timePart}`
+          ? `${selectedDate.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" })} · ${timePart}`
           : "Tarih ve saat seçin"}
       </button>
 

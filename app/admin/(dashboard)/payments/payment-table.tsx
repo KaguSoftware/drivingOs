@@ -20,8 +20,8 @@ export function PaymentTable({
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Student</th>
-            <th className="px-4 py-3 font-medium">Remaining debt</th>
+            <th className="px-4 py-3 font-medium">Öğrenci</th>
+            <th className="px-4 py-3 font-medium">Kalan borç</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>

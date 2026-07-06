@@ -24,7 +24,7 @@ export function ViolationTable({ violations }: { violations: VehicleViolation[] 
           {violations.map((violation) => (
             <tr key={violation.id}>
               <td className="px-4 py-3 font-medium">{violation.violationType}</td>
-              <td className="px-4 py-3">{violation.violationDate().toLocaleDateString()}</td>
+              <td className="px-4 py-3">{violation.violationDate().toLocaleDateString("tr-TR")}</td>
               <td className="px-4 py-3">{violation.fineAmount ?? "-"}</td>
               <td className="px-4 py-3">{violation.description}</td>
               <td className="px-4 py-3 text-right">

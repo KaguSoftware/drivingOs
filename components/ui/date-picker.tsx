@@ -53,7 +53,7 @@ export function DatePicker({
         }
       >
         {selectedDate
-          ? selectedDate.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
+          ? selectedDate.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" })
           : "Tarih seçin"}
       </button>
 

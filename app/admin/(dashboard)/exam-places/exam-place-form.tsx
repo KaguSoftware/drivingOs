@@ -25,7 +25,7 @@ export function ExamPlaceForm({
     <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
       <form action={action} className="flex flex-1 flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
-          Name
+          Ad
           <input name="name" required defaultValue={name} className={inputClass} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -39,11 +39,11 @@ export function ExamPlaceForm({
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Notes
+          Notlar
           <input name="notes" defaultValue={notes ?? undefined} className={inputClass} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          YouTube video URL
+          YouTube video adresi
           <input
             name="youtube_url"
             type="url"
@@ -52,7 +52,7 @@ export function ExamPlaceForm({
             className={inputClass}
           />
         </label>
-        <Button type="submit">{id ? "Save changes" : "Add exam place"}</Button>
+        <Button type="submit">{id ? "Değişiklikleri kaydet" : "Sınav yeri ekle"}</Button>
       </form>
 
       {address.trim() && (

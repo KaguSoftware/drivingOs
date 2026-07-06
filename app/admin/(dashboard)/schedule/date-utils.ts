@@ -42,10 +42,10 @@ export function weekLabel(weekStart: Date): string {
   const weekEnd = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + 6);
 
   if (weekStart.getMonth() === weekEnd.getMonth() && weekStart.getFullYear() === weekEnd.getFullYear()) {
-    return weekStart.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    return weekStart.toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
   }
 
-  const startLabel = weekStart.toLocaleDateString(undefined, { month: "short" });
-  const endLabel = weekEnd.toLocaleDateString(undefined, { month: "short", year: "numeric" });
+  const startLabel = weekStart.toLocaleDateString("tr-TR", { month: "short" });
+  const endLabel = weekEnd.toLocaleDateString("tr-TR", { month: "short", year: "numeric" });
   return `${startLabel} – ${endLabel}`;
 }

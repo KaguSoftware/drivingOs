@@ -6,7 +6,7 @@ import { deleteInstallment } from "../actions";
 
 export function InstallmentTable({ installments }: { installments: PaymentInstallment[] }) {
   if (installments.length === 0) {
-    return <p className={emptyStateClass}>No installments.</p>;
+    return <p className={emptyStateClass}>Bu öğrenci için taksit yok.</p>;
   }
 
   return (
@@ -26,7 +26,7 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
         <tbody className={tbodyClass}>
           {installments.map((installment) => (
             <tr key={installment.id}>
-              <td className="px-4 py-3">{installment.dueDate().toLocaleDateString()}</td>
+              <td className="px-4 py-3">{installment.dueDate().toLocaleDateString("tr-TR")}</td>
               <td className="px-4 py-3">{installment.amount.toFixed(2)}</td>
               <td className="px-4 py-3">{installment.amountPaid.toFixed(2)}</td>
               <td className="px-4 py-3">{installment.remainingDebt().toFixed(2)}</td>

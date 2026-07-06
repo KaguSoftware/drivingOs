@@ -29,7 +29,7 @@ export default async function ExamSessionPage({
         <div>
           <h1 className="text-2xl font-semibold">{session.examPlaceName}</h1>
           <p className="text-sm text-muted">
-            {session.startsAt().toLocaleString()} &middot; Gözetmen: {session.instructorName}
+            {session.startsAt().toLocaleString("tr-TR")} &middot; Gözetmen: {session.instructorName}
           </p>
         </div>
         <div className="flex items-center gap-3">

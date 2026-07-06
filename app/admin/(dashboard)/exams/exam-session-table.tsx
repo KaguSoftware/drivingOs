@@ -25,7 +25,7 @@ export function ExamSessionTable({ sessions }: { sessions: ExamSession[] }) {
             <tr key={session.id}>
               <td className="px-4 py-3 font-medium">
                 <Link href={`/admin/exams/${session.id}`} className="hover:underline">
-                  {session.startsAt().toLocaleString()}
+                  {session.startsAt().toLocaleString("tr-TR")}
                 </Link>
               </td>
               <td className="px-4 py-3">{session.examPlaceName}</td>

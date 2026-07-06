@@ -59,7 +59,7 @@ export function ExamSessionForm({
       </label>
       {students && students.length > 0 && (
         <fieldset className="flex flex-col gap-1 text-sm">
-          <legend className="mb-1">Students</legend>
+          <legend className="mb-1">Öğrenciler</legend>
           <div className="flex max-h-48 flex-col gap-1 overflow-y-auto rounded border border-border p-2">
             {students.map((student) => (
               <label key={student.id} className="flex items-center gap-2">
@@ -70,7 +70,7 @@ export function ExamSessionForm({
           </div>
         </fieldset>
       )}
-      <Button type="submit">{session ? "Save changes" : "Schedule exam"}</Button>
+      <Button type="submit">{session ? "Değişiklikleri kaydet" : "Sınav planla"}</Button>
     </form>
   );
 }

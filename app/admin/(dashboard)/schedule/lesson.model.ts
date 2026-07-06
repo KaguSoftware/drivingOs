@@ -42,8 +42,8 @@ export class Lesson {
   whatsAppLink(): string {
     const phone = this.row.students?.phone ?? "";
     const digits = phone.replace(/\D/g, "");
-    const date = this.startsAt().toLocaleDateString();
-    const time = this.startsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const date = this.startsAt().toLocaleDateString("tr-TR");
+    const time = this.startsAt().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" });
     const message = `Merhaba ${this.studentName}, ${date} tarihinde saat ${time}'da direksiyon dersiniz olduğunu hatırlatmak isteriz.`;
     return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   }

@@ -36,7 +36,7 @@ export function VehiclePeriodicCheckTable({ checks }: { checks: VehiclePeriodicC
                 {check.vehiclePlate} &middot; {check.vehicleMakeModel}
               </td>
               <td className="px-4 py-3">{check.checkTypeLabel()}</td>
-              <td className="px-4 py-3">{check.dueDate().toLocaleDateString()}</td>
+              <td className="px-4 py-3">{check.dueDate().toLocaleDateString("tr-TR")}</td>
               <td className={`px-4 py-3 font-medium ${STATUS_COLORS[check.status()]}`}>
                 {check.statusLabel()}
               </td>

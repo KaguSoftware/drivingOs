@@ -14,9 +14,9 @@ export function ExamPlaceTable({ places }: { places: ExamPlace[] }) {
       <table className="w-full text-left text-sm">
         <thead className={theadClass}>
           <tr>
-            <th className="px-4 py-3 font-medium">Name</th>
-            <th className="px-4 py-3 font-medium">Address</th>
-            <th className="px-4 py-3 font-medium">Video URL</th>
+            <th className="px-4 py-3 font-medium">Ad</th>
+            <th className="px-4 py-3 font-medium">Adres</th>
+            <th className="px-4 py-3 font-medium">Video Adresi</th>
             <th className="px-4 py-3 font-medium"></th>
           </tr>
         </thead>

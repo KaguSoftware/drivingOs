@@ -51,7 +51,7 @@ export default async function SchedulePage({
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">
           {isMonthView
-            ? monthStart.toLocaleDateString(undefined, { month: "long", year: "numeric" })
+            ? monthStart.toLocaleDateString("tr-TR", { month: "long", year: "numeric" })
             : weekLabel(weekStart)}
         </h1>
         <div className="flex items-center gap-2">
