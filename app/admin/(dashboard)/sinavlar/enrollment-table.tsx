@@ -20,14 +20,14 @@ export function EnrollmentTable({
         <thead className={theadClass}>
           <tr>
             <th className="px-4 py-3 font-medium">Öğrenci</th>
-            <th className="px-4 py-3 font-medium">Sil</th>
+            <th className="w-px px-4 py-3 font-medium"></th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
           {enrollments.map((enrollment) => (
             <tr key={enrollment.id}>
               <td className="px-4 py-3">{enrollment.studentName}</td>
-              <td className="px-4 py-3">
+              <td className="w-px px-4 py-3 text-right whitespace-nowrap">
                 <DeleteButton
                   action={deleteEnrollment.bind(null, enrollment.id, examSessionId)}
                   confirmMessage="Bu kayıt kaldırılsın mı?"
