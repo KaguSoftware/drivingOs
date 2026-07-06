@@ -81,13 +81,13 @@ const ExamsIcon = (props: IconProps) => (
 );
 
 export const NAV_ICONS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], (props: IconProps) => React.JSX.Element> = {
-  "/admin/students": StudentsIcon,
-  "/admin/vehicles": VehiclesIcon,
-  "/admin/damaged-vehicles": DamagedVehiclesIcon,
-  "/admin/vehicle-checks": VehicleChecksIcon,
-  "/admin/schedule": ScheduleIcon,
-  "/admin/tutors": TutorsIcon,
-  "/admin/payments": PaymentsIcon,
-  "/admin/exam-places": ExamPlacesIcon,
-  "/admin/exams": ExamsIcon,
+  "/admin/ogrenciler": StudentsIcon,
+  "/admin/araclar": VehiclesIcon,
+  "/admin/hasarli-araclar": DamagedVehiclesIcon,
+  "/admin/arac-periyodik-bakimlari": VehicleChecksIcon,
+  "/admin/program": ScheduleIcon,
+  "/admin/egitmenler": TutorsIcon,
+  "/admin/odemeler": PaymentsIcon,
+  "/admin/sinav-yerleri": ExamPlacesIcon,
+  "/admin/sinavlar": ExamsIcon,
 };

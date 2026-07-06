@@ -1,0 +1,32 @@
+import { BackLink } from "@/components/ui/back-link";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { StudentRepository } from "../../ogrenciler/student.repository";
+import { InstructorRepository } from "../../egitmenler/instructor.repository";
+import { VehicleRepository } from "../../araclar/vehicle.repository";
+import { LessonForm } from "../lesson-form";
+import { toFormInstructors, toFormStudents, toFormVehicles } from "../form-data";
+
+export default async function NewLessonPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ starts_at?: string }>;
+}) {
+  const { starts_at } = await searchParams;
+  const supabase = await createSupabaseServerClient();
+  const students = await new StudentRepository(supabase).listAll();
+  const instructors = await new InstructorRepository(supabase).listAll();
+  const vehicles = await new VehicleRepository(supabase).listAll();
+
+  return (
+    <section className="flex flex-col gap-6">
+      <BackLink href="../" label="Programa dön" />
+      <h1 className="text-2xl font-semibold">Ders planla</h1>
+      <LessonForm
+        students={toFormStudents(students)}
+        instructors={toFormInstructors(instructors)}
+        vehicles={toFormVehicles(vehicles)}
+        defaultStartsAt={starts_at}
+      />
+    </section>
+  );
+}

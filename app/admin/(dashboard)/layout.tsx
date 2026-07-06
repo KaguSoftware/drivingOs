@@ -15,7 +15,7 @@ export default async function DashboardLayout({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/admin/login");
+    redirect("/admin/giris");
   }
 
   const initial = user.email?.charAt(0).toUpperCase() ?? "?";
@@ -23,7 +23,7 @@ export default async function DashboardLayout({
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="group/sidebar flex w-20 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar px-4 py-6 transition-[width] duration-200 ease-in-out hover:w-64">
-        <Link href="/admin/students" className="mb-8 flex items-center gap-2.5 px-2">
+        <Link href="/admin/ogrenciler" className="mb-8 flex items-center gap-2.5 px-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
             DO
           </span>

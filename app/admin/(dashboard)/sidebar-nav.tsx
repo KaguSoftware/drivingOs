@@ -6,15 +6,15 @@ import { DASHBOARD_PATH_PREFIXES } from "@/lib/routes";
 import { NAV_ICONS } from "./nav-icons";
 
 const NAV_LABELS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], string> = {
-  "/admin/students": "Öğrenciler",
-  "/admin/vehicles": "Araçlar",
-  "/admin/damaged-vehicles": "Hasarlı Araçlar",
-  "/admin/vehicle-checks": "Araç Periyodik Bakımları",
-  "/admin/schedule": "Haftalık Program",
-  "/admin/tutors": "Eğitmenler",
-  "/admin/payments": "Ödeme Takibi",
-  "/admin/exam-places": "Sınav Yerleri",
-  "/admin/exams": "Sınavlar",
+  "/admin/ogrenciler": "Öğrenciler",
+  "/admin/araclar": "Araçlar",
+  "/admin/hasarli-araclar": "Hasarlı Araçlar",
+  "/admin/arac-periyodik-bakimlari": "Araç Periyodik Bakımları",
+  "/admin/program": "Haftalık Program",
+  "/admin/egitmenler": "Eğitmenler",
+  "/admin/odemeler": "Ödeme Takibi",
+  "/admin/sinav-yerleri": "Sınav Yerleri",
+  "/admin/sinavlar": "Sınavlar",
 };
 
 const NAV_ITEMS = DASHBOARD_PATH_PREFIXES.map((href) => ({

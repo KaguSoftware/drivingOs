@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { StudentRepository } from "@/app/admin/(dashboard)/students/student.repository";
-import { buildMebPdf } from "@/app/admin/(dashboard)/students/meb-pdf";
+import { StudentRepository } from "@/app/admin/(dashboard)/ogrenciler/student.repository";
+import { buildMebPdf } from "@/app/admin/(dashboard)/ogrenciler/meb-pdf";
 
 export const runtime = "nodejs";
 
