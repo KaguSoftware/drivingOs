@@ -1,4 +1,5 @@
 import { buildMapsEmbedUrl } from "@/lib/maps";
+import { buildYoutubeEmbedUrl } from "@/lib/youtube";
 import type { LookupRpcRow } from "./types";
 
 export class UpcomingExam {
@@ -30,5 +31,9 @@ export class UpcomingExam {
 
   mapsEmbedUrl(): string {
     return buildMapsEmbedUrl(this.row.exam_place_address);
+  }
+
+  youtubeEmbedUrl(): string | null {
+    return this.row.youtube_url ? buildYoutubeEmbedUrl(this.row.youtube_url) : null;
   }
 }

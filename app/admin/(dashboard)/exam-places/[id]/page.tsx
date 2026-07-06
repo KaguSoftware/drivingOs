@@ -17,6 +17,7 @@ export default async function ExamPlaceDetailPage({
       address={place.address}
       notes={place.notes}
       mapsEmbedUrl={place.mapsEmbedUrl()}
+      youtubeEmbedUrl={place.youtubeEmbedUrl()}
     />
   );
 }

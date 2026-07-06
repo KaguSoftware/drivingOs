@@ -11,6 +11,7 @@ function parseExamPlaceInput(formData: FormData): NewExamPlaceInput {
     name: String(formData.get("name") ?? "").trim(),
     address: String(formData.get("address") ?? "").trim(),
     notes: String(formData.get("notes") ?? "").trim() || null,
+    youtube_url: String(formData.get("youtube_url") ?? "").trim() || null,
   };
 }
 

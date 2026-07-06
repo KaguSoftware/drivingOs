@@ -6,7 +6,7 @@ import { deleteInstallment } from "../actions";
 
 export function InstallmentTable({ installments }: { installments: PaymentInstallment[] }) {
   if (installments.length === 0) {
-    return <p className={emptyStateClass}>No installments for this student.</p>;
+    return <p className={emptyStateClass}>No installments.</p>;
   }
 
   return (

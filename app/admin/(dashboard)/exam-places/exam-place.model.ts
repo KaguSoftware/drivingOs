@@ -1,4 +1,5 @@
 import { buildMapsEmbedUrl } from "@/lib/maps";
+import { buildYoutubeEmbedUrl } from "@/lib/youtube";
 import type { ExamPlaceRow } from "./types";
 
 export class ExamPlace {
@@ -20,7 +21,15 @@ export class ExamPlace {
     return this.row.notes;
   }
 
+  get youtubeUrl() {
+    return this.row.youtube_url;
+  }
+
   mapsEmbedUrl(): string {
     return buildMapsEmbedUrl(this.row.address);
+  }
+
+  youtubeEmbedUrl(): string | null {
+    return this.row.youtube_url ? buildYoutubeEmbedUrl(this.row.youtube_url) : null;
   }
 }

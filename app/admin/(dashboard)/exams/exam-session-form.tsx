@@ -4,6 +4,7 @@ import { inputClass } from "@/components/ui/input-classes";
 import { Button } from "@/components/ui/button";
 import type { ExamPlace } from "../exam-places/exam-place.model";
 import type { Instructor } from "../tutors/instructor.model";
+import type { Student } from "../students/student.model";
 import type { ExamSession } from "./exam-session.model";
 
 function toLocalDateTimeValue(date: Date): string {
@@ -14,10 +15,12 @@ function toLocalDateTimeValue(date: Date): string {
 export function ExamSessionForm({
   examPlaces,
   instructors,
+  students,
   session,
 }: {
   examPlaces: ExamPlace[];
   instructors: Instructor[];
+  students?: Student[];
   session?: ExamSession;
 }) {
   const action = session ? updateExamSession.bind(null, session.id) : createExamSession;
@@ -54,15 +57,19 @@ export function ExamSessionForm({
           minDate={new Date()}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        Ends at
-        <DateTimePicker
-          name="ends_at"
-          required
-          defaultValue={session ? toLocalDateTimeValue(session.endsAt()) : undefined}
-          className={inputClass}
-        />
-      </label>
+      {students && students.length > 0 && (
+        <fieldset className="flex flex-col gap-1 text-sm">
+          <legend className="mb-1">Students</legend>
+          <div className="flex max-h-48 flex-col gap-1 overflow-y-auto rounded border border-border p-2">
+            {students.map((student) => (
+              <label key={student.id} className="flex items-center gap-2">
+                <input type="checkbox" name="student_ids" value={student.id} />
+                {student.fullName}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
       <Button type="submit">{session ? "Save changes" : "Schedule exam"}</Button>
     </form>
   );

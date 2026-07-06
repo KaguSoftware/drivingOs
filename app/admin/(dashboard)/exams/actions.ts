@@ -7,12 +7,16 @@ import { ExamSessionRepository } from "./exam-session.repository";
 import { ExamEnrollmentRepository } from "./exam-enrollment.repository";
 import type { NewExamSessionInput } from "./types";
 
+const EXAM_DURATION_MS = 60 * 60 * 1000;
+
 function parseExamSessionInput(formData: FormData): NewExamSessionInput {
+  const startsAt = new Date(String(formData.get("starts_at") ?? ""));
+
   return {
     exam_place_id: String(formData.get("exam_place_id") ?? ""),
     instructor_id: String(formData.get("instructor_id") ?? ""),
-    starts_at: new Date(String(formData.get("starts_at") ?? "")).toISOString(),
-    ends_at: new Date(String(formData.get("ends_at") ?? "")).toISOString(),
+    starts_at: startsAt.toISOString(),
+    ends_at: new Date(startsAt.getTime() + EXAM_DURATION_MS).toISOString(),
   };
 }
 
@@ -21,6 +25,16 @@ export async function createExamSession(formData: FormData): Promise<void> {
   const repository = new ExamSessionRepository(supabase);
 
   const session = await repository.create(parseExamSessionInput(formData));
+
+  const studentIds = formData.getAll("student_ids").map(String);
+  if (studentIds.length > 0) {
+    const enrollmentRepository = new ExamEnrollmentRepository(supabase);
+    await Promise.all(
+      studentIds.map((studentId) =>
+        enrollmentRepository.enroll({ exam_session_id: session.id, student_id: studentId }),
+      ),
+    );
+  }
 
   revalidatePath("/admin/schedule");
   redirect(`/admin/exams/${session.id}`);

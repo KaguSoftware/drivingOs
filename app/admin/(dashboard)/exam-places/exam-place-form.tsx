@@ -4,18 +4,29 @@ import { useState } from "react";
 import { createExamPlace, updateExamPlace } from "./actions";
 import { inputClass } from "@/components/ui/input-classes";
 import { Button } from "@/components/ui/button";
-import type { ExamPlace } from "./exam-place.model";
 
-export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
-  const [address, setAddress] = useState(examPlace?.address ?? "");
-  const action = examPlace ? updateExamPlace.bind(null, examPlace.id) : createExamPlace;
+export function ExamPlaceForm({
+  id,
+  name,
+  address: initialAddress,
+  notes,
+  youtubeUrl,
+}: {
+  id?: string;
+  name?: string;
+  address?: string;
+  notes?: string | null;
+  youtubeUrl?: string | null;
+}) {
+  const [address, setAddress] = useState(initialAddress ?? "");
+  const action = id ? updateExamPlace.bind(null, id) : createExamPlace;
 
   return (
     <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
       <form action={action} className="flex flex-1 flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Name
-          <input name="name" required defaultValue={examPlace?.name} className={inputClass} />
+          <input name="name" required defaultValue={name} className={inputClass} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Address
@@ -29,9 +40,19 @@ export function ExamPlaceForm({ examPlace }: { examPlace?: ExamPlace }) {
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Notes
-          <input name="notes" defaultValue={examPlace?.notes ?? undefined} className={inputClass} />
+          <input name="notes" defaultValue={notes ?? undefined} className={inputClass} />
         </label>
-        <Button type="submit">{examPlace ? "Save changes" : "Add exam place"}</Button>
+        <label className="flex flex-col gap-1 text-sm">
+          YouTube video URL
+          <input
+            name="youtube_url"
+            type="url"
+            placeholder="https://www.youtube.com/watch?v=..."
+            defaultValue={youtubeUrl ?? undefined}
+            className={inputClass}
+          />
+        </label>
+        <Button type="submit">{id ? "Save changes" : "Add exam place"}</Button>
       </form>
 
       {address.trim() && (

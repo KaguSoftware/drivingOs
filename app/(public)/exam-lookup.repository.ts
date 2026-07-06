@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { UpcomingExam } from "./exam-lookup.model";
-import type { LookupRpcRow } from "./types";
+import type { LookupRpcRow, StudentLookupRpcRow } from "./types";
 
 export class ExamLookupRepository {
   constructor(private readonly supabase: SupabaseClient) {}
@@ -14,12 +14,13 @@ export class ExamLookupRepository {
     return (data as LookupRpcRow[]).map((row) => new UpcomingExam(row));
   }
 
-  async nationalIdExists(nationalId: string): Promise<boolean> {
-    const { data, error } = await this.supabase.rpc("national_id_exists", {
+  async findStudentFullName(nationalId: string): Promise<string | null> {
+    const { data, error } = await this.supabase.rpc("lookup_student_by_national_id", {
       p_national_id: nationalId,
     });
 
-    if (error) throw new Error(`Failed to check national id: ${error.message}`);
-    return Boolean(data);
+    if (error) throw new Error(`Failed to look up student: ${error.message}`);
+    const rows = data as StudentLookupRpcRow[];
+    return rows[0]?.full_name ?? null;
   }
 }
