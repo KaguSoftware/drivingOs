@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
+import { ConfirmDialog } from "./confirm-dialog";
 
 export function RowActionsMenu({
   editHref,
@@ -79,24 +80,20 @@ export function RowActionsMenu({
             >
               Düzenle
             </Link>
-            <form
+            <ConfirmDialog
+              message={deleteConfirmMessage}
               action={deleteAction}
-              onSubmit={(event) => {
-                if (!window.confirm(deleteConfirmMessage)) {
-                  event.preventDefault();
-                } else {
-                  setOpen(false);
-                }
-              }}
-            >
-              <button
-                type="submit"
-                role="menuitem"
-                className="block w-full px-3 py-2 text-left text-sm text-danger hover:bg-white"
-              >
-                Sil
-              </button>
-            </form>
+              trigger={(show) => (
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={show}
+                  className="block w-full px-3 py-2 text-left text-sm text-danger hover:bg-white"
+                >
+                  Sil
+                </button>
+              )}
+            />
           </div>,
           document.body
         )}

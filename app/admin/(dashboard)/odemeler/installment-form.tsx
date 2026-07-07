@@ -1,7 +1,7 @@
 import { createInstallment } from "./actions";
 import { DatePicker } from "@/components/ui/date-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import type { Student } from "../ogrenciler/student.model";
 
 export function InstallmentForm({ students }: { students: Student[] }) {
@@ -29,7 +29,7 @@ export function InstallmentForm({ students }: { students: Student[] }) {
         Ay sayısı (toplam = tutar &times; ay sayısı)
         <input name="months" type="number" min={1} step={1} defaultValue={1} className={inputClass} />
       </label>
-      <Button type="submit">Taksit ekle</Button>
+      <SubmitButton>Taksit ekle</SubmitButton>
     </form>
   );
 }

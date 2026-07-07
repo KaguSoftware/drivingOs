@@ -1,7 +1,7 @@
 import { updateInstallment } from "../actions";
 import { DatePicker } from "@/components/ui/date-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import type { PaymentInstallment } from "../payment-installment.model";
 
 export function EditInstallmentForm({ installment }: { installment: PaymentInstallment }) {
@@ -28,7 +28,7 @@ export function EditInstallmentForm({ installment }: { installment: PaymentInsta
           className={inputClass}
         />
       </label>
-      <Button type="submit">Değişiklikleri kaydet</Button>
+      <SubmitButton>Değişiklikleri kaydet</SubmitButton>
     </form>
   );
 }

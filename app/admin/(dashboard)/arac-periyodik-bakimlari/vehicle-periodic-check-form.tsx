@@ -1,7 +1,7 @@
 import { createPeriodicCheck, updatePeriodicCheck } from "./actions";
 import { DatePicker } from "@/components/ui/date-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { CHECK_TYPES } from "./types";
 import type { Vehicle } from "../araclar/vehicle.model";
 import type { VehiclePeriodicCheck } from "./vehicle-periodic-check.model";
@@ -54,9 +54,9 @@ export function VehiclePeriodicCheckForm({
         Sağlayıcı
         <input name="provider" defaultValue={check?.provider ?? undefined} className={inputClass} />
       </label>
-      <Button type="submit">
+      <SubmitButton>
         {check ? "Değişiklikleri kaydet" : "Kontrol ekle"}
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

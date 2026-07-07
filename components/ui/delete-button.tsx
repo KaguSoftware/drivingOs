@@ -1,26 +1,24 @@
 "use client";
 
 import { buttonClasses } from "./button";
+import { ConfirmDialog } from "./confirm-dialog";
 
 export function DeleteButton({
   action,
-  confirmMessage = "Bu silinsin mi? Bu işlem geri alınamaz.",
+  confirmMessage = "Bu silinsin mi?",
 }: {
   action: () => Promise<void>;
   confirmMessage?: string;
 }) {
   return (
-    <form
+    <ConfirmDialog
+      message={confirmMessage}
       action={action}
-      onSubmit={(event) => {
-        if (!window.confirm(confirmMessage)) {
-          event.preventDefault();
-        }
-      }}
-    >
-      <button type="submit" className={buttonClasses("danger")}>
-        Sil
-      </button>
-    </form>
+      trigger={(show) => (
+        <button type="button" onClick={show} className={buttonClasses("danger")}>
+          Sil
+        </button>
+      )}
+    />
   );
 }

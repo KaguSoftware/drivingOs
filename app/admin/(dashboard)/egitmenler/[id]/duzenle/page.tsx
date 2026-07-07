@@ -2,6 +2,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { InstructorRepository } from "../../instructor.repository";
 import { TutorForm } from "../../tutor-form";
+import { loadVehicleOptions } from "../../vehicle-options";
 import { deleteInstructor } from "../../actions";
 
 export default async function EditTutorPage({
@@ -12,6 +13,7 @@ export default async function EditTutorPage({
   const { id } = await params;
   const supabase = await createSupabaseServerClient();
   const instructor = await new InstructorRepository(supabase).findById(id);
+  const vehicles = await loadVehicleOptions(supabase);
 
   return (
     <section className="flex flex-col gap-6">
@@ -19,7 +21,7 @@ export default async function EditTutorPage({
         <h1 className="text-2xl font-semibold">Eğitmeni düzenle</h1>
         <DeleteButton action={deleteInstructor.bind(null, id)} confirmMessage="Bu eğitmen silinsin mi?" />
       </div>
-      <TutorForm instructor={instructor} />
+      <TutorForm instructor={instructor} vehicles={vehicles} />
     </section>
   );
 }

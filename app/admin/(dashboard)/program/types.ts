@@ -1,6 +1,6 @@
 // Mirrors supabase/migrations/0005_lessons.sql — keep in sync.
-
-export const MAX_CONCURRENT_LESSONS = 3;
+// Overlap prevention is now enforced by DB exclusion constraints (0017),
+// not an app-level cap.
 
 export interface LessonRow {
   id: string;
@@ -28,7 +28,7 @@ export interface NewLessonInput {
 export interface LessonFormStudent {
   id: string;
   fullName: string;
-  licenseClass: string;
+  licenseClasses: string[];
 }
 
 export interface LessonFormInstructor {

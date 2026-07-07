@@ -1,9 +1,20 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import { assertNotPast } from "@/lib/scheduling-guards";
 import { Lesson } from "./lesson.model";
-import { MAX_CONCURRENT_LESSONS, type LessonRow, type NewLessonInput } from "./types";
+import type { LessonRow, NewLessonInput } from "./types";
 
 const LESSON_SELECT = "*, students(full_name, phone), instructors(full_name), vehicles(plate)";
+
+// Postgres raises exclusion_violation (23P01) when the no-overlap constraints
+// added in migration 0017 reject a lesson. Turn it into a readable message.
+function translateOverlap(error: PostgrestError): Error {
+  if (error.code === "23P01") {
+    return new Error(
+      "Bu saat aralığında eğitmen veya araç zaten dolu. Farklı bir saat seçin."
+    );
+  }
+  return new Error(error.message);
+}
 
 export class LessonRepository {
   constructor(private readonly supabase: SupabaseClient) {}
@@ -20,23 +31,25 @@ export class LessonRepository {
     return (data as LessonRow[]).map((row) => new Lesson(row));
   }
 
+  async listForInstructor(
+    instructorId: string,
+    from?: Date,
+    to?: Date
+  ): Promise<Lesson[]> {
+    let query = this.supabase
+      .from("lessons")
+      .select(LESSON_SELECT)
+      .eq("instructor_id", instructorId);
+    if (from) query = query.gte("starts_at", from.toISOString());
+    if (to) query = query.lt("starts_at", to.toISOString());
+
+    const { data, error } = await query.order("starts_at", { ascending: true });
+    if (error) throw new Error(`Failed to list instructor lessons: ${error.message}`);
+    return (data as LessonRow[]).map((row) => new Lesson(row));
+  }
+
   async create(input: NewLessonInput): Promise<Lesson> {
     assertNotPast(input.starts_at);
-
-    // App-level concurrency rule: at most MAX_CONCURRENT_LESSONS lessons may
-    // overlap the same time window (one per vehicle). Not enforced by a DB
-    // constraint (no btree_gist precedent in this codebase), so there is a
-    // small race-condition window between this check and the insert below.
-    const { count, error: countError } = await this.supabase
-      .from("lessons")
-      .select("id", { count: "exact", head: true })
-      .lt("starts_at", input.ends_at)
-      .gt("ends_at", input.starts_at);
-
-    if (countError) throw new Error(`Failed to check schedule: ${countError.message}`);
-    if ((count ?? 0) >= MAX_CONCURRENT_LESSONS) {
-      throw new Error("Time slot is fully booked (3 vehicles already scheduled)");
-    }
 
     const { data, error } = await this.supabase
       .from("lessons")
@@ -44,7 +57,7 @@ export class LessonRepository {
       .select(LESSON_SELECT)
       .single();
 
-    if (error) throw new Error(`Failed to create lesson: ${error.message}`);
+    if (error) throw translateOverlap(error);
     return new Lesson(data as LessonRow);
   }
 
@@ -62,18 +75,6 @@ export class LessonRepository {
   async update(id: string, input: NewLessonInput): Promise<Lesson> {
     assertNotPast(input.starts_at);
 
-    const { count, error: countError } = await this.supabase
-      .from("lessons")
-      .select("id", { count: "exact", head: true })
-      .neq("id", id)
-      .lt("starts_at", input.ends_at)
-      .gt("ends_at", input.starts_at);
-
-    if (countError) throw new Error(`Failed to check schedule: ${countError.message}`);
-    if ((count ?? 0) >= MAX_CONCURRENT_LESSONS) {
-      throw new Error("Time slot is fully booked (3 vehicles already scheduled)");
-    }
-
     const { data, error } = await this.supabase
       .from("lessons")
       .update(input)
@@ -81,7 +82,7 @@ export class LessonRepository {
       .select(LESSON_SELECT)
       .single();
 
-    if (error) throw new Error(`Failed to update lesson: ${error.message}`);
+    if (error) throw translateOverlap(error);
     return new Lesson(data as LessonRow);
   }
 

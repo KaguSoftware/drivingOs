@@ -8,7 +8,7 @@ export class InstructorRepository {
   async listAll(): Promise<Instructor[]> {
     const { data, error } = await this.supabase
       .from("instructors")
-      .select("*")
+      .select("*, vehicles(plate)")
       .order("created_at", { ascending: false });
 
     if (error) throw new Error(`Failed to list instructors: ${error.message}`);
@@ -19,7 +19,7 @@ export class InstructorRepository {
     const { data, error } = await this.supabase
       .from("instructors")
       .insert(input)
-      .select()
+      .select("*, vehicles(plate)")
       .single();
 
     if (error) throw new Error(`Failed to create instructor: ${error.message}`);
@@ -29,7 +29,7 @@ export class InstructorRepository {
   async findById(id: string): Promise<Instructor> {
     const { data, error } = await this.supabase
       .from("instructors")
-      .select("*")
+      .select("*, vehicles(plate)")
       .eq("id", id)
       .single();
 
@@ -42,7 +42,7 @@ export class InstructorRepository {
       .from("instructors")
       .update(input)
       .eq("id", id)
-      .select()
+      .select("*, vehicles(plate)")
       .single();
 
     if (error) throw new Error(`Failed to update instructor: ${error.message}`);

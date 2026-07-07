@@ -23,7 +23,7 @@ function MebDocument({ student }: { student: Student }) {
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Ehliyet sınıfı</Text>
-          <Text>{student.licenseClass}</Text>
+          <Text>{student.licenseLabel()}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>MEB evrak durumu</Text>

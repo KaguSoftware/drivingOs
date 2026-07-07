@@ -1,7 +1,7 @@
 import { createViolation, updateViolation } from "../violation-actions";
 import { DatePicker } from "@/components/ui/date-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import type { VehicleViolation } from "../vehicle-violation.model";
 
 export function ViolationForm({
@@ -48,9 +48,9 @@ export function ViolationForm({
         Açıklama
         <input name="description" defaultValue={violation?.description ?? undefined} className={inputClass} />
       </label>
-      <Button type="submit">
+      <SubmitButton>
         {violation ? "Değişiklikleri kaydet" : "Ceza ekle"}
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

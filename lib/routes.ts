@@ -6,7 +6,14 @@ export const DASHBOARD_PATH_PREFIXES = [
   "/admin/arac-periyodik-bakimlari",
   "/admin/program",
   "/admin/egitmenler",
+  "/admin/egitmen-takip",
   "/admin/odemeler",
   "/admin/sinav-yerleri",
   "/admin/sinavlar",
 ] as const;
+
+// Everything under these prefixes requires a signed-in user; role checks
+// happen in each area's layout (proxy stays role-agnostic by design).
+export const PROTECTED_PATH_PREFIXES = ["/admin", "/egitmen", "/ogrenci"] as const;
+
+export const LOGIN_PATHS = ["/giris", "/admin/giris"] as const;
