@@ -12,7 +12,7 @@ export interface LessonRow {
   created_at: string;
   students: { full_name: string; phone: string } | null;
   instructors: { full_name: string } | null;
-  vehicles: { plate: string } | null;
+  vehicles: { plate: string; make_model: string; license_class: string } | null;
 }
 
 export interface NewLessonInput {
@@ -40,5 +40,6 @@ export interface LessonFormInstructor {
 export interface LessonFormVehicle {
   id: string;
   plate: string;
+  makeModel: string;
   licenseClass: string;
 }

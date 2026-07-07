@@ -3,7 +3,8 @@ import { assertNotPast } from "@/lib/scheduling-guards";
 import { Lesson } from "./lesson.model";
 import type { LessonRow, NewLessonInput } from "./types";
 
-const LESSON_SELECT = "*, students(full_name, phone), instructors(full_name), vehicles(plate)";
+const LESSON_SELECT =
+  "*, students(full_name, phone), instructors(full_name), vehicles(plate, make_model, license_class)";
 
 // Postgres raises exclusion_violation (23P01) when the no-overlap constraints
 // added in migration 0017 reject a lesson. Turn it into a readable message.

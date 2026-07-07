@@ -5,6 +5,7 @@ import { LessonRepository } from "./lesson.repository";
 import { ExamSessionRepository } from "../sinavlar/exam-session.repository";
 import { WeeklyCalendar } from "./weekly-calendar";
 import { MonthlyCalendar } from "./monthly-calendar";
+import { ScheduleDatePicker } from "./schedule-date-picker";
 import {
   addMonths,
   parseDateParam,
@@ -49,11 +50,15 @@ export default async function SchedulePage({
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">
-          {isMonthView
-            ? monthStart.toLocaleDateString("tr-TR", { month: "long", year: "numeric" })
-            : weekLabel(weekStart)}
-        </h1>
+        <ScheduleDatePicker
+          label={
+            isMonthView
+              ? monthStart.toLocaleDateString("tr-TR", { month: "long", year: "numeric" })
+              : weekLabel(weekStart)
+          }
+          selectedDate={isMonthView ? monthStart : weekStart}
+          isMonthView={isMonthView}
+        />
         <div className="flex items-center gap-2">
           <div className="flex overflow-hidden rounded-md border border-border">
             <Link

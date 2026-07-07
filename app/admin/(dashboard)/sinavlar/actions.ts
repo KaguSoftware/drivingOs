@@ -62,6 +62,19 @@ export async function deleteExamSession(id: string): Promise<void> {
   redirect("/admin/sinavlar");
 }
 
+// Same as deleteExamSession but stays on the current page — used from the
+// weekly program calendar, where redirecting to /admin/sinavlar would be
+// unexpected.
+export async function deleteExamSessionFromProgram(id: string): Promise<void> {
+  const supabase = await createSupabaseServerClient();
+  const repository = new ExamSessionRepository(supabase);
+
+  await repository.delete(id);
+
+  revalidatePath("/admin/sinavlar");
+  revalidatePath("/admin/program");
+}
+
 export async function enrollStudent(formData: FormData): Promise<void> {
   const examSessionId = String(formData.get("exam_session_id") ?? "");
 

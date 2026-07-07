@@ -88,7 +88,7 @@ export function LessonForm({
           </option>
           {vehicles.map((vehicle) => (
             <option key={vehicle.id} value={vehicle.id}>
-              {vehicle.plate} &middot; {vehicle.licenseClass}
+              {vehicle.makeModel} &middot; {vehicle.plate} &middot; {vehicle.licenseClass}
             </option>
           ))}
         </select>

@@ -24,6 +24,7 @@ export function toFormVehicles(vehicles: Vehicle[]): LessonFormVehicle[] {
   return vehicles.map((vehicle) => ({
     id: vehicle.id,
     plate: vehicle.plate,
+    makeModel: vehicle.makeModel,
     licenseClass: vehicle.licenseClass,
   }));
 }

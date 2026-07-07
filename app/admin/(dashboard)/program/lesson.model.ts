@@ -31,6 +31,12 @@ export class Lesson {
     return this.row.vehicles?.plate ?? "-";
   }
 
+  get vehicleSummary() {
+    if (!this.row.vehicles) return "-";
+    const { make_model, license_class, plate } = this.row.vehicles;
+    return `${make_model} · ${plate} · ${license_class}`;
+  }
+
   startsAt(): Date {
     return new Date(this.row.starts_at);
   }
