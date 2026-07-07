@@ -80,6 +80,13 @@ const ExamsIcon = (props: IconProps) => (
   </Icon>
 );
 
+const TrackerIcon = (props: IconProps) => (
+  <Icon {...props}>
+    <path d="M3 3v18h18" />
+    <path d="m7 14 3-4 3 3 4-6" />
+  </Icon>
+);
+
 export const NAV_ICONS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], (props: IconProps) => React.JSX.Element> = {
   "/admin/ogrenciler": StudentsIcon,
   "/admin/araclar": VehiclesIcon,
@@ -87,6 +94,7 @@ export const NAV_ICONS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], (props:
   "/admin/arac-periyodik-bakimlari": VehicleChecksIcon,
   "/admin/program": ScheduleIcon,
   "/admin/egitmenler": TutorsIcon,
+  "/admin/egitmen-takip": TrackerIcon,
   "/admin/odemeler": PaymentsIcon,
   "/admin/sinav-yerleri": ExamPlacesIcon,
   "/admin/sinavlar": ExamsIcon,

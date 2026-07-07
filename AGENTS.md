@@ -10,14 +10,28 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## What this product is
 
-An operating system for driving schools (Turkish market). Four pillars:
+An operating system for driving schools (Turkish market). All four pillars are built:
 
-1. **Student registry** — license class, theory/practice progress, MEB paperwork status ✅ *base exists*
-2. **Instructor & vehicle scheduling** — which car, which instructor, which student, which hour ❌ *not built*
-3. **Payments & installments (taksit)** — schools sell lessons in installments ❌ *not built*
-4. **Exam tracking + document generation** — ministry-required enrollment forms, attendance sheets ❌ *not built*
+1. **Student registry** — multiple license classes, theory/practice progress, MEB paperwork ✅
+2. **Instructor & vehicle scheduling** — weekly lesson calendar with DB-level overlap constraints ✅
+3. **Payments & installments (taksit)** ✅
+4. **Exam tracking + document generation** (MEB PDF via `@react-pdf/renderer`) ✅
 
-Only the registry base exists. Your job is to build the rest — this repo shows *how*, not *what*. The Students slice (`app/(dashboard)/students/`) is the reference implementation; when in doubt, copy its structure.
+Plus **role-based portals**: an admin dashboard, a teacher panel (`/egitmen`), and a student panel (`/ogrenci`) with self-service lesson booking.
+
+The reference implementation is the Students slice at **`app/admin/(dashboard)/ogrenciler/`** (routes use Turkish folder names). When in doubt, copy its structure.
+
+### Roles & auth
+- Single login at **`/giris`** (`app/giris/`). After sign-in, `ROLE_HOME` (in `lib/roles.ts`) redirects by role.
+- `profiles` table links `auth.users` → role (`admin`/`teacher`/`student`) + `instructor_id`/`student_id`.
+- Route protection: `proxy.ts` (Next 16 middleware) enforces *authentication* only for `/admin`, `/egitmen`, `/ogrenci`; **role** is enforced in each area's layout via `requireRole()`. Do not add role queries to the proxy.
+- RLS is role-aware (`is_admin()`, `current_student_id()`, `current_instructor_id()` helpers). Student booking/cancel go through SECURITY DEFINER RPCs (`book_lesson`, `cancel_lesson`, `list_open_slots`) — never raw table writes.
+- Creating teacher/student login accounts uses the **service-role** client (`lib/supabase/admin.ts`, requires `SUPABASE_SERVICE_ROLE_KEY`) via `lib/accounts.ts`. This is the only place the service role is used; never import it into client code.
+
+### HCI conventions
+- Mutations that need inline feedback use `useActionState` returning `ActionResult` (`lib/action-result.ts`); on success they `redirect(withToast(path, msg))` and `QueryToast` shows the toast. Forms use `<SubmitButton>` (pending spinner) and `<FormFeedback>`.
+- Confirmations use `<ConfirmDialog>` (never `window.confirm`). Toasts via `useToast()` / `<Toaster>` mounted in the root layout.
+- Shared UI primitives live in `components/ui/`: `PageHeader`, `StatCard`/`StatGrid`, `Badge`, `EmptyState`, skeletons (for `loading.tsx`).
 
 ## Stack (fixed — do not substitute)
 
@@ -72,5 +86,5 @@ form component (Client) → Server Action → Repository → Supabase → revali
 
 ## Known TODOs (deliberately left for the team)
 
-- Auth: client factories are wired but there is no login flow; RLS policies are permissive placeholders (`authenticated` role). Whoever builds the first real feature should tighten this.
-- Scheduling, payments, exams: greenfield — design them well. This is where your creativity is being evaluated.
+- Rate limiting: public national-ID lookup RPCs and `/giris` rely on Supabase's built-in auth limits. Enable CAPTCHA in the Supabase dashboard before production.
+- `assigned_vehicle_id` on instructors is a single primary vehicle; multi-vehicle assignment would need a join table.

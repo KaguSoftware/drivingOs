@@ -16,17 +16,21 @@ This repo is the **minimal base**. Only the student registry slice exists — it
    ```bash
    npm install
    ```
-2. Create a Supabase project, then run the migration in `supabase/migrations/0001_init.sql` (via the SQL editor or `supabase db push` with the CLI).
-3. Copy `.env.example` to `.env.local` and fill in your project URL and anon key (Supabase dashboard → Settings → API).
+2. Create a Supabase project and run the migrations in `supabase/migrations/` in order via the SQL editor (or `supabase db push`). **To bring an existing 0001–0013 database up to date in one step, paste `supabase/combined_setup.sql` into the SQL editor and run it once** — read its preflight note about overlapping lessons first.
+3. Copy `.env.example` to `.env.local` and fill in:
+   - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (dashboard → Settings → API)
+   - `SUPABASE_SERVICE_ROLE_KEY` — **required** for admins to create teacher/student login accounts (same page, "service_role" secret). Server-only; never expose it to the client.
 4. Run the dev server:
    ```bash
    npm run dev
    ```
-   Open http://localhost:3000 — it redirects to `/students`.
+   Open http://localhost:3000 — sign in at `/giris`; you land on the admin dashboard, teacher panel, or student panel by role.
 
 ## Deployment
 
-Connect the repo to Vercel and set the two `NEXT_PUBLIC_SUPABASE_*` env vars in the project settings. Nothing else is required.
+Connect the repo to Vercel and set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` in the project settings.
+
+**Before production:** enable CAPTCHA / auth rate limiting in the Supabase dashboard — the public national-ID lookup and login rely on it.
 
 ## Project structure
 

@@ -1,7 +1,7 @@
 import { createVehicle, updateVehicle } from "./actions";
 import { PlateInput } from "./plate-input";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { LICENSE_CLASSES, TRANSMISSIONS } from "./types";
 import { Vehicle } from "./vehicle.model";
 
@@ -40,9 +40,9 @@ export function VehicleForm({ vehicle }: { vehicle?: Vehicle }) {
           ))}
         </select>
       </label>
-      <Button type="submit">
+      <SubmitButton>
         {vehicle ? "Değişiklikleri kaydet" : "Araç ekle"}
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

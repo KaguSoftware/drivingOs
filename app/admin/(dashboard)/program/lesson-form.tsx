@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { createLesson, updateLesson } from "./actions";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { DURATION_OPTIONS, DEFAULT_DURATION_MINUTES } from "./duration";
 import type { LessonFormInstructor, LessonFormStudent, LessonFormVehicle } from "./types";
 
@@ -59,7 +59,7 @@ export function LessonForm({
   const licenseClass = selectedVehicle?.licenseClass;
 
   const eligibleStudents = useMemo(
-    () => (licenseClass ? students.filter((student) => student.licenseClass === licenseClass) : students),
+    () => (licenseClass ? students.filter((student) => student.licenseClasses.includes(licenseClass)) : students),
     [students, licenseClass]
   );
   const eligibleInstructors = useMemo(
@@ -145,7 +145,7 @@ export function LessonForm({
         </select>
       </label>
       <input type="hidden" name="ends_at" value={endsAt} />
-      <Button type="submit">{lesson ? "Değişiklikleri kaydet" : "Ders planla"}</Button>
+      <SubmitButton>{lesson ? "Değişiklikleri kaydet" : "Ders planla"}</SubmitButton>
     </form>
   );
 }

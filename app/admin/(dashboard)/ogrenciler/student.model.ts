@@ -32,8 +32,20 @@ export class Student {
     return this.row.national_id;
   }
 
-  get licenseClass() {
-    return this.row.license_class;
+  get email() {
+    return this.row.email;
+  }
+
+  get licenseClasses() {
+    return this.row.license_classes;
+  }
+
+  licenseLabel(): string {
+    return this.row.license_classes.join(", ");
+  }
+
+  hasLicenseClass(licenseClass: string): boolean {
+    return (this.row.license_classes as string[]).includes(licenseClass);
   }
 
   isTheoryComplete(): boolean {

@@ -1,5 +1,5 @@
 import { recordPayment } from "../actions";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export function RecordPaymentForm({ installmentId }: { installmentId: string }) {
   return (
@@ -12,9 +12,7 @@ export function RecordPaymentForm({ installmentId }: { installmentId: string }) 
         required
         className="w-24 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
-      <Button type="submit" className="px-3 py-1">
-        Öde
-      </Button>
+      <SubmitButton className="px-3 py-1">Öde</SubmitButton>
     </form>
   );
 }

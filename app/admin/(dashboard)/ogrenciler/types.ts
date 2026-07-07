@@ -1,4 +1,5 @@
-// Mirrors supabase/migrations/0001_init.sql — keep in sync.
+// Mirrors supabase/migrations/0001_init.sql + 0015 (multi-license, email) —
+// keep in sync.
 
 export const LICENSE_CLASSES = [
   "A1", "A2", "A", "B1", "B", "C1", "C", "D1", "D", "BE", "F", "M",
@@ -25,7 +26,8 @@ export interface StudentRow {
   full_name: string;
   phone: string;
   national_id: string;
-  license_class: LicenseClass;
+  email: string | null;
+  license_classes: LicenseClass[];
   theory_status: ProgressStatus;
   practice_status: ProgressStatus;
   meb_paperwork_status: MebStatus;
@@ -36,5 +38,6 @@ export interface NewStudentInput {
   full_name: string;
   phone: string;
   national_id: string;
-  license_class: LicenseClass;
+  email: string | null;
+  license_classes: LicenseClass[];
 }

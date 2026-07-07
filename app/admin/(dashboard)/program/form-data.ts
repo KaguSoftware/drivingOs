@@ -8,7 +8,7 @@ export function toFormStudents(students: Student[]): LessonFormStudent[] {
   return students.map((student) => ({
     id: student.id,
     fullName: student.fullName,
-    licenseClass: student.licenseClass,
+    licenseClasses: student.licenseClasses,
   }));
 }
 

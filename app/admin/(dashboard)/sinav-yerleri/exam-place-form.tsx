@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createExamPlace, updateExamPlace } from "./actions";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export function ExamPlaceForm({
   id,
@@ -52,7 +52,7 @@ export function ExamPlaceForm({
             className={inputClass}
           />
         </label>
-        <Button type="submit">{id ? "Değişiklikleri kaydet" : "Sınav yeri ekle"}</Button>
+        <SubmitButton>{id ? "Değişiklikleri kaydet" : "Sınav yeri ekle"}</SubmitButton>
       </form>
 
       {address.trim() && (

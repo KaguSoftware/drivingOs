@@ -39,6 +39,19 @@ export class Lesson {
     return new Date(this.row.ends_at);
   }
 
+  durationMinutes(): number {
+    return Math.round((this.endsAt().getTime() - this.startsAt().getTime()) / 60000);
+  }
+
+  isPast(now = new Date()): boolean {
+    return this.endsAt() < now;
+  }
+
+  // Students may cancel only when the lesson is more than 24h away.
+  isCancellable(now = new Date()): boolean {
+    return this.startsAt().getTime() > now.getTime() + 24 * 60 * 60 * 1000;
+  }
+
   whatsAppLink(): string {
     const phone = this.row.students?.phone ?? "";
     const digits = phone.replace(/\D/g, "");

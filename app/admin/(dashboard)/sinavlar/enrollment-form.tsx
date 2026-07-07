@@ -1,6 +1,6 @@
 import { enrollStudent } from "./actions";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import type { Student } from "../ogrenciler/student.model";
 
 export function EnrollmentForm({
@@ -27,7 +27,7 @@ export function EnrollmentForm({
           ))}
         </select>
       </label>
-      <Button type="submit">Kaydet</Button>
+      <SubmitButton>Kaydet</SubmitButton>
     </form>
   );
 }

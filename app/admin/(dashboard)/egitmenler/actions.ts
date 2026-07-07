@@ -3,12 +3,14 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createPortalAccount } from "@/lib/accounts";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { InstructorRepository } from "./instructor.repository";
 import { LICENSE_CLASSES, type LicenseClass } from "../ogrenciler/types";
 import type { NewInstructorInput } from "./types";
 
 function parseInstructorInput(formData: FormData): NewInstructorInput {
-  const licenseClasses = formData.getAll("license_classes") as string[];
+  const licenseClasses = formData.getAll("license_classes").map(String);
   if (licenseClasses.length === 0) {
     throw new Error("En az bir ehliyet sınıfı seçin");
   }
@@ -28,39 +30,69 @@ function parseInstructorInput(formData: FormData): NewInstructorInput {
     throw new Error("Telefon tam olarak 10 haneli olmalı");
   }
 
+  const email = String(formData.get("email") ?? "").trim();
+  const vehicleId = String(formData.get("assigned_vehicle_id") ?? "").trim();
+
   return {
     full_name: fullName,
     phone: `+90${phone}`,
+    email: email || null,
     license_classes: licenseClasses as LicenseClass[],
+    assigned_vehicle_id: vehicleId || null,
   };
 }
 
-export async function createInstructor(formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new InstructorRepository(supabase);
+export async function createInstructor(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  let tempPassword: string | null = null;
+  try {
+    const input = parseInstructorInput(formData);
+    const supabase = await createSupabaseServerClient();
+    const instructor = await new InstructorRepository(supabase).create(input);
 
-  await repository.create(parseInstructorInput(formData));
+    if (input.email) {
+      tempPassword = await createPortalAccount({
+        email: input.email,
+        role: "teacher",
+        linkId: instructor.id,
+      });
+    }
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/egitmenler");
-  redirect("/admin/egitmenler");
+  if (tempPassword) {
+    return {
+      ok: true,
+      message: `Eğitmen kaydedildi ve giriş hesabı açıldı. Geçici şifre: ${tempPassword}`,
+    };
+  }
+  redirect(withToast("/admin/egitmenler", "Eğitmen kaydedildi"));
 }
 
-export async function updateInstructor(id: string, formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new InstructorRepository(supabase);
-
-  await repository.update(id, parseInstructorInput(formData));
+export async function updateInstructor(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new InstructorRepository(supabase).update(id, parseInstructorInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/egitmenler");
-  redirect("/admin/egitmenler");
+  redirect(withToast("/admin/egitmenler", "Değişiklikler kaydedildi"));
 }
 
 export async function deleteInstructor(id: string): Promise<void> {
   const supabase = await createSupabaseServerClient();
-  const repository = new InstructorRepository(supabase);
-
-  await repository.delete(id);
+  await new InstructorRepository(supabase).delete(id);
 
   revalidatePath("/admin/egitmenler");
-  redirect("/admin/egitmenler");
+  redirect(withToast("/admin/egitmenler", "Eğitmen silindi"));
 }

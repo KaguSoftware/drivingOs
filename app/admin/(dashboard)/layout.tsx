@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { requireRole } from "@/lib/roles";
 import { SidebarNav } from "./sidebar-nav";
+import { MobileNav } from "./mobile-nav";
 import { logout } from "./actions";
 
 export default async function DashboardLayout({
@@ -9,21 +10,20 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  await requireRole("admin");
+
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/admin/giris");
-  }
-
-  const initial = user.email?.charAt(0).toUpperCase() ?? "?";
+  const initial = user?.email?.charAt(0).toUpperCase() ?? "?";
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <aside className="group/sidebar flex w-20 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar px-4 py-6 transition-[width] duration-200 ease-in-out hover:w-64">
-        <Link href="/admin/ogrenciler" className="mb-8 flex items-center gap-2.5 px-2">
+    <div className="flex min-h-screen flex-col bg-background lg:flex-row">
+      <MobileNav email={user?.email} />
+      <aside className="group/sidebar hidden w-20 shrink-0 flex-col overflow-hidden border-r border-sidebar-border bg-sidebar px-4 py-6 transition-[width] duration-200 ease-in-out hover:w-64 lg:flex">
+        <Link href="/admin" className="mb-8 flex items-center gap-2.5 px-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
             DO
           </span>
@@ -38,7 +38,7 @@ export default async function DashboardLayout({
               {initial}
             </span>
             <p className="truncate whitespace-nowrap text-xs text-sidebar-muted opacity-0 transition-opacity duration-200 group-hover/sidebar:opacity-100">
-              {user.email}
+              {user?.email}
             </p>
           </div>
           <form action={logout}>
@@ -51,7 +51,7 @@ export default async function DashboardLayout({
           </form>
         </div>
       </aside>
-      <main className="flex-1 p-8">{children}</main>
+      <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
     </div>
   );
 }

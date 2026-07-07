@@ -1,6 +1,6 @@
 import { createDamageRecord, updateDamageRecord } from "../damage-record-actions";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { DAMAGE_STATUSES } from "../types";
 import { VehicleDamageRecord } from "../vehicle-damage-record.model";
 
@@ -34,9 +34,9 @@ export function DamageRecordForm({
         Notlar
         <input name="notes" defaultValue={record?.notes ?? undefined} className={inputClass} />
       </label>
-      <Button type="submit">
+      <SubmitButton>
         {record ? "Değişiklikleri kaydet" : "Hasar kaydı ekle"}
-      </Button>
+      </SubmitButton>
     </form>
   );
 }

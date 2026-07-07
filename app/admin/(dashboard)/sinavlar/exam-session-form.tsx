@@ -1,7 +1,7 @@
 import { createExamSession, updateExamSession } from "./actions";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { inputClass } from "@/components/ui/input-classes";
-import { Button } from "@/components/ui/button";
+import { SubmitButton } from "@/components/ui/submit-button";
 import type { ExamPlace } from "../sinav-yerleri/exam-place.model";
 import type { Instructor } from "../egitmenler/instructor.model";
 import type { Student } from "../ogrenciler/student.model";
@@ -70,7 +70,7 @@ export function ExamSessionForm({
           </div>
         </fieldset>
       )}
-      <Button type="submit">{session ? "Değişiklikleri kaydet" : "Sınav planla"}</Button>
+      <SubmitButton>{session ? "Değişiklikleri kaydet" : "Sınav planla"}</SubmitButton>
     </form>
   );
 }
