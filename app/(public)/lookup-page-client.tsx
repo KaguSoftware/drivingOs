@@ -37,7 +37,7 @@ export function LookupPageClient({
           <ExamLookupResult state={state} />
         </div>
       </div>
-      <LookupShowcase carHidden={driving} />
+      <LookupShowcase driving={driving} />
       <DrivingCarOverlay driving={driving} />
     </main>
   );
