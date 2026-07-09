@@ -24,7 +24,7 @@ export function SidebarNav() {
             key={href}
             href={href}
             aria-current={isActive ? "page" : undefined}
-            className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+            className={`group relative flex items-center gap-2.5 rounded-lg px-2 py-2.5 text-sm transition-colors ${
               isActive
                 ? "bg-sidebar-active font-medium text-primary-foreground"
                 : "text-sidebar-muted hover:bg-background hover:text-sidebar-foreground"
@@ -33,11 +33,13 @@ export function SidebarNav() {
             {isActive && (
               <span className="absolute -left-4 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-primary" />
             )}
-            <Icon
-              className={`h-[18px] w-[18px] shrink-0 transition-colors ${
-                isActive ? "text-primary-foreground" : "text-sidebar-muted group-hover:text-sidebar-foreground"
-              }`}
-            />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center">
+              <Icon
+                className={`h-[18px] w-[18px] shrink-0 transition-colors ${
+                  isActive ? "text-primary-foreground" : "text-sidebar-muted group-hover:text-sidebar-foreground"
+                }`}
+              />
+            </span>
             <span className="truncate whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover/sidebar:opacity-100">
               {label}
             </span>

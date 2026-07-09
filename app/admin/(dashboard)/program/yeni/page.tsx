@@ -1,4 +1,7 @@
 import { BackLink } from "@/components/ui/back-link";
+import { FormCard } from "@/components/ui/form-card";
+import { PageContainer } from "@/components/ui/page-container";
+import { PageHeader } from "@/components/ui/page-header";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "../../ogrenciler/student.repository";
 import { InstructorRepository } from "../../egitmenler/instructor.repository";
@@ -18,15 +21,19 @@ export default async function NewLessonPage({
   const vehicles = await new VehicleRepository(supabase).listAll();
 
   return (
-    <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Programa dön" />
-      <h1 className="text-2xl font-semibold">Ders planla</h1>
-      <LessonForm
-        students={toFormStudents(students)}
-        instructors={toFormInstructors(instructors)}
-        vehicles={toFormVehicles(vehicles)}
-        defaultStartsAt={starts_at}
-      />
-    </section>
+    <PageContainer className="max-w-2xl">
+      <section className="flex flex-col gap-6">
+        <BackLink href="../" label="Programa dön" />
+        <PageHeader title="Ders planla" />
+        <FormCard>
+          <LessonForm
+            students={toFormStudents(students)}
+            instructors={toFormInstructors(instructors)}
+            vehicles={toFormVehicles(vehicles)}
+            defaultStartsAt={starts_at}
+          />
+        </FormCard>
+      </section>
+    </PageContainer>
   );
 }

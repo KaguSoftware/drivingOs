@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { LessonRepository } from "./lesson.repository";
 import type { NewLessonInput } from "./types";
 
@@ -16,24 +17,35 @@ function parseLessonInput(formData: FormData): NewLessonInput {
   };
 }
 
-export async function createLesson(formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new LessonRepository(supabase);
-
-  await repository.create(parseLessonInput(formData));
+export async function createLesson(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new LessonRepository(supabase).create(parseLessonInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/program");
-  redirect("/admin/program");
+  redirect(withToast("/admin/program", "Ders planlandı"));
 }
 
-export async function updateLesson(id: string, formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new LessonRepository(supabase);
-
-  await repository.update(id, parseLessonInput(formData));
+export async function updateLesson(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new LessonRepository(supabase).update(id, parseLessonInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/program");
-  redirect("/admin/program");
+  redirect(withToast("/admin/program", "Değişiklikler kaydedildi"));
 }
 
 export async function deleteLesson(id: string): Promise<void> {

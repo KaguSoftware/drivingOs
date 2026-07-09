@@ -30,3 +30,28 @@ export interface NewExamEnrollmentInput {
   exam_session_id: string;
   student_id: string;
 }
+
+// Plain, serializable shapes for passing into the client-side
+// ExamSessionForm (class instances lose their prototype methods across the
+// RSC boundary).
+export interface ExamSessionFormPlace {
+  id: string;
+  name: string;
+}
+
+export interface ExamSessionFormInstructor {
+  id: string;
+  fullName: string;
+}
+
+export interface ExamSessionFormStudent {
+  id: string;
+  fullName: string;
+}
+
+export interface ExamSessionFormSession {
+  id: string;
+  examPlaceId: string;
+  instructorId: string | null;
+  startsAt: string;
+}

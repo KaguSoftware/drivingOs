@@ -48,9 +48,7 @@ export function DatePicker({
       <button
         type="button"
         onClick={() => setOpen((isOpen) => !isOpen)}
-        className={
-          className ?? "w-full rounded-md border border-border bg-surface px-3 py-2 text-left text-sm"
-        }
+        className={`text-left ${className ?? "w-full rounded-md border border-border bg-surface px-3 py-2 text-sm"}`}
       >
         {selectedDate
           ? selectedDate.toLocaleDateString("tr-TR", { year: "numeric", month: "long", day: "numeric" })

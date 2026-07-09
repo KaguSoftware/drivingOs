@@ -25,6 +25,16 @@ export interface NewVehicleInput {
   license_class: LicenseClass;
 }
 
+// Plain, serializable shape for passing into the client-side VehicleForm
+// (class instances lose their prototype methods across the RSC boundary).
+export interface VehicleFormVehicle {
+  id: string;
+  plate: string;
+  makeModel: string;
+  transmission: Transmission;
+  licenseClass: LicenseClass;
+}
+
 export const DAMAGE_STATUSES = [
   "reported",
   "waiting_parts",

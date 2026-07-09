@@ -28,7 +28,7 @@ export default async function EditVehiclePage({
           <TrashIcon />
         </DeleteButton>
       </div>
-      <VehicleForm vehicle={vehicle} />
+      <VehicleForm vehicle={vehicle.toFormVehicle()} />
     </section>
   );
 }

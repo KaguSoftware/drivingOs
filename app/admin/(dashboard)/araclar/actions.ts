@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { VehicleRepository } from "./vehicle.repository";
 import { isValidPlate } from "./plate";
 import {
@@ -42,25 +43,36 @@ function parseVehicleInput(formData: FormData): NewVehicleInput {
   };
 }
 
-export async function createVehicle(formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new VehicleRepository(supabase);
-
-  await repository.create(parseVehicleInput(formData));
+export async function createVehicle(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new VehicleRepository(supabase).create(parseVehicleInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/araclar");
-  redirect("/admin/araclar");
+  redirect(withToast("/admin/araclar", "Araç eklendi"));
 }
 
-export async function updateVehicle(id: string, formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new VehicleRepository(supabase);
-
-  await repository.update(id, parseVehicleInput(formData));
+export async function updateVehicle(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new VehicleRepository(supabase).update(id, parseVehicleInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/araclar");
   revalidatePath(`/admin/araclar/${id}`);
-  redirect("/admin/araclar");
+  redirect(withToast("/admin/araclar", "Değişiklikler kaydedildi"));
 }
 
 export async function deleteVehicle(id: string): Promise<void> {

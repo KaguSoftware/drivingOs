@@ -1,4 +1,4 @@
-import type { CheckStatus, CheckType, VehiclePeriodicCheckRow } from "./types";
+import type { CheckFormCheck, CheckStatus, CheckType, VehiclePeriodicCheckRow } from "./types";
 
 const CHECK_TYPE_LABELS: Record<CheckType, string> = {
   kasko: "Kasko",
@@ -66,5 +66,16 @@ export class VehiclePeriodicCheck {
 
   statusLabel(): string {
     return STATUS_LABELS[this.status()];
+  }
+
+  toFormCheck(): CheckFormCheck {
+    return {
+      id: this.id,
+      vehicleId: this.vehicleId,
+      checkType: this.checkType,
+      dueDate: this.dueDate().toISOString().slice(0, 10),
+      cost: this.cost,
+      provider: this.provider,
+    };
   }
 }

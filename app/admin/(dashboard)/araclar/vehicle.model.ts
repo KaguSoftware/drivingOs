@@ -1,4 +1,4 @@
-import type { Transmission, VehicleRow } from "./types";
+import type { Transmission, VehicleFormVehicle, VehicleRow } from "./types";
 
 const TRANSMISSION_LABELS: Record<string, string> = {
   manual: "Manuel",
@@ -34,5 +34,19 @@ export class Vehicle {
 
   get licenseClass() {
     return this.row.license_class;
+  }
+
+  toFormVehicle(): VehicleFormVehicle {
+    return {
+      id: this.id,
+      plate: this.plate,
+      makeModel: this.makeModel,
+      transmission: this.transmission,
+      licenseClass: this.licenseClass,
+    };
+  }
+
+  toOption() {
+    return { id: this.id, plate: this.plate, makeModel: this.makeModel };
   }
 }

@@ -1,4 +1,4 @@
-import type { PaymentInstallmentRow, PaymentStatus } from "./types";
+import type { InstallmentFormInstallment, PaymentInstallmentRow, PaymentStatus } from "./types";
 
 const STATUS_LABELS: Record<PaymentStatus, string> = {
   pending: "Bekliyor",
@@ -48,5 +48,14 @@ export class PaymentInstallment {
 
   statusLabel(): string {
     return STATUS_LABELS[this.row.status];
+  }
+
+  toFormInstallment(): InstallmentFormInstallment {
+    return {
+      id: this.id,
+      studentId: this.studentId,
+      amount: this.amount,
+      dueDate: this.dueDate().toISOString().slice(0, 10),
+    };
   }
 }
