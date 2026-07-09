@@ -5,9 +5,11 @@ import { inputClass } from "./input-classes";
 export function NationalIdInput({
   defaultValue,
   required = true,
+  onValueChange,
 }: {
   defaultValue?: string;
   required?: boolean;
+  onValueChange?: (value: string) => void;
 }) {
   return (
     <input
@@ -24,6 +26,7 @@ export function NationalIdInput({
       onInput={(event) => {
         const input = event.currentTarget;
         input.value = input.value.replace(/\D/g, "").slice(0, 11);
+        onValueChange?.(input.value);
       }}
     />
   );

@@ -22,6 +22,7 @@ export default async function StudentPaymentsPage() {
 
   const totalDebt = installments.reduce((s, i) => s + i.remainingDebt(), 0);
   const totalPaid = installments.reduce((s, i) => s + i.amountPaid, 0);
+  const overdueCount = installments.filter((i) => i.isOverdue()).length;
 
   return (
     <section className="flex flex-col gap-6">
@@ -30,6 +31,7 @@ export default async function StudentPaymentsPage() {
         <StatCard label="Kalan borç" value={formatCurrency(totalDebt)} />
         <StatCard label="Ödenen" value={formatCurrency(totalPaid)} />
         <StatCard label="Taksit sayısı" value={installments.length} />
+        <StatCard label="Gecikmiş taksit" value={overdueCount} />
       </StatGrid>
 
       {installments.length === 0 ? (

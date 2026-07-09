@@ -19,7 +19,7 @@ export default async function EditExamSessionPage({
   const instructors = await new InstructorRepository(supabase).listAll();
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex max-w-md flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Sınavı düzenle</h1>
         <DeleteButton

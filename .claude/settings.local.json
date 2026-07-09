@@ -1,5 +1,17 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(lsof -i :3000 -sTCP:LISTEN -t)",
+      "Bash(git rm *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(mkdir -p /private/tmp/claude-501/-Users-saitaydin-Documents-KaguSoftware-projects-drivingOs/7366a3af-c3cf-4216-a632-32cfb5b8223e/scratchpad/pw-check)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Bash(curl -s http://localhost:3000/ -o /dev/null -w \"%{http_code}\\\\n\")",
+      "Bash(kill 50263)"
+    ],
     "deny": [
       "Read(./.env*)",
       "Bash(cat .env*)",

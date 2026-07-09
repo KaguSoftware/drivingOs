@@ -59,3 +59,18 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+@keyframes drive-across {
+  from {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  to {
+    left: -40%;
+    transform: translateX(-50%);
+  }
+}
+
+.drive-across {
+  animation: drive-across 900ms linear forwards;
+}

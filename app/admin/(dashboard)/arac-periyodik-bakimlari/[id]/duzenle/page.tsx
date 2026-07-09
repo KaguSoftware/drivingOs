@@ -17,7 +17,7 @@ export default async function EditPeriodicCheckPage({
   const vehicles = await new VehicleRepository(supabase).listAll();
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex max-w-md flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Periyodik kontrolü düzenle</h1>
         <DeleteButton
