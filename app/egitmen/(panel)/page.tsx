@@ -30,6 +30,7 @@ export default async function TeacherHomePage() {
   );
   const now = new Date();
   const upcoming = lessons.filter((l) => l.endsAt() >= now);
+  const completed = lessons.length - upcoming.length;
   const totalMinutes = lessons.reduce((sum, l) => sum + l.durationMinutes(), 0);
 
   return (
@@ -38,6 +39,7 @@ export default async function TeacherHomePage() {
       <StatGrid>
         <StatCard label="Bu hafta ders" value={lessons.length} />
         <StatCard label="Kalan ders" value={upcoming.length} />
+        <StatCard label="Tamamlanan ders" value={completed} />
         <StatCard label="Toplam süre" value={formatHours(totalMinutes)} />
       </StatGrid>
       <div>

@@ -15,7 +15,7 @@ export default async function EditStudentPage({
   const student = await new StudentRepository(supabase).findById(id);
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex max-w-xl flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Öğrenciyi düzenle</h1>
         <DeleteButton

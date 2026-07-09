@@ -53,8 +53,14 @@ export default async function ExamSessionPage({
           </DeleteButton>
         </div>
       </div>
-      <EnrollmentForm examSessionId={session.id} availableStudents={availableStudents} />
-      <EnrollmentTable enrollments={enrollments} examSessionId={session.id} />
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+        <div className="lg:w-80 lg:shrink-0">
+          <EnrollmentForm examSessionId={session.id} availableStudents={availableStudents} />
+        </div>
+        <div className="lg:flex-1">
+          <EnrollmentTable enrollments={enrollments} examSessionId={session.id} />
+        </div>
+      </div>
     </section>
   );
 }
