@@ -14,4 +14,16 @@ export class ExamEnrollment {
   get studentName() {
     return this.row.students?.full_name ?? "-";
   }
+
+  get examSessionId() {
+    return this.row.exam_session_id;
+  }
+
+  get examPlaceName() {
+    return this.row.exam_sessions?.exam_places?.name ?? "-";
+  }
+
+  examStartsAt(): Date | null {
+    return this.row.exam_sessions ? new Date(this.row.exam_sessions.starts_at) : null;
+  }
 }

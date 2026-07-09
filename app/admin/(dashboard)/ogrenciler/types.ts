@@ -41,3 +41,14 @@ export interface NewStudentInput {
   email: string | null;
   license_classes: LicenseClass[];
 }
+
+// Plain, serializable shape for passing into the client-side StudentForm
+// (class instances lose their prototype methods across the RSC boundary).
+export interface StudentFormValues {
+  id: string;
+  fullName: string;
+  phone: string;
+  nationalId: string;
+  email: string | null;
+  licenseClasses: LicenseClass[];
+}

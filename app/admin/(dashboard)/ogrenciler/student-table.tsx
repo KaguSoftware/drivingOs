@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass } from "@/components/ui/table-classes";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -5,7 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import type { Student } from "./student.model";
 import { deleteStudent } from "./actions";
 
-export function StudentTable({ students }: { students: Student[] }) {
+export function StudentTable({
+  students,
+  debtByStudent,
+}: {
+  students: Student[];
+  debtByStudent?: Map<string, number>;
+}) {
   if (students.length === 0) {
     return <EmptyState title="Henüz öğrenci yok" description="İlk öğrencinizi ekleyerek başlayın." />;
   }
@@ -30,7 +37,16 @@ export function StudentTable({ students }: { students: Student[] }) {
           <tbody className={tbodyClass}>
             {students.map((student) => (
               <tr key={student.id}>
-                <td className="px-4 py-3 font-medium">{student.fullName}</td>
+                <td className="px-4 py-3 font-medium">
+                  <div className="flex items-center gap-2">
+                    <Link href={`/admin/ogrenciler/${student.id}`} className="hover:underline">
+                      {student.fullName}
+                    </Link>
+                    {(debtByStudent?.get(student.id) ?? 0) > 0 && (
+                      <Badge tone="danger">Borçlu</Badge>
+                    )}
+                  </div>
+                </td>
                 <td className="px-4 py-3">{student.phone}</td>
                 <td className="px-4 py-3">{student.licenseLabel()}</td>
                 <td className="px-4 py-3">{student.theoryLabel()}</td>
@@ -60,7 +76,14 @@ export function StudentTable({ students }: { students: Student[] }) {
           <li key={student.id} className="rounded-xl border border-border bg-surface p-4 shadow-sm">
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="font-medium">{student.fullName}</p>
+                <div className="flex items-center gap-2">
+                  <Link href={`/admin/ogrenciler/${student.id}`} className="font-medium hover:underline">
+                    {student.fullName}
+                  </Link>
+                  {(debtByStudent?.get(student.id) ?? 0) > 0 && (
+                    <Badge tone="danger">Borçlu</Badge>
+                  )}
+                </div>
                 <p className="text-xs text-muted">{student.phone}</p>
               </div>
               <RowActionsMenu

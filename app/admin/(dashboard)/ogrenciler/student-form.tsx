@@ -10,9 +10,9 @@ import { SubmitButton } from "@/components/ui/submit-button";
 import { FormFeedback } from "@/components/ui/form-feedback";
 import { LicenseClassPicker } from "@/components/ui/license-class-picker";
 import { LICENSE_CLASSES } from "./types";
-import type { Student } from "./student.model";
+import type { StudentFormValues } from "./types";
 
-export function StudentForm({ student }: { student?: Student }) {
+export function StudentForm({ student }: { student?: StudentFormValues }) {
   const [result, formAction] = useActionState(
     student ? updateStudent.bind(null, student.id) : createStudent,
     null
@@ -37,7 +37,9 @@ export function StudentForm({ student }: { student?: Student }) {
           <NationalIdInput defaultValue={student?.nationalId} />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          E-posta <span className="text-xs text-muted">(öğrenci girişi için, opsiyonel)</span>
+          <span>
+            E-posta <span className="text-xs font-normal text-muted">(öğrenci girişi için, opsiyonel)</span>
+          </span>
           <input
             name="email"
             type="email"
@@ -52,7 +54,7 @@ export function StudentForm({ student }: { student?: Student }) {
         selected={student?.licenseClasses ?? []}
       />
       <FormFeedback result={result} />
-      <SubmitButton>
+      <SubmitButton className="w-fit self-start px-3 py-1.5">
         {student ? "Değişiklikleri kaydet" : "Öğrenci kaydet"}
       </SubmitButton>
     </form>

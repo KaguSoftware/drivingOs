@@ -1,10 +1,19 @@
 import Link from "next/link";
 import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { Badge } from "@/components/ui/badge";
 import type { Vehicle } from "./vehicle.model";
 import { deleteVehicle } from "./actions";
 
-export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
+export function VehicleTable({
+  vehicles,
+  damagedVehicleIds,
+  overdueVehicleIds,
+}: {
+  vehicles: Vehicle[];
+  damagedVehicleIds?: Set<string>;
+  overdueVehicleIds?: Set<string>;
+}) {
   if (vehicles.length === 0) {
     return <p className={emptyStateClass}>Henüz araç yok.</p>;
   }
@@ -25,9 +34,13 @@ export function VehicleTable({ vehicles }: { vehicles: Vehicle[] }) {
           {vehicles.map((vehicle) => (
             <tr key={vehicle.id}>
               <td className="px-4 py-3 font-medium">
-                <Link href={`/admin/araclar/${vehicle.id}`} className="hover:underline">
-                  {vehicle.plate}
-                </Link>
+                <div className="flex items-center gap-2">
+                  <Link href={`/admin/araclar/${vehicle.id}`} className="hover:underline">
+                    {vehicle.plate}
+                  </Link>
+                  {damagedVehicleIds?.has(vehicle.id) && <Badge tone="danger">Hasarlı</Badge>}
+                  {overdueVehicleIds?.has(vehicle.id) && <Badge tone="warning">Gecikmiş kontrol</Badge>}
+                </div>
               </td>
               <td className="px-4 py-3">{vehicle.makeModel}</td>
               <td className="px-4 py-3">{vehicle.transmissionLabel()}</td>

@@ -2,12 +2,22 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { primaryLinkClass } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
+import { StatCard, StatGrid } from "@/components/ui/stat-card";
 import { StudentRepository } from "./student.repository";
+import { PaymentInstallmentRepository } from "../odemeler/payment-installment.repository";
 import { StudentTable } from "./student-table";
 
 export default async function StudentsPage() {
   const supabase = await createSupabaseServerClient();
-  const students = await new StudentRepository(supabase).listAll();
+  const [students, balances] = await Promise.all([
+    new StudentRepository(supabase).listAll(),
+    new PaymentInstallmentRepository(supabase).outstandingBalances(),
+  ]);
+
+  const debtByStudent = new Map(balances.map((b) => [b.studentId, b.totalDebt]));
+  const theoryComplete = students.filter((s) => s.isTheoryComplete()).length;
+  const practiceComplete = students.filter((s) => s.isPracticeComplete()).length;
+  const debtorCount = balances.filter((b) => b.totalDebt > 0).length;
 
   return (
     <section className="flex flex-col gap-6">
@@ -20,7 +30,13 @@ export default async function StudentsPage() {
           </Link>
         }
       />
-      <StudentTable students={students} />
+      <StatGrid>
+        <StatCard label="Toplam öğrenci" value={students.length} />
+        <StatCard label="Teorisi tamam" value={theoryComplete} />
+        <StatCard label="Direksiyonu tamam" value={practiceComplete} />
+        <StatCard label="Borçlu öğrenci" value={debtorCount} />
+      </StatGrid>
+      <StudentTable students={students} debtByStudent={debtByStudent} />
     </section>
   );
 }

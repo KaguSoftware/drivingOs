@@ -24,6 +24,10 @@ export interface ExamEnrollmentRow {
   student_id: string;
   created_at: string;
   students: { full_name: string } | null;
+  exam_sessions?: {
+    starts_at: string;
+    exam_places: { name: string } | null;
+  } | null;
 }
 
 export interface NewExamEnrollmentInput {

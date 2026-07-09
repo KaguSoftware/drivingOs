@@ -16,6 +16,17 @@ export class ExamEnrollmentRepository {
     return (data as ExamEnrollmentRow[]).map((row) => new ExamEnrollment(row));
   }
 
+  async listForStudent(studentId: string): Promise<ExamEnrollment[]> {
+    const { data, error } = await this.supabase
+      .from("exam_enrollments")
+      .select("*, students(full_name), exam_sessions(starts_at, exam_places(name))")
+      .eq("student_id", studentId)
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(`Failed to list student enrollments: ${error.message}`);
+    return (data as ExamEnrollmentRow[]).map((row) => new ExamEnrollment(row));
+  }
+
   async enroll(input: NewExamEnrollmentInput): Promise<ExamEnrollment> {
     const { data, error } = await this.supabase
       .from("exam_enrollments")

@@ -32,6 +32,17 @@ export class LessonRepository {
     return (data as LessonRow[]).map((row) => new Lesson(row));
   }
 
+  async listForStudent(studentId: string): Promise<Lesson[]> {
+    const { data, error } = await this.supabase
+      .from("lessons")
+      .select(LESSON_SELECT)
+      .eq("student_id", studentId)
+      .order("starts_at", { ascending: true });
+
+    if (error) throw new Error(`Failed to list student lessons: ${error.message}`);
+    return (data as LessonRow[]).map((row) => new Lesson(row));
+  }
+
   async listForInstructor(
     instructorId: string,
     from?: Date,

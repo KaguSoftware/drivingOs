@@ -10,7 +10,15 @@
       "Bash(npm install *)",
       "Bash(npx playwright *)",
       "Bash(curl -s http://localhost:3000/ -o /dev/null -w \"%{http_code}\\\\n\")",
-      "Bash(kill 50263)"
+      "Bash(kill 50263)",
+      "Bash(tail -100 /tmp/nextdev.log 2>/dev/null | grep -i -A 20 \"error\\\\|Error\")",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s http://localhost:3000/admin/ogrenciler/00000000-0000-0000-0000-000000000000/duzenle -D - -o /tmp/edit_page.html)",
+      "Read(//tmp/**)",
+      "Read(//Users/saitaydin/**)",
+      "Bash(find / -maxdepth 3 -iname \"*.log\" -newer \"/Users/saitaydin/Documents/KaguSoftware/projects/drivingOs/package.json\")",
+      "Bash(tail -150 /private/tmp/drivingos-dev.log 2>&1)",
+      "Bash(npx tsc *)"
     ],
     "deny": [
       "Read(./.env*)",

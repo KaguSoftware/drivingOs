@@ -28,7 +28,7 @@ export default async function EditStudentPage({
           <TrashIcon />
         </DeleteButton>
       </div>
-      <StudentForm student={student} />
+      <StudentForm student={student.toFormValues()} />
     </section>
   );
 }

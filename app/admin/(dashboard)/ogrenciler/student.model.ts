@@ -1,4 +1,4 @@
-import type { MebStatus, ProgressStatus, StudentRow } from "./types";
+import type { MebStatus, ProgressStatus, StudentFormValues, StudentRow } from "./types";
 
 const PROGRESS_LABELS: Record<ProgressStatus, string> = {
   not_started: "Başlanmadı",
@@ -74,5 +74,16 @@ export class Student {
 
   enrolledAt(): Date {
     return new Date(this.row.created_at);
+  }
+
+  toFormValues(): StudentFormValues {
+    return {
+      id: this.row.id,
+      fullName: this.row.full_name,
+      phone: this.row.phone,
+      nationalId: this.row.national_id,
+      email: this.row.email,
+      licenseClasses: this.row.license_classes,
+    };
   }
 }
