@@ -28,16 +28,18 @@ export default async function VehicleDetailPage({
         </p>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold">Hasarlı parçalar</h2>
-        <DamageRecordTable records={damageRecords} />
-        <DamageRecordForm vehicleId={vehicle.id} />
-      </div>
+      <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <h2 className="text-lg font-semibold">Hasarlı parçalar</h2>
+          <DamageRecordTable records={damageRecords} />
+          <DamageRecordForm vehicleId={vehicle.id} />
+        </div>
 
-      <div className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold">Trafik cezaları</h2>
-        <ViolationTable violations={violations} />
-        <ViolationForm vehicleId={vehicle.id} />
+        <div className="mt-8 flex flex-col gap-4 lg:mt-0">
+          <h2 className="text-lg font-semibold">Trafik cezaları</h2>
+          <ViolationTable violations={violations} />
+          <ViolationForm vehicleId={vehicle.id} />
+        </div>
       </div>
     </section>
   );

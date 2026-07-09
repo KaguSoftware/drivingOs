@@ -1,10 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ExamLookupRepository } from "./exam-lookup.repository";
-import { NationalIdLookupForm } from "./national-id-lookup-form";
-import { ExamLookupResult, type LookupState } from "./exam-lookup-result";
+import type { LookupState } from "./exam-lookup-result";
 import { StudentWelcomeScreen } from "./student-welcome-screen";
-import { Logo } from "./logo";
-import { MebBadge } from "./meb-badge";
+import { LookupSplitScreen } from "./lookup-split-screen";
 import { isValidNationalId } from "./validation";
 import type { UpcomingExam } from "./exam-lookup.model";
 
@@ -42,22 +40,5 @@ export default async function PublicLookupPage({
     return <StudentWelcomeScreen studentFullName={studentFullName} exams={exams} />;
   }
 
-  return (
-    <main className="mx-auto flex min-h-screen max-w-lg flex-col justify-center gap-8 p-8">
-      <div className="flex items-center justify-between">
-        <Logo />
-        <MebBadge />
-      </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-muted">Hoş geldiniz</p>
-        <h1 className="text-2xl font-semibold">Sınav Yerinizi Öğrenin</h1>
-        <p className="text-sm text-muted">
-          TC kimlik numaranızı girerek yaklaşan sınav tarihinizi ve yerinizi güvenli
-          bir şekilde görüntüleyebilirsiniz.
-        </p>
-      </div>
-      <NationalIdLookupForm defaultValue={submitted} />
-      <ExamLookupResult state={state} />
-    </main>
-  );
+  return <LookupSplitScreen defaultValue={submitted} state={state} />;
 }

@@ -17,7 +17,7 @@ export default async function EditTutorPage({
   const vehicles = await loadVehicleOptions(supabase);
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="flex max-w-xl flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Eğitmeni düzenle</h1>
         <DeleteButton
