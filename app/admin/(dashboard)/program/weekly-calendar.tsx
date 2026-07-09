@@ -82,7 +82,7 @@ export function WeeklyCalendar({
                 >
                   {isEmpty && !isPast && (
                     <Link
-                      href={`/admin/program/new?starts_at=${encodeURIComponent(toLocalDateTimeValue(slotStart))}`}
+                      href={`/admin/program/yeni?starts_at=${encodeURIComponent(toLocalDateTimeValue(slotStart))}`}
                       className="absolute inset-0 flex items-center justify-center text-xs text-muted opacity-0 transition-opacity hover:bg-background/60 group-hover:opacity-100"
                       aria-label={`${String(hour).padStart(2, "0")}:00 için ders planla`}
                     >

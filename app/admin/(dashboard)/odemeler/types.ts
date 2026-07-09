@@ -19,3 +19,18 @@ export interface NewPaymentInstallmentInput {
   amount: number;
   due_date: string;
 }
+
+// Plain, serializable shapes for passing into the client-side
+// InstallmentForm / EditInstallmentForm (class instances lose their
+// prototype methods across the RSC boundary).
+export interface InstallmentFormStudent {
+  id: string;
+  fullName: string;
+}
+
+export interface InstallmentFormInstallment {
+  id: string;
+  studentId: string;
+  amount: number;
+  dueDate: string;
+}

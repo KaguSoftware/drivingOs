@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { primaryLinkClass } from "@/components/ui/button";
 import { VehicleRepository } from "../araclar/vehicle.repository";
 import { VehicleDamageRecordRepository } from "../araclar/vehicle-damage-record.repository";
 import { DamagedVehicleTable } from "./damaged-vehicle-table";
@@ -11,7 +13,12 @@ export default async function DamagedVehiclesPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Hasarlı Araçlar</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold">Hasarlı Araçlar</h1>
+        <Link href="/admin/hasarli-araclar/yeni" className={primaryLinkClass}>
+          Hasar kaydı ekle
+        </Link>
+      </div>
       <DamagedVehicleTable vehicles={vehicles} damageRecords={damageRecords} />
     </section>
   );

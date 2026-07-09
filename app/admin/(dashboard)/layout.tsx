@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/roles";
+import { PageContainer } from "@/components/ui/page-container";
 import { SidebarNav } from "./sidebar-nav";
 import { MobileNav } from "./mobile-nav";
 import { logout } from "./actions";
@@ -61,7 +62,9 @@ export default async function DashboardLayout({
           </div>
         </div>
       </aside>
-      <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+      <main className="flex-1 p-4 sm:p-6 lg:p-8">
+        <PageContainer>{children}</PageContainer>
+      </main>
     </div>
   );
 }

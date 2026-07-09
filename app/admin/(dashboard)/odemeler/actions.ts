@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { PaymentInstallmentRepository } from "./payment-installment.repository";
 import type { NewPaymentInstallmentInput } from "./types";
 
@@ -28,38 +29,77 @@ function splitIntoMonths(
   return rows;
 }
 
-export async function createInstallment(formData: FormData): Promise<void> {
+function splitIntoCustomDates(
+  studentId: string,
+  amountPerInstallment: number,
+  months: number,
+  formData: FormData
+): NewPaymentInstallmentInput[] {
+  const rows: NewPaymentInstallmentInput[] = [];
+
+  for (let i = 0; i < months; i++) {
+    rows.push({
+      student_id: studentId,
+      amount: amountPerInstallment,
+      due_date: String(formData.get(`due_date_${i}`) ?? ""),
+    });
+  }
+
+  return rows;
+}
+
+export async function createInstallment(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
   const studentId = String(formData.get("student_id") ?? "");
   const amount = Number(formData.get("amount") ?? 0);
   const dueDate = String(formData.get("due_date") ?? "");
   const months = Math.max(1, Number(formData.get("months") ?? 1));
+  const useCustomDates = formData.get("custom_dates") === "true";
 
-  const supabase = await createSupabaseServerClient();
-  const repository = new PaymentInstallmentRepository(supabase);
+  try {
+    const supabase = await createSupabaseServerClient();
+    const repository = new PaymentInstallmentRepository(supabase);
 
-  if (months <= 1) {
-    await repository.create({ student_id: studentId, amount, due_date: dueDate });
-  } else {
-    await repository.createMany(splitIntoMonths(studentId, amount, months, dueDate));
+    if (useCustomDates) {
+      await repository.createMany(splitIntoCustomDates(studentId, amount, months, formData));
+    } else if (months <= 1) {
+      await repository.create({ student_id: studentId, amount, due_date: dueDate });
+    } else {
+      await repository.createMany(splitIntoMonths(studentId, amount, months, dueDate));
+    }
+  } catch (error) {
+    return actionError(error);
   }
 
   revalidatePath("/admin/odemeler");
-  redirect("/admin/odemeler");
+  redirect(withToast("/admin/odemeler", "Taksit eklendi"));
 }
 
-export async function updateInstallment(id: string, formData: FormData): Promise<void> {
+export async function updateInstallment(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
   const studentId = String(formData.get("student_id") ?? "");
   const amount = Number(formData.get("amount") ?? 0);
   const dueDate = String(formData.get("due_date") ?? "");
 
-  const supabase = await createSupabaseServerClient();
-  const repository = new PaymentInstallmentRepository(supabase);
-
-  await repository.update(id, { student_id: studentId, amount, due_date: dueDate });
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new PaymentInstallmentRepository(supabase).update(id, {
+      student_id: studentId,
+      amount,
+      due_date: dueDate,
+    });
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/odemeler");
   revalidatePath(`/admin/odemeler/${studentId}`);
-  redirect(`/admin/odemeler/${studentId}`);
+  redirect(withToast(`/admin/odemeler/${studentId}`, "Değişiklikler kaydedildi"));
 }
 
 export async function deleteInstallment(id: string, studentId: string): Promise<void> {

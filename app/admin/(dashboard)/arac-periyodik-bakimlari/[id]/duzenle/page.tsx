@@ -30,7 +30,10 @@ export default async function EditPeriodicCheckPage({
           <TrashIcon />
         </DeleteButton>
       </div>
-      <VehiclePeriodicCheckForm vehicles={vehicles} check={check} />
+      <VehiclePeriodicCheckForm
+        vehicles={vehicles.map((vehicle) => vehicle.toOption())}
+        check={check.toFormCheck()}
+      />
     </section>
   );
 }

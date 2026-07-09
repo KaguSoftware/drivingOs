@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { ExamSessionRepository } from "./exam-session.repository";
 import { ExamEnrollmentRepository } from "./exam-enrollment.repository";
 import type { NewExamSessionInput } from "./types";
@@ -20,35 +21,49 @@ function parseExamSessionInput(formData: FormData): NewExamSessionInput {
   };
 }
 
-export async function createExamSession(formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new ExamSessionRepository(supabase);
+export async function createExamSession(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  let sessionId: string;
+  try {
+    const supabase = await createSupabaseServerClient();
+    const repository = new ExamSessionRepository(supabase);
+    const session = await repository.create(parseExamSessionInput(formData));
+    sessionId = session.id;
 
-  const session = await repository.create(parseExamSessionInput(formData));
-
-  const studentIds = formData.getAll("student_ids").map(String);
-  if (studentIds.length > 0) {
-    const enrollmentRepository = new ExamEnrollmentRepository(supabase);
-    await Promise.all(
-      studentIds.map((studentId) =>
-        enrollmentRepository.enroll({ exam_session_id: session.id, student_id: studentId }),
-      ),
-    );
+    const studentIds = formData.getAll("student_ids").map(String);
+    if (studentIds.length > 0) {
+      const enrollmentRepository = new ExamEnrollmentRepository(supabase);
+      await Promise.all(
+        studentIds.map((studentId) =>
+          enrollmentRepository.enroll({ exam_session_id: session.id, student_id: studentId }),
+        ),
+      );
+    }
+  } catch (error) {
+    return actionError(error);
   }
 
   revalidatePath("/admin/program");
-  redirect(`/admin/sinavlar/${session.id}`);
+  redirect(withToast(`/admin/sinavlar/${sessionId}`, "Sınav planlandı"));
 }
 
-export async function updateExamSession(id: string, formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new ExamSessionRepository(supabase);
-
-  await repository.update(id, parseExamSessionInput(formData));
+export async function updateExamSession(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new ExamSessionRepository(supabase).update(id, parseExamSessionInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/program");
   revalidatePath("/admin/sinavlar");
-  redirect(`/admin/sinavlar/${id}`);
+  redirect(withToast(`/admin/sinavlar/${id}`, "Değişiklikler kaydedildi"));
 }
 
 export async function deleteExamSession(id: string): Promise<void> {

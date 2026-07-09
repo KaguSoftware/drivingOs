@@ -23,3 +23,21 @@ export interface NewVehiclePeriodicCheckInput {
 }
 
 export type CheckStatus = "ok" | "due_soon" | "overdue";
+
+// Plain, serializable shapes for passing into the client-side
+// VehiclePeriodicCheckForm (class instances lose their prototype methods
+// across the RSC boundary).
+export interface CheckFormVehicle {
+  id: string;
+  plate: string;
+  makeModel: string;
+}
+
+export interface CheckFormCheck {
+  id: string;
+  vehicleId: string;
+  checkType: CheckType;
+  dueDate: string;
+  cost: number | null;
+  provider: string | null;
+}

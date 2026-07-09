@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { VehiclePeriodicCheckRepository } from "./vehicle-periodic-check.repository";
 import { CHECK_TYPES, type CheckType, type NewVehiclePeriodicCheckInput } from "./types";
 
@@ -23,24 +24,35 @@ function parsePeriodicCheckInput(formData: FormData): NewVehiclePeriodicCheckInp
   };
 }
 
-export async function createPeriodicCheck(formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new VehiclePeriodicCheckRepository(supabase);
-
-  await repository.create(parsePeriodicCheckInput(formData));
+export async function createPeriodicCheck(
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new VehiclePeriodicCheckRepository(supabase).create(parsePeriodicCheckInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/arac-periyodik-bakimlari");
-  redirect("/admin/arac-periyodik-bakimlari");
+  redirect(withToast("/admin/arac-periyodik-bakimlari", "Kontrol eklendi"));
 }
 
-export async function updatePeriodicCheck(id: string, formData: FormData): Promise<void> {
-  const supabase = await createSupabaseServerClient();
-  const repository = new VehiclePeriodicCheckRepository(supabase);
-
-  await repository.update(id, parsePeriodicCheckInput(formData));
+export async function updatePeriodicCheck(
+  id: string,
+  _prev: ActionResult | null,
+  formData: FormData
+): Promise<ActionResult> {
+  try {
+    const supabase = await createSupabaseServerClient();
+    await new VehiclePeriodicCheckRepository(supabase).update(id, parsePeriodicCheckInput(formData));
+  } catch (error) {
+    return actionError(error);
+  }
 
   revalidatePath("/admin/arac-periyodik-bakimlari");
-  redirect("/admin/arac-periyodik-bakimlari");
+  redirect(withToast("/admin/arac-periyodik-bakimlari", "Değişiklikler kaydedildi"));
 }
 
 export async function deletePeriodicCheck(id: string): Promise<void> {

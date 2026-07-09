@@ -1,8 +1,8 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ExamLookupRepository } from "./exam-lookup.repository";
-import { LookupPageClient } from "./lookup-page-client";
 import type { LookupState } from "./exam-lookup-result";
 import { StudentWelcomeScreen } from "./student-welcome-screen";
+import { LookupSplitScreen } from "./lookup-split-screen";
 import { isValidNationalId } from "./validation";
 import type { UpcomingExam } from "./exam-lookup.model";
 
@@ -40,5 +40,5 @@ export default async function PublicLookupPage({
     return <StudentWelcomeScreen studentFullName={studentFullName} exams={exams} />;
   }
 
-  return <LookupPageClient defaultValue={submitted} state={state} />;
+  return <LookupSplitScreen defaultValue={submitted} state={state} />;
 }

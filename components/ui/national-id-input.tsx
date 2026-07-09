@@ -1,18 +1,15 @@
 "use client";
 
+import { forwardRef } from "react";
 import { inputClass } from "./input-classes";
 
-export function NationalIdInput({
-  defaultValue,
-  required = true,
-  onValueChange,
-}: {
-  defaultValue?: string;
-  required?: boolean;
-  onValueChange?: (value: string) => void;
-}) {
+export const NationalIdInput = forwardRef<
+  HTMLInputElement,
+  { defaultValue?: string; required?: boolean }
+>(function NationalIdInput({ defaultValue, required = true }, ref) {
   return (
     <input
+      ref={ref}
       name="national_id"
       type="text"
       inputMode="numeric"
@@ -30,4 +27,4 @@ export function NationalIdInput({
       }}
     />
   );
-}
+});

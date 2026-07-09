@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { createExamPlace, updateExamPlace } from "./actions";
 import { inputClass } from "@/components/ui/input-classes";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { FormFeedback } from "@/components/ui/form-feedback";
 
 export function ExamPlaceForm({
   id,
@@ -19,11 +20,14 @@ export function ExamPlaceForm({
   youtubeUrl?: string | null;
 }) {
   const [address, setAddress] = useState(initialAddress ?? "");
-  const action = id ? updateExamPlace.bind(null, id) : createExamPlace;
+  const [result, formAction] = useActionState(
+    id ? updateExamPlace.bind(null, id) : createExamPlace,
+    null
+  );
 
   return (
-    <div className="flex max-w-2xl flex-col gap-4 md:flex-row">
-      <form action={action} className="flex flex-1 flex-col gap-4">
+    <div className="flex flex-col gap-6 md:flex-row">
+      <form action={formAction} className="flex flex-1 flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
           İsim
           <input name="name" required defaultValue={name} className={inputClass} />
@@ -52,6 +56,7 @@ export function ExamPlaceForm({
             className={inputClass}
           />
         </label>
+        <FormFeedback result={result} />
         <SubmitButton>{id ? "Değişiklikleri kaydet" : "Sınav yeri ekle"}</SubmitButton>
       </form>
 

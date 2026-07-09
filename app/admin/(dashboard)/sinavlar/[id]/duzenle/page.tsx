@@ -5,6 +5,11 @@ import { ExamPlaceRepository } from "../../../sinav-yerleri/exam-place.repositor
 import { InstructorRepository } from "../../../egitmenler/instructor.repository";
 import { ExamSessionRepository } from "../../exam-session.repository";
 import { ExamSessionForm } from "../../exam-session-form";
+import {
+  toExamSessionFormInstructors,
+  toExamSessionFormPlaces,
+  toExamSessionFormSession,
+} from "../../exam-session-form-data";
 import { deleteExamSession } from "../../actions";
 
 export default async function EditExamSessionPage({
@@ -32,7 +37,11 @@ export default async function EditExamSessionPage({
           <TrashIcon />
         </DeleteButton>
       </div>
-      <ExamSessionForm examPlaces={examPlaces} instructors={instructors} session={session} />
+      <ExamSessionForm
+        examPlaces={toExamSessionFormPlaces(examPlaces)}
+        instructors={toExamSessionFormInstructors(instructors)}
+        session={toExamSessionFormSession(session)}
+      />
     </section>
   );
 }

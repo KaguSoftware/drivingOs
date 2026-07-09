@@ -1,12 +1,19 @@
 import { BackLink } from "@/components/ui/back-link";
+import { FormCard } from "@/components/ui/form-card";
+import { PageContainer } from "@/components/ui/page-container";
+import { PageHeader } from "@/components/ui/page-header";
 import { ExamPlaceForm } from "../exam-place-form";
 
 export default function NewExamPlacePage() {
   return (
-    <section className="flex flex-col gap-6">
-      <BackLink href="../" label="Sınav yerlerine dön" />
-      <h1 className="text-2xl font-semibold">Yeni sınav yeri</h1>
-      <ExamPlaceForm />
-    </section>
+    <PageContainer className="max-w-3xl">
+      <section className="flex flex-col gap-6">
+        <BackLink href="../" label="Sınav yerlerine dön" />
+        <PageHeader title="Yeni sınav yeri" />
+        <FormCard>
+          <ExamPlaceForm />
+        </FormCard>
+      </section>
+    </PageContainer>
   );
 }
