@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { EditIcon, TrashIcon } from "@/components/ui/icons";
 import type { Lesson } from "./lesson.model";
 import type { ExamSession } from "../sinavlar/exam-session.model";
 import { deleteLesson } from "./actions";
@@ -23,26 +24,6 @@ function toLocalDateTimeValue(date: Date): string {
 
 const iconButtonClass =
   "inline-flex h-6 w-6 items-center justify-center rounded-md text-primary-foreground/80 transition-colors hover:bg-primary-foreground/20 hover:text-primary-foreground";
-
-function EditIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
-      <path d="M12 20h9" />
-      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-    </svg>
-  );
-}
-
-function TrashIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
-      <path d="M3 6h18" />
-      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-      <path d="M10 11v6M14 11v6" />
-    </svg>
-  );
-}
 
 export function WeeklyCalendar({
   weekStart,

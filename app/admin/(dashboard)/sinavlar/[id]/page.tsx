@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { EditIcon, TrashIcon } from "@/components/ui/icons";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "../../ogrenciler/student.repository";
 import { ExamSessionRepository } from "../exam-session.repository";
@@ -32,11 +33,24 @@ export default async function ExamSessionPage({
             {session.startsAt().toLocaleString("tr-TR")} &middot; Gözetmen: {session.instructorName}
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <Link href={`/admin/sinavlar/${session.id}/duzenle`} className="hover:underline">
-            Düzenle
+        <div className="flex items-center gap-1">
+          <Link
+            href={`/admin/sinavlar/${session.id}/duzenle`}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted transition-colors hover:bg-surface hover:text-foreground"
+            aria-label="Düzenle"
+            title="Düzenle"
+          >
+            <EditIcon />
           </Link>
-          <DeleteButton action={deleteExamSession.bind(null, session.id)} confirmMessage="Bu sınav silinsin mi?" />
+          <DeleteButton
+            action={deleteExamSession.bind(null, session.id)}
+            confirmMessage="Bu sınav silinsin mi?"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-danger transition-colors hover:bg-surface"
+            title="Sil"
+          >
+            <span className="sr-only">Sil</span>
+            <TrashIcon />
+          </DeleteButton>
         </div>
       </div>
       <EnrollmentForm examSessionId={session.id} availableStudents={availableStudents} />

@@ -5,6 +5,7 @@ import { inputClass } from "@/components/ui/input-classes";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { FormFeedback } from "@/components/ui/form-feedback";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { TrashIcon } from "@/components/ui/icons";
 import { addAvailability, removeAvailability } from "./actions";
 import { WEEKDAYS, type AvailabilityRow } from "./types";
 
@@ -61,7 +62,12 @@ export function WeeklyHoursForm({ rows }: { rows: AvailabilityRow[] }) {
                     <DeleteButton
                       action={removeAvailability.bind(null, slot.id)}
                       confirmMessage="Bu saat aralığı silinsin mi?"
-                    />
+                      className="inline-flex h-7 w-7 items-center justify-center rounded-md text-danger transition-colors hover:bg-background"
+                      title="Sil"
+                    >
+                      <span className="sr-only">Sil</span>
+                      <TrashIcon className="h-3.5 w-3.5" />
+                    </DeleteButton>
                   </li>
                 ))}
               </ul>

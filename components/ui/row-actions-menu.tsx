@@ -4,6 +4,7 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { ConfirmDialog } from "./confirm-dialog";
+import { EditIcon, TrashIcon } from "./icons";
 
 export function RowActionsMenu({
   editHref,
@@ -15,6 +16,8 @@ export function RowActionsMenu({
   deleteConfirmMessage?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -25,7 +28,7 @@ export function RowActionsMenu({
     function updatePosition() {
       const rect = buttonRef.current?.getBoundingClientRect();
       if (!rect) return;
-      setPosition({ top: rect.bottom + window.scrollY + 4, left: rect.right + window.scrollX - 128 });
+      setPosition({ top: rect.bottom + window.scrollY + 4, left: rect.right + window.scrollX - 80 });
     }
 
     function handleClickOutside(event: MouseEvent) {
@@ -48,6 +51,17 @@ export function RowActionsMenu({
     };
   }, [open]);
 
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      const raf = requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+      return () => cancelAnimationFrame(raf);
+    }
+    setVisible(false);
+    const timeout = setTimeout(() => setMounted(false), 220);
+    return () => clearTimeout(timeout);
+  }, [open]);
+
   return (
     <>
       <button
@@ -64,21 +78,33 @@ export function RowActionsMenu({
         </svg>
       </button>
 
-      {open &&
+      {mounted &&
         createPortal(
           <div
             ref={menuRef}
             role="menu"
-            style={{ top: position.top, left: position.left }}
-            className="fixed z-50 w-32 overflow-hidden rounded-md border border-border bg-[#faf6ed] shadow-md"
+            style={{
+              top: position.top,
+              left: position.left,
+              transformOrigin: "top right",
+              transform: visible ? "translateY(0) scale(1)" : "translateY(-10px) scale(0.85)",
+              transitionProperty: "opacity, transform",
+              transitionDuration: "220ms",
+              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            className={`fixed z-50 flex w-20 overflow-hidden rounded-md border border-border bg-[#faf6ed] shadow-md ${
+              visible ? "opacity-100" : "opacity-0"
+            }`}
           >
             <Link
               href={editHref}
               role="menuitem"
               onClick={() => setOpen(false)}
-              className="block px-3 py-2 text-sm hover:bg-white"
+              aria-label="Düzenle"
+              title="Düzenle"
+              className="flex flex-1 items-center justify-center px-3 py-2 hover:bg-white"
             >
-              Düzenle
+              <EditIcon />
             </Link>
             <ConfirmDialog
               message={deleteConfirmMessage}
@@ -88,9 +114,11 @@ export function RowActionsMenu({
                   type="button"
                   role="menuitem"
                   onClick={show}
-                  className="block w-full px-3 py-2 text-left text-sm text-danger hover:bg-white"
+                  aria-label="Sil"
+                  title="Sil"
+                  className="flex flex-1 items-center justify-center px-3 py-2 text-danger hover:bg-white"
                 >
-                  Sil
+                  <TrashIcon />
                 </button>
               )}
             />

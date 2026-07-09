@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { TrashIcon } from "@/components/ui/icons";
 import { VehicleDamageRecordRepository } from "../../../../vehicle-damage-record.repository";
 import { DamageRecordForm } from "../../../damage-record-form";
 import { deleteDamageRecord } from "../../../../damage-record-actions";
@@ -20,7 +21,12 @@ export default async function EditDamageRecordPage({
         <DeleteButton
           action={deleteDamageRecord.bind(null, recordId, id)}
           confirmMessage="Bu hasar kaydı silinsin mi?"
-        />
+          className="inline-flex h-8 w-8 items-center justify-center rounded-md text-danger transition-colors hover:bg-surface"
+          title="Sil"
+        >
+          <span className="sr-only">Sil</span>
+          <TrashIcon />
+        </DeleteButton>
       </div>
       <DamageRecordForm vehicleId={id} record={record} />
     </section>

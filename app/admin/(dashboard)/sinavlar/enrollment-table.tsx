@@ -1,4 +1,5 @@
 import { DeleteButton } from "@/components/ui/delete-button";
+import { TrashIcon } from "@/components/ui/icons";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
 import type { ExamEnrollment } from "./exam-enrollment.model";
 import { deleteEnrollment } from "./actions";
@@ -31,7 +32,12 @@ export function EnrollmentTable({
                 <DeleteButton
                   action={deleteEnrollment.bind(null, enrollment.id, examSessionId)}
                   confirmMessage="Bu kayıt kaldırılsın mı?"
-                />
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-md text-danger transition-colors hover:bg-surface"
+                  title="Sil"
+                >
+                  <span className="sr-only">Sil</span>
+                  <TrashIcon />
+                </DeleteButton>
               </td>
             </tr>
           ))}

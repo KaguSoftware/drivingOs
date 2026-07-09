@@ -5,6 +5,7 @@ import { inputClass } from "@/components/ui/input-classes";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { FormFeedback } from "@/components/ui/form-feedback";
 import { DeleteButton } from "@/components/ui/delete-button";
+import { TrashIcon } from "@/components/ui/icons";
 import { addBlockedDate, removeBlockedDate } from "./actions";
 import type { BlockedDateRow } from "./types";
 
@@ -55,7 +56,12 @@ export function BlockedDatesForm({ rows }: { rows: BlockedDateRow[] }) {
               <DeleteButton
                 action={removeBlockedDate.bind(null, row.id)}
                 confirmMessage="Bu gün tekrar açılsın mı?"
-              />
+                className="inline-flex h-8 w-8 items-center justify-center rounded-md text-danger transition-colors hover:bg-background"
+                title="Sil"
+              >
+                <span className="sr-only">Sil</span>
+                <TrashIcon />
+              </DeleteButton>
             </li>
           ))}
         </ul>
