@@ -5,8 +5,8 @@ import { inputClass } from "./input-classes";
 
 export const NationalIdInput = forwardRef<
   HTMLInputElement,
-  { defaultValue?: string; required?: boolean }
->(function NationalIdInput({ defaultValue, required = true }, ref) {
+  { defaultValue?: string; required?: boolean; onValueChange?: (value: string) => void }
+>(function NationalIdInput({ defaultValue, required = true, onValueChange }, ref) {
   return (
     <input
       ref={ref}
