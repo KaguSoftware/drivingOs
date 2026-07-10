@@ -1,4 +1,4 @@
-import type { ExamPlace } from "../sinav-yerleri/exam-place.model";
+import type { ExamPlace } from "./yerler/exam-place.model";
 import type { Instructor } from "../egitmenler/instructor.model";
 import type { Student } from "../ogrenciler/student.model";
 import type { ExamSession } from "./exam-session.model";

@@ -14,7 +14,7 @@ export default async function NewInstallmentPage() {
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Ödemelere dön" />
+        <BackLink href="/admin/odemeler" label="Ödemelere dön" />
         <PageHeader title="Yeni taksit" />
         <FormCard>
           <InstallmentForm students={toInstallmentFormStudents(students)} />

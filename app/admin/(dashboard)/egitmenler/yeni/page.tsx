@@ -13,7 +13,7 @@ export default async function NewTutorPage() {
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Eğitmenlere dön" />
+        <BackLink href="/admin/egitmenler" label="Eğitmenlere dön" />
         <PageHeader title="Eğitmen kaydet" />
         <FormCard>
           <TutorForm vehicles={vehicles} />

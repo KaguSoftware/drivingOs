@@ -6,7 +6,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { StudentRepository } from "../../ogrenciler/student.repository";
 import { InstructorRepository } from "../../egitmenler/instructor.repository";
 import { VehicleRepository } from "../../araclar/vehicle.repository";
-import { LessonForm } from "../lesson-form";
+import { NewLessonView } from "../new-lesson-view";
 import { toFormInstructors, toFormStudents, toFormVehicles } from "../form-data";
 
 export default async function NewLessonPage({
@@ -23,10 +23,10 @@ export default async function NewLessonPage({
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Programa dön" />
+        <BackLink href="/admin/program" label="Programa dön" />
         <PageHeader title="Ders planla" />
         <FormCard>
-          <LessonForm
+          <NewLessonView
             students={toFormStudents(students)}
             instructors={toFormInstructors(instructors)}
             vehicles={toFormVehicles(vehicles)}

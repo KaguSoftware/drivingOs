@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { fetchProfile, ROLE_HOME } from "@/lib/roles";
 
+// Teacher entrance: email + password. Students sign in by phone number at
+// "/"; admins have their own dedicated form at /admin/giris.
 export async function login(formData: FormData): Promise<void> {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");

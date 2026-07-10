@@ -11,7 +11,7 @@ import { TodayLessonsCard, UpcomingExamsCard, OutstandingBalancesCard } from "./
 const SHORTCUTS = [
   { href: "/admin/ogrenciler/yeni", label: "Yeni öğrenci" },
   { href: "/admin/program", label: "Haftalık program" },
-  { href: "/admin/egitmen-takip", label: "Eğitmen takibi" },
+  { href: "/admin/egitmenler?tab=takip", label: "Eğitmen takibi" },
   { href: "/admin/odemeler", label: "Ödemeler" },
 ];
 

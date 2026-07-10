@@ -22,6 +22,15 @@ export interface NewInstructorInput {
   assigned_vehicle_id: string | null;
 }
 
+export interface InstructorFormValues {
+  id: string;
+  fullName: string;
+  phone: string;
+  email: string | null;
+  licenseClasses: LicenseClass[];
+  assignedVehicleId: string | null;
+}
+
 export interface ExamResultRow {
   id: string;
   student_id: string;

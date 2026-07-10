@@ -5,7 +5,6 @@ import { createStudent, updateStudent } from "./actions";
 import { FullNameInput } from "@/components/ui/full-name-input";
 import { NationalIdInput } from "@/components/ui/national-id-input";
 import { PhoneInput } from "@/components/ui/phone-input";
-import { inputClass } from "@/components/ui/input-classes";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { FormFeedback } from "@/components/ui/form-feedback";
 import { LicenseClassPicker } from "@/components/ui/license-class-picker";
@@ -35,18 +34,6 @@ export function StudentForm({ student }: { student?: StudentFormValues }) {
         <label className="flex flex-col gap-1 text-sm">
           T.C. Kimlik No
           <NationalIdInput defaultValue={student?.nationalId} />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          <span>
-            E-posta <span className="text-xs font-normal text-muted">(öğrenci girişi için, opsiyonel)</span>
-          </span>
-          <input
-            name="email"
-            type="email"
-            defaultValue={student?.email ?? ""}
-            className={inputClass}
-            placeholder="ornek@eposta.com"
-          />
         </label>
       </div>
       <LicenseClassPicker

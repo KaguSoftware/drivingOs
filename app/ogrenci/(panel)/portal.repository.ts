@@ -5,6 +5,7 @@ import { Lesson } from "../../admin/(dashboard)/program/lesson.model";
 import type { StudentRow } from "../../admin/(dashboard)/ogrenciler/types";
 import type { PaymentInstallmentRow } from "../../admin/(dashboard)/odemeler/types";
 import type { LessonRow } from "../../admin/(dashboard)/program/types";
+import { UpcomingExam, type UpcomingExamRow } from "./upcoming-exam.model";
 
 const LESSON_SELECT = "*, students(full_name, phone), instructors(full_name), vehicles(plate)";
 
@@ -41,5 +42,21 @@ export class PortalRepository {
       .order("due_date", { ascending: true });
     if (error) throw new Error(`Ödemeler yüklenemedi: ${error.message}`);
     return (data as PaymentInstallmentRow[]).map((row) => new PaymentInstallment(row));
+  }
+
+  async listUpcomingExams(studentId: string): Promise<UpcomingExam[]> {
+    const { data, error } = await this.supabase
+      .from("exam_enrollments")
+      .select("exam_sessions(starts_at, ends_at, exam_places(name, address, notes, youtube_url))")
+      .eq("student_id", studentId);
+    if (error) throw new Error(`Sınav bilgisi yüklenemedi: ${error.message}`);
+
+    const rows = (data as unknown as { exam_sessions: UpcomingExamRow | null }[])
+      .map((row) => row.exam_sessions)
+      .filter((session): session is UpcomingExamRow => session !== null)
+      .filter((session) => new Date(session.starts_at) > new Date())
+      .sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime());
+
+    return rows.map((row) => new UpcomingExam(row));
   }
 }

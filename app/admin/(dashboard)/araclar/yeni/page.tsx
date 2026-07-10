@@ -8,7 +8,7 @@ export default function NewVehiclePage() {
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Araçlara dön" />
+        <BackLink href="/admin/araclar" label="Araçlara dön" />
         <PageHeader title="Araç ekle" />
         <FormCard>
           <VehicleForm />

@@ -1,7 +1,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { DeleteButton } from "@/components/ui/delete-button";
 import { TrashIcon } from "@/components/ui/icons";
-import { ExamPlaceRepository } from "../../../sinav-yerleri/exam-place.repository";
+import { ExamPlaceRepository } from "../../yerler/exam-place.repository";
 import { InstructorRepository } from "../../../egitmenler/instructor.repository";
 import { ExamSessionRepository } from "../../exam-session.repository";
 import { ExamSessionForm } from "../../exam-session-form";

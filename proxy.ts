@@ -14,7 +14,8 @@ export async function proxy(request: NextRequest) {
     );
 
   if (isProtectedRoute && !user) {
-    return NextResponse.redirect(new URL("/giris", request.url));
+    const loginPath = pathname.startsWith("/admin") ? "/admin/giris" : "/giris";
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
 
   // Role-aware landing happens in layouts; /admin bounces non-admins.

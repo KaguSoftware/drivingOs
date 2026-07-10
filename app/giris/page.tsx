@@ -14,19 +14,25 @@ export default async function LoginPage({
       <div className="w-full max-w-sm rounded-lg border border-border bg-surface p-8 shadow-sm">
         <h1 className="mb-1 text-xl font-semibold text-primary">Driving School OS</h1>
         <p className="mb-6 text-sm text-muted">
-          Yönetici, eğitmen veya öğrenci hesabınızla giriş yapın.
+          Eğitmen hesabınızla giriş yapın.
         </p>
         <form action={login} className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-sm">
             E-posta
-            <input name="email" type="email" required className={inputClass} />
+            <input
+              name="email"
+              type="email"
+              placeholder="ornek@eposta.com"
+              required
+              className={inputClass}
+            />
           </label>
           <label className="flex flex-col gap-1 text-sm">
             Şifre
             <input name="password" type="password" required className={inputClass} />
           </label>
           {error && (
-            <p className="text-sm text-danger">Geçersiz e-posta veya şifre.</p>
+            <p className="text-sm text-danger">Geçersiz bilgiler.</p>
           )}
           <Button type="submit">Giriş yap</Button>
         </form>

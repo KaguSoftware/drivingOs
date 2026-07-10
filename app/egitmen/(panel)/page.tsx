@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/ui/page-header";
 import { StatCard, StatGrid } from "@/components/ui/stat-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LessonRepository } from "../../admin/(dashboard)/program/lesson.repository";
-import { formatHours } from "../../admin/(dashboard)/egitmen-takip/tracker.repository";
+import { formatHours } from "../../admin/(dashboard)/egitmenler/tracker/tracker.repository";
 import { LessonList } from "./derslerim/lesson-list";
 
 function startOfWeek(): Date {

@@ -34,11 +34,13 @@ export interface StudentRow {
   created_at: string;
 }
 
+// Email isn't collected from the admin — it's an internal identifier used
+// only to wire up the student's Supabase Auth account (real login is by
+// phone number, see app/(public)/actions.ts). Never exposed in the form.
 export interface NewStudentInput {
   full_name: string;
   phone: string;
   national_id: string;
-  email: string | null;
   license_classes: LicenseClass[];
 }
 
@@ -49,6 +51,5 @@ export interface StudentFormValues {
   fullName: string;
   phone: string;
   nationalId: string;
-  email: string | null;
   licenseClasses: LicenseClass[];
 }

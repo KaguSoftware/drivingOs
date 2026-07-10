@@ -1,44 +1,47 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { ExamLookupRepository } from "./exam-lookup.repository";
-import type { LookupState } from "./exam-lookup-result";
-import { StudentWelcomeScreen } from "./student-welcome-screen";
-import { LookupSplitScreen } from "./lookup-split-screen";
-import { isValidNationalId } from "./validation";
-import type { UpcomingExam } from "./exam-lookup.model";
+import { Logo } from "./logo";
+import { MebBadge } from "./meb-badge";
+import { LookupShowcase } from "./lookup-showcase";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { Button } from "@/components/ui/button";
+import { PhoneEntryResult } from "./phone-entry-result";
+import { signInWithPhone } from "./actions";
 
-export default async function PublicLookupPage({
+export default async function StudentEntryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ national_id?: string }>;
+  searchParams: Promise<{ error?: string }>;
 }) {
-  const { national_id } = await searchParams;
-  const submitted = national_id?.trim();
+  const { error } = await searchParams;
 
-  let state: LookupState = "idle";
-  let studentFullName: string | null = null;
-  let exams: UpcomingExam[] = [];
-
-  if (submitted !== undefined && submitted !== "") {
-    if (!isValidNationalId(submitted)) {
-      state = "invalid";
-    } else {
-      const supabase = await createSupabaseServerClient();
-      const repository = new ExamLookupRepository(supabase);
-
-      const [fullName, upcomingExams] = await Promise.all([
-        repository.findStudentFullName(submitted),
-        repository.findUpcomingExam(submitted),
-      ]);
-
-      studentFullName = fullName;
-      exams = upcomingExams;
-      state = fullName === null ? "not_found" : "found";
-    }
-  }
-
-  if (state === "found" && studentFullName !== null) {
-    return <StudentWelcomeScreen studentFullName={studentFullName} exams={exams} />;
-  }
-
-  return <LookupSplitScreen defaultValue={submitted} state={state} />;
+  return (
+    <main className="flex min-h-screen">
+      <div className="flex w-full flex-col justify-center gap-8 bg-background p-4 sm:p-8 lg:w-1/2">
+        <div className="mx-auto flex w-full max-w-lg flex-col gap-8">
+          <div className="flex items-center justify-between">
+            <Logo />
+            <MebBadge />
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-muted">Hoş geldiniz</p>
+            <h1 className="text-2xl font-semibold">Öğrenci Girişi</h1>
+            <p className="text-sm text-muted">
+              Telefon numaranızı girerek panelinize ulaşın. Şifre gerekmez.
+            </p>
+          </div>
+          <form action={signInWithPhone} className="flex max-w-md flex-col gap-3">
+            <label className="flex flex-col gap-1 text-sm">
+              Telefon numarası
+              <div className="flex items-center rounded-lg border border-border bg-background pl-3">
+                <span className="text-sm text-muted">+90</span>
+                <PhoneInput />
+              </div>
+            </label>
+            <Button type="submit">Giriş yap</Button>
+          </form>
+          <PhoneEntryResult error={error} />
+        </div>
+      </div>
+      <LookupShowcase />
+    </main>
+  );
 }

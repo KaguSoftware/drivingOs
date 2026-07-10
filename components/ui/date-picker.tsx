@@ -19,11 +19,13 @@ export function DatePicker({
   defaultValue,
   required,
   className,
+  onValueChange,
 }: {
   name: string;
   defaultValue?: string;
   required?: boolean;
   className?: string;
+  onValueChange?: (value: string) => void;
 }) {
   const [value, setValue] = useState(defaultValue ?? "");
   const [open, setOpen] = useState(false);
@@ -62,7 +64,9 @@ export function DatePicker({
             onViewDateChange={setViewDate}
             selectedDate={selectedDate}
             onSelectDate={(day) => {
-              setValue(toDateValue(day));
+              const next = toDateValue(day);
+              setValue(next);
+              onValueChange?.(next);
               setOpen(false);
             }}
           />

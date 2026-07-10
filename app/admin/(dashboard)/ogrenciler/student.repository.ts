@@ -26,7 +26,7 @@ export class StudentRepository {
     return new Student(data as StudentRow);
   }
 
-  async create(input: NewStudentInput): Promise<Student> {
+  async create(input: NewStudentInput & { email: string }): Promise<Student> {
     const { data, error } = await this.supabase
       .from("students")
       .insert(input)
@@ -35,6 +35,13 @@ export class StudentRepository {
 
     if (error) throw new Error(`Failed to create student: ${error.message}`);
     return new Student(data as StudentRow);
+  }
+
+  // Backfills the internal login email for students created before a
+  // portal account existed for them (see updateStudent).
+  async setEmail(id: string, email: string): Promise<void> {
+    const { error } = await this.supabase.from("students").update({ email }).eq("id", id);
+    if (error) throw new Error(`Failed to set student email: ${error.message}`);
   }
 
   async update(id: string, input: NewStudentInput): Promise<Student> {

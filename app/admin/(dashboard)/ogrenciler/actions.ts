@@ -34,47 +34,42 @@ function parseStudentInput(formData: FormData): NewStudentInput {
     throw new Error("T.C. Kimlik No tam olarak 11 haneli olmalı");
   }
 
-  const email = String(formData.get("email") ?? "").trim();
-
   return {
     full_name: fullName,
     phone: `+90${phone}`,
     national_id: nationalId,
-    email: email || null,
     license_classes: licenseClasses as LicenseClass[],
   };
+}
+
+// Students log in by phone number only (see app/(public)/actions.ts) —
+// Supabase Auth still needs an email internally to wire up the account, so
+// we derive one from the phone number rather than asking the admin for it.
+function internalEmailForPhone(phone: string): string {
+  return `${phone.replace(/^\+90/, "")}@ogrenci.internal`;
 }
 
 export async function createStudent(
   _prev: ActionResult | null,
   formData: FormData
 ): Promise<ActionResult> {
-  let tempPassword: string | null = null;
+  let tempPassword: string;
   try {
     const input = parseStudentInput(formData);
+    const email = internalEmailForPhone(input.phone);
     const supabase = await createSupabaseServerClient();
-    const student = await new StudentRepository(supabase).create(input);
-
-    if (input.email) {
-      tempPassword = await createPortalAccount({
-        email: input.email,
-        role: "student",
-        linkId: student.id,
-      });
-    }
+    const student = await new StudentRepository(supabase).create({ ...input, email });
+    tempPassword = await createPortalAccount({ email, role: "student", linkId: student.id });
   } catch (error) {
     return actionError(error);
   }
 
   revalidatePath("/admin/ogrenciler");
-  if (tempPassword) {
-    // Stay on the form so the admin can copy the one-time password.
-    return {
-      ok: true,
-      message: `Öğrenci kaydedildi ve giriş hesabı açıldı. Geçici şifre: ${tempPassword}`,
-    };
-  }
-  redirect(withToast("/admin/ogrenciler", "Öğrenci kaydedildi"));
+  // Stay on the form so the admin can copy the one-time password.
+  return {
+    ok: true,
+    message: `Öğrenci kaydedildi ve giriş hesabı açıldı. Geçici şifre: ${tempPassword}`,
+  };
 }
 
 export async function updateStudent(
@@ -82,14 +77,36 @@ export async function updateStudent(
   _prev: ActionResult | null,
   formData: FormData
 ): Promise<ActionResult> {
+  let tempPassword: string | null = null;
   try {
+    const input = parseStudentInput(formData);
     const supabase = await createSupabaseServerClient();
-    await new StudentRepository(supabase).update(id, parseStudentInput(formData));
+    const repo = new StudentRepository(supabase);
+    await repo.update(id, input);
+
+    // Students created before this account-provisioning flow existed may
+    // have no portal login yet — backfill one on save.
+    const { data: existingProfile } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("student_id", id)
+      .maybeSingle();
+    if (!existingProfile) {
+      const email = internalEmailForPhone(input.phone);
+      await repo.setEmail(id, email);
+      tempPassword = await createPortalAccount({ email, role: "student", linkId: id });
+    }
   } catch (error) {
     return actionError(error);
   }
 
   revalidatePath("/admin/ogrenciler");
+  if (tempPassword) {
+    return {
+      ok: true,
+      message: `Değişiklikler kaydedildi ve giriş hesabı açıldı. Geçici şifre: ${tempPassword}`,
+    };
+  }
   redirect(withToast("/admin/ogrenciler", "Değişiklikler kaydedildi"));
 }
 

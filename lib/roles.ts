@@ -37,14 +37,15 @@ export async function fetchProfile(
 // Layout guard: requires a signed-in user with the given role; bounces
 // signed-in users with another role to their own panel.
 export async function requireRole(role: UserRole): Promise<Profile> {
+  const loginPath = role === "admin" ? "/admin/giris" : "/giris";
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) redirect("/giris");
+  if (!user) redirect(loginPath);
 
   const profile = await fetchProfile(supabase);
-  if (!profile) redirect("/giris");
+  if (!profile) redirect(loginPath);
   if (profile.role !== role) redirect(ROLE_HOME[profile.role]);
   return profile;
 }

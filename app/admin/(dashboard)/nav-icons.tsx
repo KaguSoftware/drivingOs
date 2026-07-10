@@ -31,20 +31,6 @@ const VehiclesIcon = (props: IconProps) => (
   </Icon>
 );
 
-const DamagedVehiclesIcon = (props: IconProps) => (
-  <Icon {...props}>
-    <path d="M5 17h14M5 17a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0ZM3 17V11l2-5h10l4 5v6" />
-    <path d="m9 8 2.5 3L14 8" />
-  </Icon>
-);
-
-const VehicleChecksIcon = (props: IconProps) => (
-  <Icon {...props}>
-    <path d="m9 12 2 2 4-4" />
-    <circle cx="12" cy="12" r="9" />
-  </Icon>
-);
-
 const ScheduleIcon = (props: IconProps) => (
   <Icon {...props}>
     <rect x="3" y="4" width="18" height="17" rx="2" />
@@ -66,13 +52,6 @@ const PaymentsIcon = (props: IconProps) => (
   </Icon>
 );
 
-const ExamPlacesIcon = (props: IconProps) => (
-  <Icon {...props}>
-    <path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z" />
-    <circle cx="12" cy="9.5" r="2.5" />
-  </Icon>
-);
-
 const ExamsIcon = (props: IconProps) => (
   <Icon {...props}>
     <path d="M9 3h6l3 3v15H6V6l3-3Z" />
@@ -80,22 +59,11 @@ const ExamsIcon = (props: IconProps) => (
   </Icon>
 );
 
-const TrackerIcon = (props: IconProps) => (
-  <Icon {...props}>
-    <path d="M3 3v18h18" />
-    <path d="m7 14 3-4 3 3 4-6" />
-  </Icon>
-);
-
 export const NAV_ICONS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], (props: IconProps) => React.JSX.Element> = {
   "/admin/ogrenciler": StudentsIcon,
   "/admin/araclar": VehiclesIcon,
-  "/admin/hasarli-araclar": DamagedVehiclesIcon,
-  "/admin/arac-periyodik-bakimlari": VehicleChecksIcon,
   "/admin/program": ScheduleIcon,
   "/admin/egitmenler": TutorsIcon,
-  "/admin/egitmen-takip": TrackerIcon,
   "/admin/odemeler": PaymentsIcon,
-  "/admin/sinav-yerleri": ExamPlacesIcon,
   "/admin/sinavlar": ExamsIcon,
 };

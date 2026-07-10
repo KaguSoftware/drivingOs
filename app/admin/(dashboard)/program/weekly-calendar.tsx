@@ -1,13 +1,10 @@
 import Link from "next/link";
-import { DeleteButton } from "@/components/ui/delete-button";
-import { EditIcon, TrashIcon } from "@/components/ui/icons";
 import type { Lesson } from "./lesson.model";
 import type { ExamSession } from "../sinavlar/exam-session.model";
-import { deleteLesson } from "./actions";
-import { deleteExamSessionFromProgram } from "../sinavlar/actions";
+import { LessonCard, ExamSessionCard } from "./calendar-cards";
+import { PRESET_SLOTS, presetSlotToDateRange } from "@/lib/lesson-slots";
 
 const DAY_LABELS = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
-const HOURS = Array.from({ length: 13 }, (_, i) => 8 + i); // 08:00-20:00
 
 function isSameDay(a: Date, b: Date): boolean {
   return (
@@ -17,13 +14,14 @@ function isSameDay(a: Date, b: Date): boolean {
   );
 }
 
+function overlaps(aStart: Date, aEnd: Date, bStart: Date, bEnd: Date): boolean {
+  return aStart < bEnd && aEnd > bStart;
+}
+
 function toLocalDateTimeValue(date: Date): string {
   const offsetMs = date.getTimezoneOffset() * 60 * 1000;
   return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16);
 }
-
-const iconButtonClass =
-  "inline-flex h-6 w-6 items-center justify-center rounded-md text-primary-foreground/80 transition-colors hover:bg-primary-foreground/20 hover:text-primary-foreground";
 
 export function WeeklyCalendar({
   weekStart,
@@ -44,7 +42,7 @@ export function WeeklyCalendar({
     <div className="overflow-x-auto rounded-lg border border-border">
       <div
         className="grid min-w-[900px]"
-        style={{ gridTemplateColumns: `80px repeat(7, 1fr)` }}
+        style={{ gridTemplateColumns: `100px repeat(7, 1fr)` }}
       >
         <div className="border-b border-r border-border bg-background p-2" />
         {days.map((day) => (
@@ -56,21 +54,27 @@ export function WeeklyCalendar({
           </div>
         ))}
 
-        {HOURS.map((hour) => (
-          <div key={hour} className="contents">
+        {PRESET_SLOTS.map((slot) => (
+          <div key={slot.label} className="contents">
             <div className="border-b border-r border-border p-2 text-xs text-muted">
-              {String(hour).padStart(2, "0")}:00
+              {slot.start}
+              <br />
+              {slot.end}
             </div>
             {days.map((day) => {
+              const { startsAt: slotStart, endsAt: slotEnd } = presetSlotToDateRange(day.date, slot);
+
               const cellLessons = lessons.filter(
-                (lesson) => isSameDay(lesson.startsAt(), day.date) && lesson.startsAt().getHours() === hour
+                (lesson) =>
+                  isSameDay(lesson.startsAt(), day.date) &&
+                  overlaps(lesson.startsAt(), lesson.endsAt(), slotStart, slotEnd)
               );
               const cellExamSessions = examSessions.filter(
-                (session) => isSameDay(session.startsAt(), day.date) && session.startsAt().getHours() === hour
+                (session) =>
+                  isSameDay(session.startsAt(), day.date) &&
+                  overlaps(session.startsAt(), session.endsAt(), slotStart, slotEnd)
               );
               const isEmpty = cellLessons.length === 0 && cellExamSessions.length === 0;
-              const slotStart = new Date(day.date);
-              slotStart.setHours(hour, 0, 0, 0);
               const isPast = slotStart.getTime() < Date.now();
 
               return (
@@ -84,75 +88,16 @@ export function WeeklyCalendar({
                     <Link
                       href={`/admin/program/yeni?starts_at=${encodeURIComponent(toLocalDateTimeValue(slotStart))}`}
                       className="absolute inset-0 flex items-center justify-center text-xs text-muted opacity-0 transition-opacity hover:bg-background/60 group-hover:opacity-100"
-                      aria-label={`${String(hour).padStart(2, "0")}:00 için ders planla`}
+                      aria-label={`${slot.label} için ders planla`}
                     >
                       +
                     </Link>
                   )}
                   {cellLessons.map((lesson) => (
-                    <div
-                      key={lesson.id}
-                      className="group/card relative flex flex-col gap-1 rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground shadow-sm"
-                    >
-                      <a href={lesson.whatsAppLink()} target="_blank" rel="noreferrer" className="font-bold uppercase hover:underline">
-                        {lesson.studentName}
-                      </a>
-                      <span>{lesson.vehicleSummary}</span>
-                      <span className="text-primary-foreground/80">
-                        {lesson.startsAt().toLocaleDateString([], { day: "2-digit", month: "2-digit" })}{" "}
-                        {lesson.startsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        {" – "}
-                        {lesson.endsAt().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                      </span>
-                      <div className="flex h-0 items-center justify-center gap-1 overflow-hidden opacity-0 transition-[height,opacity] group-hover/card:h-6 group-hover/card:opacity-100">
-                        <Link
-                          href={`/admin/program/${lesson.id}/duzenle`}
-                          className={iconButtonClass}
-                          aria-label="Dersi düzenle"
-                          title="Düzenle"
-                        >
-                          <EditIcon />
-                        </Link>
-                        <DeleteButton
-                          action={deleteLesson.bind(null, lesson.id)}
-                          confirmMessage="Bu ders silinsin mi?"
-                          className={iconButtonClass}
-                          title="Sil"
-                        >
-                          <span className="sr-only">Sil</span>
-                          <TrashIcon />
-                        </DeleteButton>
-                      </div>
-                    </div>
+                    <LessonCard key={lesson.id} lesson={lesson} />
                   ))}
                   {cellExamSessions.map((session) => (
-                    <div
-                      key={session.id}
-                      className="group/card relative flex flex-col gap-1 rounded-md bg-primary px-2 py-1 text-xs text-primary-foreground shadow-sm"
-                    >
-                      <Link href={`/admin/sinavlar/${session.id}`} className="hover:underline">
-                        Sınav &middot; {session.examPlaceName}
-                      </Link>
-                      <div className="flex h-0 items-center justify-center gap-1 overflow-hidden opacity-0 transition-[height,opacity] group-hover/card:h-6 group-hover/card:opacity-100">
-                        <Link
-                          href={`/admin/sinavlar/${session.id}/duzenle`}
-                          className={iconButtonClass}
-                          aria-label="Sınavı düzenle"
-                          title="Düzenle"
-                        >
-                          <EditIcon />
-                        </Link>
-                        <DeleteButton
-                          action={deleteExamSessionFromProgram.bind(null, session.id)}
-                          confirmMessage="Bu sınav silinsin mi?"
-                          className={iconButtonClass}
-                          title="Sil"
-                        >
-                          <span className="sr-only">Sil</span>
-                          <TrashIcon />
-                        </DeleteButton>
-                      </div>
-                    </div>
+                    <ExamSessionCard key={session.id} session={session} />
                   ))}
                 </div>
               );

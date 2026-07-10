@@ -29,7 +29,7 @@ export async function createDamageRecord(formData: FormData): Promise<void> {
   await repository.create(input);
 
   revalidatePath(`/admin/araclar/${input.vehicle_id}`);
-  revalidatePath("/admin/hasarli-araclar");
+  revalidatePath("/admin/araclar");
 }
 
 export async function updateDamageRecord(id: string, formData: FormData): Promise<void> {

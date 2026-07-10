@@ -3,7 +3,7 @@ import { FormCard } from "@/components/ui/form-card";
 import { PageContainer } from "@/components/ui/page-container";
 import { PageHeader } from "@/components/ui/page-header";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { ExamPlaceRepository } from "../../sinav-yerleri/exam-place.repository";
+import { ExamPlaceRepository } from "../yerler/exam-place.repository";
 import { InstructorRepository } from "../../egitmenler/instructor.repository";
 import { StudentRepository } from "../../ogrenciler/student.repository";
 import { ExamSessionForm } from "../exam-session-form";
@@ -18,7 +18,7 @@ export default async function NewExamSessionPage() {
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Sınavlara dön" />
+        <BackLink href="/admin/sinavlar" label="Sınavlara dön" />
         <PageHeader title="Sınav planla" />
         <FormCard>
           <ExamSessionForm

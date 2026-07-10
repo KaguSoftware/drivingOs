@@ -32,10 +32,6 @@ export class Student {
     return this.row.national_id;
   }
 
-  get email() {
-    return this.row.email;
-  }
-
   get licenseClasses() {
     return this.row.license_classes;
   }
@@ -82,7 +78,6 @@ export class Student {
       fullName: this.row.full_name,
       phone: this.row.phone,
       nationalId: this.row.national_id,
-      email: this.row.email,
       licenseClasses: this.row.license_classes,
     };
   }

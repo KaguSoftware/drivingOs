@@ -8,7 +8,7 @@ export default function NewStudentPage() {
   return (
     <PageContainer className="max-w-2xl">
       <section className="flex flex-col gap-6">
-        <BackLink href="../" label="Öğrencilere dön" />
+        <BackLink href="/admin/ogrenciler" label="Öğrencilere dön" />
         <PageHeader title="Öğrenci kaydet" />
         <FormCard>
           <StudentForm />
