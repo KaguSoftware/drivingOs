@@ -28,3 +28,11 @@ export function normalizeTrPhone(input: string): string | null {
 
   return digits;
 }
+
+// Students log in by phone number only (see app/(public)/actions.ts) —
+// Supabase Auth still needs an email internally to wire up the account, so
+// we derive one from the phone number rather than asking the admin for it.
+// `phone` is the `+90${10 digits}` form stored on `students.phone`.
+export function internalEmailForPhone(phone: string): string {
+  return `${phone.replace(/^\+90/, "")}@ogrenci.internal`;
+}

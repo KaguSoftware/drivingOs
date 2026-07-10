@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { createPortalAccount } from "@/lib/accounts";
+import { internalEmailForPhone } from "@/lib/phone";
 import { actionError, withToast, type ActionResult } from "@/lib/action-result";
 import { StudentRepository } from "./student.repository";
 import { LICENSE_CLASSES, type LicenseClass, type NewStudentInput } from "./types";
@@ -40,13 +41,6 @@ function parseStudentInput(formData: FormData): NewStudentInput {
     national_id: nationalId,
     license_classes: licenseClasses as LicenseClass[],
   };
-}
-
-// Students log in by phone number only (see app/(public)/actions.ts) —
-// Supabase Auth still needs an email internally to wire up the account, so
-// we derive one from the phone number rather than asking the admin for it.
-function internalEmailForPhone(phone: string): string {
-  return `${phone.replace(/^\+90/, "")}@ogrenci.internal`;
 }
 
 export async function createStudent(
