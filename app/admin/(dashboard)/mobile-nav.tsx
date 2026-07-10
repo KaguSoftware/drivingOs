@@ -16,7 +16,7 @@ export function MobileNav({ email }: { email?: string | null }) {
 
   return (
     <div className="lg:hidden">
-      <header className="sticky top-0 z-30 flex items-center justify-between border-b border-border bg-surface/90 px-4 py-3 backdrop-blur">
+      <header className="sticky top-0 z-60 flex items-center justify-between border-b border-border bg-surface/90 px-4 py-3 backdrop-blur">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground">
             DO
@@ -25,60 +25,70 @@ export function MobileNav({ email }: { email?: string | null }) {
         </div>
         <button
           type="button"
-          aria-label="Menü"
-          onClick={() => setOpen(true)}
-          className="rounded-lg p-2 text-muted hover:bg-background hover:text-foreground"
+          aria-label={open ? "Kapat" : "Menü"}
+          aria-expanded={open}
+          onClick={() => setOpen((prev) => !prev)}
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-muted hover:bg-background hover:text-foreground"
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-6 w-6">
-            <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
-          </svg>
+          <span className="relative block h-4 w-5">
+            <span
+              className={`absolute left-0 h-0.5 w-5 rounded-full bg-current transition-transform duration-200 ease-out ${
+                open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0 rotate-0"
+              }`}
+            />
+            <span
+              className={`absolute left-0 top-1/2 h-0.5 w-5 -translate-y-1/2 rounded-full bg-current transition-opacity duration-150 ${
+                open ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`absolute left-0 h-0.5 w-5 rounded-full bg-current transition-transform duration-200 ease-out ${
+                open ? "top-1/2 -translate-y-1/2 -rotate-45" : "top-full -translate-y-full rotate-0"
+              }`}
+            />
+          </span>
         </button>
       </header>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex">
-          <div className="flex-1 bg-foreground/40" onClick={() => setOpen(false)} />
-          <div className="flex w-72 max-w-[80%] flex-col overflow-y-auto bg-sidebar p-4">
-            <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm font-semibold">Menü</span>
-              <button aria-label="Kapat" onClick={() => setOpen(false)} className="rounded p-1 text-muted">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
-                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-                </svg>
-              </button>
-            </div>
-            <nav className="flex flex-col gap-1">
-              {DASHBOARD_PATH_PREFIXES.map((href) => {
-                const Icon = NAV_ICONS[href];
-                const active = pathname === href || pathname.startsWith(`${href}/`);
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setOpen(false)}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${
-                      active
-                        ? "bg-sidebar-active font-medium text-primary-foreground"
-                        : "text-sidebar-muted hover:bg-background"
-                    }`}
-                  >
-                    <Icon className="h-[18px] w-[18px] shrink-0" />
-                    {NAV_LABELS[href]}
-                  </Link>
-                );
-              })}
-            </nav>
-            <div className="mt-auto border-t border-sidebar-border pt-4">
-              {email && <p className="mb-2 truncate px-3 text-xs text-sidebar-muted">{email}</p>}
-              <form action={logout}>
-                <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-sidebar-muted hover:bg-background">
-                  Çıkış yap
-                </button>
-              </form>
-            </div>
-          </div>
+      <div
+        aria-hidden={!open}
+        className={`fixed inset-0 z-50 flex w-full flex-col overflow-y-auto bg-sidebar p-4 transition-transform duration-200 ease-out ${
+          open ? "translate-x-0" : "pointer-events-none translate-x-full"
+        }`}
+      >
+        <div className="mb-4 flex h-9 items-center">
+          <span className="text-sm font-semibold">Menü</span>
         </div>
-      )}
+        <nav className="flex flex-col gap-1">
+          {DASHBOARD_PATH_PREFIXES.map((href) => {
+            const Icon = NAV_ICONS[href];
+            const active = pathname === href || pathname.startsWith(`${href}/`);
+            return (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${
+                  active
+                    ? "bg-sidebar-active font-medium text-primary-foreground"
+                    : "text-sidebar-muted hover:bg-background"
+                }`}
+              >
+                <Icon className="h-[18px] w-[18px] shrink-0" />
+                {NAV_LABELS[href]}
+              </Link>
+            );
+          })}
+        </nav>
+        <div className="mt-auto border-t border-sidebar-border pt-4">
+          {email && <p className="mb-2 truncate px-3 text-xs text-sidebar-muted">{email}</p>}
+          <form action={logout}>
+            <button className="w-full rounded-lg px-3 py-2 text-left text-sm text-sidebar-muted hover:bg-background">
+              Çıkış yap
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
