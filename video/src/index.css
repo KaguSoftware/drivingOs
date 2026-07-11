@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf6ec;
+  --surface: #ffffff;
+  --surface-strong: #f3edde;
+  --foreground: #1e293b;
+  --muted: #6b6255;
+  --border: #e4dcc9;
+  --primary: #1e3a8a;
+  --primary-hover: #17296b;
+  --primary-foreground: #faf6ec;
+  --danger: #b91c1c;
+  --danger-soft: #fdecec;
+  --success: #15803d;
+  --success-soft: #e8f6ed;
+  --warning: #b45309;
+  --warning-soft: #fdf3e3;
+  --info: #1e3a8a;
+  --info-soft: #e8edfa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
