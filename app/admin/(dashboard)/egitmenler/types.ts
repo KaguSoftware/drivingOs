@@ -1,5 +1,5 @@
 // Mirrors supabase/migrations/0001_init.sql (instructors), 0006_exam_results.sql,
-// 0015 (email) and 0017 (assigned_vehicle_id) — keep in sync.
+// 0015 (email), 0017 (assigned_vehicle_id) and 0026 (monthly_wage) — keep in sync.
 
 import type { LicenseClass } from "../ogrenciler/types";
 
@@ -10,6 +10,7 @@ export interface InstructorRow {
   email: string | null;
   license_classes: LicenseClass[];
   assigned_vehicle_id: string | null;
+  monthly_wage: number;
   created_at: string;
   vehicles: { plate: string } | null;
 }
@@ -20,6 +21,7 @@ export interface NewInstructorInput {
   email: string | null;
   license_classes: LicenseClass[];
   assigned_vehicle_id: string | null;
+  monthly_wage: number;
 }
 
 export interface InstructorFormValues {
@@ -29,6 +31,7 @@ export interface InstructorFormValues {
   email: string | null;
   licenseClasses: LicenseClass[];
   assignedVehicleId: string | null;
+  monthlyWage: number;
 }
 
 export interface ExamResultRow {

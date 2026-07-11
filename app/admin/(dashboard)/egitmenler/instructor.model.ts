@@ -27,6 +27,10 @@ export class Instructor {
     return this.row.assigned_vehicle_id;
   }
 
+  get monthlyWage() {
+    return this.row.monthly_wage;
+  }
+
   assignedVehiclePlate(): string | null {
     return this.row.vehicles?.plate ?? null;
   }
@@ -39,6 +43,7 @@ export class Instructor {
       email: this.row.email,
       licenseClasses: this.row.license_classes,
       assignedVehicleId: this.row.assigned_vehicle_id,
+      monthlyWage: this.row.monthly_wage,
     };
   }
 }

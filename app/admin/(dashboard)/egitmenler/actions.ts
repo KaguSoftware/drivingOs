@@ -33,12 +33,18 @@ function parseInstructorInput(formData: FormData): NewInstructorInput {
   const email = String(formData.get("email") ?? "").trim();
   const vehicleId = String(formData.get("assigned_vehicle_id") ?? "").trim();
 
+  const monthlyWage = Number(formData.get("monthly_wage") ?? 0);
+  if (monthlyWage < 0) {
+    throw new Error("Aylık ücret negatif olamaz");
+  }
+
   return {
     full_name: fullName,
     phone: `+90${phone}`,
     email: email || null,
     license_classes: licenseClasses as LicenseClass[],
     assigned_vehicle_id: vehicleId || null,
+    monthly_wage: monthlyWage,
   };
 }
 

@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { PaymentInstallment } from "./payment-installment.model";
+import { PaymentTransactionRepository } from "./payment-transaction.repository";
 import type { NewPaymentInstallmentInput, PaymentInstallmentRow } from "./types";
 
 const INSTALLMENT_SELECT = "*, students(full_name)";
@@ -103,7 +104,7 @@ export class PaymentInstallmentRepository {
   async recordPayment(id: string, amountPaid: number): Promise<PaymentInstallment> {
     const { data: existing, error: findError } = await this.supabase
       .from("payment_installments")
-      .select("amount, amount_paid")
+      .select("amount, amount_paid, student_id")
       .eq("id", id)
       .single();
 
@@ -120,6 +121,13 @@ export class PaymentInstallmentRepository {
       .single();
 
     if (error) throw new Error(`Failed to record payment: ${error.message}`);
+
+    await new PaymentTransactionRepository(this.supabase).create({
+      installment_id: id,
+      student_id: existing.student_id,
+      amount: amountPaid,
+    });
+
     return new PaymentInstallment(data as PaymentInstallmentRow);
   }
 }

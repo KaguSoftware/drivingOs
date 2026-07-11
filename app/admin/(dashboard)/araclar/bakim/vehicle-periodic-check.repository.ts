@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { VehiclePeriodicCheck } from "./vehicle-periodic-check.model";
-import type { NewVehiclePeriodicCheckInput, VehiclePeriodicCheckRow } from "./types";
+import type { CheckType, NewVehiclePeriodicCheckInput, VehiclePeriodicCheckRow } from "./types";
 
 export class VehiclePeriodicCheckRepository {
   constructor(private readonly supabase: SupabaseClient) {}
@@ -9,6 +9,17 @@ export class VehiclePeriodicCheckRepository {
     const { data, error } = await this.supabase
       .from("vehicle_periodic_checks")
       .select("*, vehicles(plate, make_model)")
+      .order("due_date", { ascending: true });
+
+    if (error) throw new Error(`Failed to list periodic checks: ${error.message}`);
+    return (data as VehiclePeriodicCheckRow[]).map((row) => new VehiclePeriodicCheck(row));
+  }
+
+  async listByType(checkType: CheckType): Promise<VehiclePeriodicCheck[]> {
+    const { data, error } = await this.supabase
+      .from("vehicle_periodic_checks")
+      .select("*, vehicles(plate, make_model)")
+      .eq("check_type", checkType)
       .order("due_date", { ascending: true });
 
     if (error) throw new Error(`Failed to list periodic checks: ${error.message}`);

@@ -13,11 +13,14 @@ function parseDamageRecordInput(formData: FormData): NewVehicleDamageRecordInput
     throw new Error(`Invalid damage status: ${status}`);
   }
 
+  const costRaw = String(formData.get("cost") ?? "").trim();
+
   return {
     vehicle_id: vehicleId,
     part_name: String(formData.get("part_name") ?? "").trim(),
     status: status as DamageStatus,
     notes: String(formData.get("notes") ?? "").trim() || null,
+    cost: costRaw ? Number(costRaw) : null,
   };
 }
 

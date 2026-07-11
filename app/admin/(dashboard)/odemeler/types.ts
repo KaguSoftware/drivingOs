@@ -1,4 +1,5 @@
-// Mirrors supabase/migrations/0007_payment_installments.sql — keep in sync.
+// Mirrors supabase/migrations/0007_payment_installments.sql,
+// 0023_expenses.sql and 0024_payment_transactions.sql — keep in sync.
 
 export const PAYMENT_STATUSES = ["pending", "partial", "paid", "overdue"] as const;
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];
@@ -33,4 +34,32 @@ export interface InstallmentFormInstallment {
   studentId: string;
   amount: number;
   dueDate: string;
+}
+
+export interface ExpenseRow {
+  id: string;
+  name: string;
+  cost: number;
+  expense_date: string;
+  created_at: string;
+}
+
+export interface NewExpenseInput {
+  name: string;
+  cost: number;
+  expense_date: string;
+}
+
+export interface PaymentTransactionRow {
+  id: string;
+  installment_id: string;
+  student_id: string;
+  amount: number;
+  paid_at: string;
+}
+
+export interface NewPaymentTransactionInput {
+  installment_id: string;
+  student_id: string;
+  amount: number;
 }

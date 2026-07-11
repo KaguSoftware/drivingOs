@@ -34,6 +34,17 @@ export function DamageRecordForm({
         Notlar
         <input name="notes" defaultValue={record?.notes ?? undefined} className={inputClass} />
       </label>
+      <label className="flex flex-col gap-1 text-sm">
+        Onarım maliyeti (₺)
+        <input
+          name="cost"
+          type="number"
+          min="0"
+          step="0.01"
+          defaultValue={record?.cost ?? undefined}
+          className={inputClass}
+        />
+      </label>
       <SubmitButton>
         {record ? "Değişiklikleri kaydet" : "Hasar kaydı ekle"}
       </SubmitButton>

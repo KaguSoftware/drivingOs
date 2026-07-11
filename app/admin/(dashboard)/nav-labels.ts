@@ -7,6 +7,6 @@ export const NAV_LABELS: Record<(typeof DASHBOARD_PATH_PREFIXES)[number], string
   "/admin/araclar": "Araçlar",
   "/admin/program": "Haftalık Program",
   "/admin/egitmenler": "Eğitmenler",
-  "/admin/odemeler": "Ödeme Takibi",
+  "/admin/odemeler": "Finansal Takip",
   "/admin/sinavlar": "Sınavlar",
 };

@@ -40,6 +40,10 @@ export function DamagedVehicleForm({ vehicles }: { vehicles: Vehicle[] }) {
           Notlar
           <input name="notes" className={inputClass} />
         </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Onarım maliyeti (₺)
+          <input name="cost" type="number" min="0" step="0.01" className={inputClass} />
+        </label>
       </div>
       <SubmitButton>Hasar kaydı ekle</SubmitButton>
     </form>

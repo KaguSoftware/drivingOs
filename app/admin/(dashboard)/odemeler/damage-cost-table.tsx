@@ -1,9 +1,7 @@
-import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
-import type { VehicleDamageRecord } from "../vehicle-damage-record.model";
-import { deleteDamageRecord } from "../damage-record-actions";
+import type { VehicleDamageRecord } from "../araclar/vehicle-damage-record.model";
 
-export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] }) {
+export function DamageCostTable({ records }: { records: VehicleDamageRecord[] }) {
   if (records.length === 0) {
     return <p className={emptyStateClass}>Kayıtlı hasar yok.</p>;
   }
@@ -15,9 +13,8 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
           <tr>
             <th className="px-4 py-3 font-medium">Parça</th>
             <th className="px-4 py-3 font-medium">Durum</th>
-            <th className="px-4 py-3 font-medium">Notlar</th>
             <th className="px-4 py-3 font-medium">Maliyet</th>
-            <th className="px-4 py-3 font-medium"></th>
+            <th className="px-4 py-3 font-medium">Tarih</th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
@@ -25,15 +22,8 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
             <tr key={record.id}>
               <td className="px-4 py-3 font-medium">{record.partName}</td>
               <td className="px-4 py-3">{record.statusLabel()}</td>
-              <td className="px-4 py-3">{record.notes}</td>
               <td className="px-4 py-3">{record.cost ? `₺${record.cost.toFixed(2)}` : "-"}</td>
-              <td className="px-4 py-3 text-right">
-                <RowActionsMenu
-                  editHref={`/admin/araclar/${record.vehicleId}/hasar-kayitlari/${record.id}/duzenle`}
-                  deleteAction={deleteDamageRecord.bind(null, record.id, record.vehicleId)}
-                  deleteConfirmMessage="Bu hasar kaydı silinsin mi?"
-                />
-              </td>
+              <td className="px-4 py-3">{record.createdAt().toLocaleDateString("tr-TR")}</td>
             </tr>
           ))}
         </tbody>

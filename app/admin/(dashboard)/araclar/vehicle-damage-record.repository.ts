@@ -16,6 +16,16 @@ export class VehicleDamageRecordRepository {
     return (data as VehicleDamageRecordRow[]).map((row) => new VehicleDamageRecord(row));
   }
 
+  async listAll(): Promise<VehicleDamageRecord[]> {
+    const { data, error } = await this.supabase
+      .from("vehicle_damage_records")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw new Error(`Failed to list damage records: ${error.message}`);
+    return (data as VehicleDamageRecordRow[]).map((row) => new VehicleDamageRecord(row));
+  }
+
   async listOpen(): Promise<VehicleDamageRecord[]> {
     const { data, error } = await this.supabase
       .from("vehicle_damage_records")

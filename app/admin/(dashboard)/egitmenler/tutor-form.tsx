@@ -43,6 +43,17 @@ export function TutorForm({
           </div>
         </label>
         <label className="flex flex-col gap-1 text-sm">
+          Aylık ücret (₺)
+          <input
+            name="monthly_wage"
+            type="number"
+            min="0"
+            step="0.01"
+            defaultValue={instructor?.monthlyWage ?? 0}
+            className={inputClass}
+          />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
           Kullandığı araç
           <select
             name="assigned_vehicle_id"

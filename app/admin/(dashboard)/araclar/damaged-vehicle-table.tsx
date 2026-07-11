@@ -30,25 +30,29 @@ export function DamagedVehicleTable({
             <th className="px-4 py-3 font-medium">Marka / model</th>
             <th className="px-4 py-3 font-medium">Ehliyet sınıfı</th>
             <th className="px-4 py-3 font-medium">Hasarlı parçalar</th>
+            <th className="px-4 py-3 font-medium">Onarım maliyeti</th>
           </tr>
         </thead>
         <tbody className={tbodyClass}>
-          {vehicles.map((vehicle) => (
-            <tr key={vehicle.id}>
-              <td className="px-4 py-3 font-medium">
-                <Link href={`/admin/araclar/${vehicle.id}`} className="hover:underline">
-                  {vehicle.plate}
-                </Link>
-              </td>
-              <td className="px-4 py-3">{vehicle.makeModel}</td>
-              <td className="px-4 py-3">{vehicle.licenseClass}</td>
-              <td className="px-4 py-3">
-                {(recordsByVehicle.get(vehicle.id) ?? [])
-                  .map((record) => `${record.partName} (${record.statusLabel()})`)
-                  .join(", ")}
-              </td>
-            </tr>
-          ))}
+          {vehicles.map((vehicle) => {
+            const records = recordsByVehicle.get(vehicle.id) ?? [];
+            const totalCost = records.reduce((sum, record) => sum + (record.cost ?? 0), 0);
+            return (
+              <tr key={vehicle.id}>
+                <td className="px-4 py-3 font-medium">
+                  <Link href={`/admin/araclar/${vehicle.id}`} className="hover:underline">
+                    {vehicle.plate}
+                  </Link>
+                </td>
+                <td className="px-4 py-3">{vehicle.makeModel}</td>
+                <td className="px-4 py-3">{vehicle.licenseClass}</td>
+                <td className="px-4 py-3">
+                  {records.map((record) => `${record.partName} (${record.statusLabel()})`).join(", ")}
+                </td>
+                <td className="px-4 py-3">{totalCost > 0 ? `₺${totalCost.toFixed(2)}` : "-"}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -34,6 +34,14 @@ export class VehicleDamageRecord {
     return this.row.notes;
   }
 
+  get cost() {
+    return this.row.cost;
+  }
+
+  createdAt(): Date {
+    return new Date(this.row.created_at);
+  }
+
   isResolved(): boolean {
     return this.row.status === "resolved";
   }

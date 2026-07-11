@@ -1,5 +1,6 @@
-// Mirrors supabase/migrations/0001_init.sql (vehicles) and
-// supabase/migrations/0003_vehicle_damage_and_violations.sql — keep in sync.
+// Mirrors supabase/migrations/0001_init.sql (vehicles),
+// supabase/migrations/0003_vehicle_damage_and_violations.sql and
+// supabase/migrations/0025_vehicle_damage_cost.sql — keep in sync.
 
 import { LICENSE_CLASSES, type LicenseClass } from "../ogrenciler/types";
 
@@ -49,6 +50,7 @@ export interface VehicleDamageRecordRow {
   part_name: string;
   status: DamageStatus;
   notes: string | null;
+  cost: number | null;
   created_at: string;
 }
 
@@ -57,6 +59,7 @@ export interface NewVehicleDamageRecordInput {
   part_name: string;
   status: DamageStatus;
   notes: string | null;
+  cost: number | null;
 }
 
 export interface VehicleViolationRow {

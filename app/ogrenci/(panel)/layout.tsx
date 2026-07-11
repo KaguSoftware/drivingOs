@@ -26,7 +26,7 @@ export default async function StudentPanelLayout({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <PanelNav title="Öğrenci Paneli" items={NAV_ITEMS} email={user?.email} />
-      <main className="flex-1 px-4 py-6 sm:px-6 sm:py-8">
+      <main className="flex-1 px-4 py-6 peer-data-[sidebar=true]:pl-16 sm:px-6 sm:py-8 sm:peer-data-[sidebar=true]:pl-6">
         <PageContainer>
           <CanceledClassBanner studentId={profile.student_id!} />
           {children}
