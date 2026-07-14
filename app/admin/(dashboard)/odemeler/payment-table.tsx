@@ -1,4 +1,5 @@
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { StudentBalance } from "./payment-installment.repository";
 import type { PaymentInstallment } from "./payment-installment.model";
 import { ExpandableBalanceRow } from "./expandable-balance-row";
@@ -32,7 +33,7 @@ export function PaymentTable({
               trigger={
                 <>
                   <td className="px-4 py-3 font-medium">{balance.studentName}</td>
-                  <td className="px-4 py-3">{balance.totalDebt.toFixed(2)}</td>
+                  <td className="px-4 py-3">{formatCurrency(balance.totalDebt)}</td>
                 </>
               }
             >

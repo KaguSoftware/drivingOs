@@ -1,4 +1,5 @@
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { Instructor } from "../egitmenler/instructor.model";
 
 export function WageSummary({ instructors }: { instructors: Instructor[] }) {
@@ -21,12 +22,12 @@ export function WageSummary({ instructors }: { instructors: Instructor[] }) {
           {instructors.map((instructor) => (
             <tr key={instructor.id}>
               <td className="px-4 py-3 font-medium">{instructor.fullName}</td>
-              <td className="px-4 py-3">₺{instructor.monthlyWage.toFixed(2)}</td>
+              <td className="px-4 py-3">{formatCurrency(instructor.monthlyWage)}</td>
             </tr>
           ))}
           <tr>
             <td className="px-4 py-3 font-semibold">Toplam</td>
-            <td className="px-4 py-3 font-semibold">₺{total.toFixed(2)}</td>
+            <td className="px-4 py-3 font-semibold">{formatCurrency(total)}</td>
           </tr>
         </tbody>
       </table>

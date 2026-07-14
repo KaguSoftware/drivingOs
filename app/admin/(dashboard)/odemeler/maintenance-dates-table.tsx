@@ -1,4 +1,5 @@
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { VehiclePeriodicCheck } from "../araclar/bakim/vehicle-periodic-check.model";
 
 export function MaintenanceDatesTable({ checks }: { checks: VehiclePeriodicCheck[] }) {
@@ -24,7 +25,7 @@ export function MaintenanceDatesTable({ checks }: { checks: VehiclePeriodicCheck
                 {check.vehiclePlate} &middot; {check.vehicleMakeModel}
               </td>
               <td className="px-4 py-3">{check.dueDate().toLocaleDateString("tr-TR")}</td>
-              <td className="px-4 py-3">{check.cost ? `₺${check.cost.toFixed(2)}` : "-"}</td>
+              <td className="px-4 py-3">{check.cost ? formatCurrency(check.cost) : "-"}</td>
               <td className="px-4 py-3">{check.statusLabel()}</td>
             </tr>
           ))}

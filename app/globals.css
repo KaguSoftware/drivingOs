@@ -1,41 +1,107 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Design system — see DESIGN.md. Calm, precise, trustworthy.
+  Neutrals are cool graphite at near-zero chroma (escapes the beige/government look).
+  Accent is a restrained signal-teal (not purple, not navy — escapes generic-SaaS AND the old form feel).
+  Token NAMES are stable; only values change. Semantic colors are never tenant-overridable.
+  Per-tenant branding (Phase 3) sets --brand-accent* only; --primary falls back to the default teal.
+*/
+
 :root {
   color-scheme: light;
-  --background: #faf6ec;
-  --surface: #ffffff;
-  --foreground: #1e293b;
-  --muted: #6b6255;
-  --border: #e4dcc9;
-  --primary: #1e3a8a;
-  --primary-hover: #17296b;
-  --primary-foreground: #faf6ec;
-  --danger: #b91c1c;
-  --danger-hover: #991b1b;
-  --danger-soft: #fdecec;
-  --success: #15803d;
-  --success-soft: #e8f6ed;
-  --warning: #b45309;
-  --warning-soft: #fdf3e3;
-  --info: #1e3a8a;
-  --info-soft: #e8edfa;
-  --surface-strong: #f3edde;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #1e293b;
-  --sidebar-muted: #6b6255;
-  --sidebar-border: #e4dcc9;
-  --sidebar-active: #1e3a8a;
+
+  /* neutrals — cool graphite */
+  --background: oklch(0.985 0.004 240);
+  --surface: oklch(1 0 0);
+  --surface-strong: oklch(0.965 0.005 240);
+  --foreground: oklch(0.24 0.02 255);
+  --muted: oklch(0.45 0.019 255);
+  --faint: oklch(0.62 0.014 255);
+  --border: oklch(0.915 0.005 255);
+  --border-strong: oklch(0.86 0.007 255);
+
+  /* brand — tenant overrides --brand-accent* (Phase 3); otherwise the default teal */
+  --primary: var(--brand-accent, oklch(0.54 0.118 196));
+  --primary-hover: var(--brand-accent-hover, oklch(0.48 0.118 196));
+  --primary-foreground: var(--brand-accent-fg, oklch(0.99 0.02 196));
+  --ring: var(--brand-accent, oklch(0.54 0.118 196));
+
+  /* semantic — locked, never tenant-overridable */
+  /* text tokens darkened so colored text clears WCAG AA (>=4.5:1) on their -soft backgrounds in light mode */
+  --success: oklch(0.50 0.14 155);
+  --success-soft: oklch(0.95 0.032 155);
+  --warning: oklch(0.52 0.15 74);
+  --warning-soft: oklch(0.95 0.04 74);
+  --danger: oklch(0.49 0.20 25);
+  --danger-hover: oklch(0.43 0.20 25);
+  --danger-soft: oklch(0.95 0.038 25);
+  --info: oklch(0.49 0.13 245);
+  --info-soft: oklch(0.95 0.03 245);
+
+  /* second neutral layer — chrome (sidebar/toolbars) */
+  --sidebar: oklch(0.995 0.004 240);
+  --sidebar-foreground: oklch(0.30 0.02 255);
+  --sidebar-muted: oklch(0.48 0.019 255);
+  --sidebar-border: oklch(0.91 0.005 255);
+  --sidebar-active: var(--primary);
+
+  /* motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --dur-fast: 120ms;
+  --dur: 190ms;
+  --dur-slow: 300ms;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.19 0.012 255);
+  --surface: oklch(0.23 0.014 255);
+  --surface-strong: oklch(0.27 0.015 255);
+  --foreground: oklch(0.96 0.006 255);
+  --muted: oklch(0.71 0.016 255);
+  --faint: oklch(0.55 0.014 255);
+  --border: oklch(0.30 0.014 255);
+  --border-strong: oklch(0.38 0.016 255);
+
+  --primary: var(--brand-accent, oklch(0.70 0.115 196));
+  --primary-hover: var(--brand-accent-hover, oklch(0.76 0.115 196));
+  --primary-foreground: var(--brand-accent-fg, oklch(0.19 0.03 196));
+  --ring: var(--brand-accent, oklch(0.70 0.115 196));
+
+  --success: oklch(0.72 0.14 155);
+  --success-soft: oklch(0.28 0.05 155);
+  --warning: oklch(0.79 0.13 74);
+  --warning-soft: oklch(0.30 0.05 74);
+  --danger: oklch(0.68 0.17 25);
+  --danger-hover: oklch(0.74 0.17 25);
+  --danger-soft: oklch(0.30 0.06 25);
+  --info: oklch(0.70 0.11 245);
+  --info-soft: oklch(0.30 0.05 245);
+
+  --sidebar: oklch(0.21 0.013 255);
+  --sidebar-foreground: oklch(0.92 0.006 255);
+  --sidebar-muted: oklch(0.66 0.016 255);
+  --sidebar-border: oklch(0.30 0.014 255);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
   --color-danger: var(--danger);
   --color-danger-hover: var(--danger-hover);
   --color-danger-soft: var(--danger-soft);
@@ -45,19 +111,35 @@
   --color-warning-soft: var(--warning-soft);
   --color-info: var(--info);
   --color-info-soft: var(--info-soft);
-  --color-surface-strong: var(--surface-strong);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-muted: var(--sidebar-muted);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-active: var(--sidebar-active);
+
+  --shadow-xs: 0 1px 2px oklch(0.25 0.03 255 / 0.05);
+  --shadow-sm: 0 1px 2px oklch(0.25 0.03 255 / 0.06), 0 2px 6px oklch(0.25 0.03 255 / 0.05);
+  --shadow-md: 0 4px 12px oklch(0.25 0.03 255 / 0.10);
+  --shadow-lg: 0 12px 32px oklch(0.25 0.03 255 / 0.16);
+
+  --ease-out-expo: var(--ease-out-expo);
+  --ease-out-quart: var(--ease-out-quart);
+
   --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jakarta-mono, ui-monospace, "SF Mono", Menlo, monospace);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
 }
 
 @keyframes drive-across {
@@ -73,4 +155,15 @@ body {
 
 .drive-across {
   animation: drive-across 900ms linear forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -5,8 +5,8 @@ import type { VehiclePeriodicCheck } from "./vehicle-periodic-check.model";
 import { deletePeriodicCheck } from "./actions";
 
 const STATUS_COLORS: Record<CheckStatus, string> = {
-  ok: "text-emerald-600",
-  due_soon: "text-amber-600",
+  ok: "text-success",
+  due_soon: "text-warning",
   overdue: "text-danger",
 };
 

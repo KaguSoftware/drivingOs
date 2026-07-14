@@ -5,6 +5,7 @@ import { BackLink } from "@/components/ui/back-link";
 import { StatGrid, StatCard } from "@/components/ui/stat-card";
 import { Badge } from "@/components/ui/badge";
 import { primaryLinkClass } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/format";
 import { StudentRepository } from "../student.repository";
 import { LessonRepository } from "../../program/lesson.repository";
 import { PaymentInstallmentRepository } from "../../odemeler/payment-installment.repository";
@@ -50,7 +51,7 @@ export default async function StudentDetailPage({
         <StatCard label="Teori" value={student.theoryLabel()} />
         <StatCard label="Direksiyon" value={student.practiceLabel()} />
         <StatCard label="MEB evrak" value={student.mebLabel()} />
-        <StatCard label="Kalan borç" value={`${totalDebt.toFixed(2)} ₺`} hint="Taksitler sayfasında detay" />
+        <StatCard label="Kalan borç" value={formatCurrency(totalDebt)} hint="Taksitler sayfasında detay" />
       </StatGrid>
       <Link
         href={`/admin/odemeler/${student.id}`}

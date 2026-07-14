@@ -1,5 +1,6 @@
 import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { PaymentInstallment } from "../payment-installment.model";
 import { RecordPaymentForm } from "./record-payment-form";
 import { deleteInstallment } from "../actions";
@@ -27,9 +28,9 @@ export function InstallmentTable({ installments }: { installments: PaymentInstal
           {installments.map((installment) => (
             <tr key={installment.id}>
               <td className="px-4 py-3">{installment.dueDate().toLocaleDateString("tr-TR")}</td>
-              <td className="px-4 py-3">{installment.amount.toFixed(2)}</td>
-              <td className="px-4 py-3">{installment.amountPaid.toFixed(2)}</td>
-              <td className="px-4 py-3">{installment.remainingDebt().toFixed(2)}</td>
+              <td className="px-4 py-3">{formatCurrency(installment.amount)}</td>
+              <td className="px-4 py-3">{formatCurrency(installment.amountPaid)}</td>
+              <td className="px-4 py-3">{formatCurrency(installment.remainingDebt())}</td>
               <td className="px-4 py-3">{installment.statusLabel()}</td>
               <td className="px-4 py-3">
                 <RecordPaymentForm installmentId={installment.id} />

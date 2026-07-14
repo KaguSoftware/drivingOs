@@ -1,5 +1,6 @@
 import { RowActionsMenu } from "@/components/ui/row-actions-menu";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { VehicleDamageRecord } from "../vehicle-damage-record.model";
 import { deleteDamageRecord } from "../damage-record-actions";
 
@@ -26,7 +27,7 @@ export function DamageRecordTable({ records }: { records: VehicleDamageRecord[] 
               <td className="px-4 py-3 font-medium">{record.partName}</td>
               <td className="px-4 py-3">{record.statusLabel()}</td>
               <td className="px-4 py-3">{record.notes}</td>
-              <td className="px-4 py-3">{record.cost ? `₺${record.cost.toFixed(2)}` : "-"}</td>
+              <td className="px-4 py-3">{record.cost ? formatCurrency(record.cost) : "-"}</td>
               <td className="px-4 py-3 text-right">
                 <RowActionsMenu
                   editHref={`/admin/araclar/${record.vehicleId}/hasar-kayitlari/${record.id}/duzenle`}

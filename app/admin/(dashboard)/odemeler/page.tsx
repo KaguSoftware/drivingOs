@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { primaryLinkClass } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
-import { StatCard, StatGrid } from "@/components/ui/stat-card";
+import { FinanceStats } from "./finance-stats";
 import { PaymentInstallmentRepository } from "./payment-installment.repository";
 import { PaymentTransactionRepository } from "./payment-transaction.repository";
 import { ExpenseRepository } from "./expense.repository";
@@ -61,7 +61,6 @@ export default async function FinancialTakipPage() {
     expense: expense[key],
   }));
 
-  const currentMonth = monthKeys[monthKeys.length - 1];
   const totalOutstandingDebt = balances.reduce((sum, balance) => sum + balance.totalDebt, 0);
 
   return (
@@ -78,15 +77,13 @@ export default async function FinancialTakipPage() {
         }
       />
 
-      <StatGrid>
-        <StatCard label="Bu ay gelir" value={`₺${income[currentMonth].toFixed(2)}`} />
-        <StatCard label="Bu ay gider" value={`₺${expense[currentMonth].toFixed(2)}`} />
-        <StatCard
-          label="Bu ay net"
-          value={`₺${(income[currentMonth] - expense[currentMonth]).toFixed(2)}`}
-        />
-        <StatCard label="Bekleyen öğrenci borcu" value={`₺${totalOutstandingDebt.toFixed(2)}`} />
-      </StatGrid>
+      <FinanceStats
+        income={income}
+        expense={expense}
+        monthKeys={monthKeys}
+        totalOutstandingDebt={totalOutstandingDebt}
+        studentCount={balances.length}
+      />
 
       <IncomeExpenseChart data={chartData} />
 

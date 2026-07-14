@@ -1,4 +1,5 @@
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { Expense } from "./expense.model";
 
 export function RecentExpensesTable({ expenses }: { expenses: Expense[] }) {
@@ -20,7 +21,7 @@ export function RecentExpensesTable({ expenses }: { expenses: Expense[] }) {
           {expenses.map((expense) => (
             <tr key={expense.id}>
               <td className="px-4 py-3 font-medium">{expense.name}</td>
-              <td className="px-4 py-3">₺{expense.cost.toFixed(2)}</td>
+              <td className="px-4 py-3">{formatCurrency(expense.cost)}</td>
               <td className="px-4 py-3">{expense.expenseDate().toLocaleDateString("tr-TR")}</td>
             </tr>
           ))}

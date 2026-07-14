@@ -1,4 +1,5 @@
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { VehicleDamageRecord } from "../araclar/vehicle-damage-record.model";
 
 export function DamageCostTable({ records }: { records: VehicleDamageRecord[] }) {
@@ -22,7 +23,7 @@ export function DamageCostTable({ records }: { records: VehicleDamageRecord[] })
             <tr key={record.id}>
               <td className="px-4 py-3 font-medium">{record.partName}</td>
               <td className="px-4 py-3">{record.statusLabel()}</td>
-              <td className="px-4 py-3">{record.cost ? `₺${record.cost.toFixed(2)}` : "-"}</td>
+              <td className="px-4 py-3">{record.cost ? formatCurrency(record.cost) : "-"}</td>
               <td className="px-4 py-3">{record.createdAt().toLocaleDateString("tr-TR")}</td>
             </tr>
           ))}

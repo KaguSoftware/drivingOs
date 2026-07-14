@@ -28,7 +28,8 @@ export function RowActionsMenu({
     function updatePosition() {
       const rect = buttonRef.current?.getBoundingClientRect();
       if (!rect) return;
-      setPosition({ top: rect.bottom + window.scrollY + 4, left: rect.right + window.scrollX - 80 });
+      // Menu is position:fixed (viewport-relative), so use rect coords directly — do NOT add scroll offsets.
+      setPosition({ top: rect.bottom + 4, left: rect.right - 80 });
     }
 
     function handleClickOutside(event: MouseEvent) {
@@ -53,6 +54,7 @@ export function RowActionsMenu({
 
   useEffect(() => {
     if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional: mount the portal so the enter animation can run
       setMounted(true);
       const raf = requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
       return () => cancelAnimationFrame(raf);
@@ -71,7 +73,7 @@ export function RowActionsMenu({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="rounded-md p-1.5 text-muted hover:bg-surface hover:text-foreground"
+        className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface-strong hover:text-foreground"
       >
         <svg viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
           <path d="M10 4a1.75 1.75 0 1 1 0 3.5A1.75 1.75 0 0 1 10 4Zm0 4.75a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5ZM10 13.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5Z" />
@@ -90,9 +92,9 @@ export function RowActionsMenu({
               transform: visible ? "translateY(0) scale(1)" : "translateY(-10px) scale(0.85)",
               transitionProperty: "opacity, transform",
               transitionDuration: "220ms",
-              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+              transitionTimingFunction: "var(--ease-out-expo)",
             }}
-            className={`fixed z-50 flex w-20 overflow-hidden rounded-md border border-border bg-[#faf6ed] shadow-md ${
+            className={`fixed z-50 flex w-20 overflow-hidden rounded-md border border-border bg-surface shadow-md ${
               visible ? "opacity-100" : "opacity-0"
             }`}
           >
@@ -102,7 +104,7 @@ export function RowActionsMenu({
               onClick={() => setOpen(false)}
               aria-label="Düzenle"
               title="Düzenle"
-              className="flex flex-1 items-center justify-center px-3 py-2 hover:bg-white"
+              className="flex flex-1 items-center justify-center px-3 py-2 transition-colors hover:bg-surface-strong"
             >
               <EditIcon />
             </Link>
@@ -116,7 +118,7 @@ export function RowActionsMenu({
                   onClick={show}
                   aria-label="Sil"
                   title="Sil"
-                  className="flex flex-1 items-center justify-center px-3 py-2 text-danger hover:bg-white"
+                  className="flex flex-1 items-center justify-center px-3 py-2 text-danger transition-colors hover:bg-surface-strong"
                 >
                   <TrashIcon />
                 </button>

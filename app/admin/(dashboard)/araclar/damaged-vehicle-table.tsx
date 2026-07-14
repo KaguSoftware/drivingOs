@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { tableWrapperClass, theadClass, tbodyClass, emptyStateClass } from "@/components/ui/table-classes";
+import { formatCurrency } from "@/lib/format";
 import type { Vehicle } from "./vehicle.model";
 import type { VehicleDamageRecord } from "./vehicle-damage-record.model";
 
@@ -49,7 +50,7 @@ export function DamagedVehicleTable({
                 <td className="px-4 py-3">
                   {records.map((record) => `${record.partName} (${record.statusLabel()})`).join(", ")}
                 </td>
-                <td className="px-4 py-3">{totalCost > 0 ? `₺${totalCost.toFixed(2)}` : "-"}</td>
+                <td className="px-4 py-3">{totalCost > 0 ? formatCurrency(totalCost) : "-"}</td>
               </tr>
             );
           })}

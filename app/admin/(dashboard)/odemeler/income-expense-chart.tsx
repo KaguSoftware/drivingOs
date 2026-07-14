@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { buttonClasses } from "@/components/ui/button";
+import { formatCurrency, formatCurrencyCompact } from "@/lib/format";
 
 export interface IncomeExpensePoint {
   month: string;
@@ -11,10 +12,6 @@ export interface IncomeExpensePoint {
 }
 
 const WINDOW_SIZE = 6;
-
-function formatCurrency(value: number): string {
-  return `₺${value.toLocaleString("tr-TR")}`;
-}
 
 export function IncomeExpenseChart({ data }: { data: IncomeExpensePoint[] }) {
   const maxStart = Math.max(0, data.length - WINDOW_SIZE);
@@ -49,7 +46,7 @@ export function IncomeExpenseChart({ data }: { data: IncomeExpensePoint[] }) {
           <BarChart data={visible} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
             <XAxis dataKey="month" tick={{ fill: "var(--color-muted)", fontSize: 12 }} />
-            <YAxis tick={{ fill: "var(--color-muted)", fontSize: 12 }} tickFormatter={formatCurrency} />
+            <YAxis tick={{ fill: "var(--color-muted)", fontSize: 12 }} tickFormatter={formatCurrencyCompact} />
             <Tooltip
               formatter={(value) => formatCurrency(Number(value))}
               contentStyle={{
